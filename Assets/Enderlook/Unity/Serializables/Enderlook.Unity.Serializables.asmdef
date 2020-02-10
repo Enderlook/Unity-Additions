@@ -1,0 +1,17 @@
+{
+    "name": "Enderlook.Unity.Serializables",
+    "references": [
+        "Enderlook.Unity.Attributes",
+        "Enderlook.Unity.Attributes.AttributeUsage",
+        "Enderlook.Unity.Utils",
+        "Enderlook.Extensions"
+    ],
+    "optionalUnityReferences": [],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": []
+}

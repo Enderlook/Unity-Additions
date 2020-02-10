@@ -1,0 +1,16 @@
+{
+    "name": "Enderlook.Unity.Serializables.Range.Drawer",
+    "references": [
+        "Enderlook.Unity.Serializables"
+    ],
+    "optionalUnityReferences": [],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": []
+}

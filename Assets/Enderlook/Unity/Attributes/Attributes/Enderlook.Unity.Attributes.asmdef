@@ -1,0 +1,16 @@
+{
+    "name": "Enderlook.Unity.Attributes",
+    "references": [
+        "Enderlook.Unity.Attributes.AttributeUsage",
+        "Enderlook.Unity.Extensions",
+        "Enderlook.Extensions"
+    ],
+    "optionalUnityReferences": [],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": []
+}
