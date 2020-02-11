@@ -1,0 +1,25 @@
+﻿[*.{cs,vb}]
+
+# IDE0054: Use compound assignment
+dotnet_style_prefer_compound_assignment = false:suggestion
+
+# RCS1058: Use compound assignment.
+dotnet_diagnostic.RCS1058.severity = none
+
+# IDE0066: Convert switch statement to expression
+csharp_style_prefer_switch_expression = false:suggestion
+
+# IDE0010: Add missing cases
+dotnet_diagnostic.IDE0010.severity = none
+
+# RCS1128: Use coalesce expression.
+dotnet_diagnostic.RCS1128.severity = none
+
+# RCS1146: Use conditional access.
+dotnet_diagnostic.RCS1146.severity = none
+
+# IDE0063: Use simple 'using' statement
+csharp_prefer_simple_using_statement = true:none
+
+# IDE0062: Make local function 'static'
+csharp_prefer_static_local_function = true:none
