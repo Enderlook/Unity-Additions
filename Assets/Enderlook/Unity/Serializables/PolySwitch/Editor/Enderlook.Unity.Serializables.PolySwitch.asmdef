@@ -1,0 +1,17 @@
+{
+    "name": "Enderlook.Unity.Serializables.PolySwitch",
+    "references": [
+        "Enderlook.Unity.Serializables",
+        "Enderlook.Unity.Utils.UnityEditor"
+    ],
+    "optionalUnityReferences": [],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": []
+}
