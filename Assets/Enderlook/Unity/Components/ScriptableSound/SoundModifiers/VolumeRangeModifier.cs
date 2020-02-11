@@ -1,11 +1,13 @@
 ﻿using Enderlook.Unity.Serializables.Ranges;
 using Enderlook.Unity.Utils;
 
+using System;
+
 using UnityEngine;
 
 namespace Enderlook.Unity.Components.ScriptableSound.Modifiers
 {
-    [CreateAssetMenu(fileName = "VolumeRange", menuName = "Sound/Modifiers/Volume Range")]
+    [Serializable, CreateAssetMenu(fileName = "VolumeRange", menuName = "Sound/Modifiers/Volume Range")]
     public class VolumeRangeModifier : SoundModifier
     {
 #pragma warning disable CS0649
