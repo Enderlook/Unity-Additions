@@ -1,10 +1,12 @@
-﻿using System;
+﻿using Enderlook.Unity.Attributes;
+
+using System;
 
 using UnityEngine;
 
 namespace Enderlook.Unity.Serializables.Ranges
 {
-    [Serializable]
+    [Serializable, CannotBeUsedAsMember]
     public abstract class Range<T> : IRange<T>
     {
 #pragma warning disable CS0649
