@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Enderlook.Unity.Components.Navigation
+namespace Enderlook.Collections
 {
     public class PriorityQueue<T>
     {
