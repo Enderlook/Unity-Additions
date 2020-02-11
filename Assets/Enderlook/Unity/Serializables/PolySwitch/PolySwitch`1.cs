@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Enderlook.Unity.Serializables.PolySwitcher
 {
-    [Serializable, AbstractScriptableObject, CannotBeUsedAsMember]
+    [Serializable, CannotBeUsedAsMember]
     public class PolySwitch<T> : ScriptableObject
     {
 #pragma warning disable CA2235, CS0649

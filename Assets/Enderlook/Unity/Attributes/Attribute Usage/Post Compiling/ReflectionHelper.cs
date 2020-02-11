@@ -71,13 +71,13 @@ namespace Enderlook.Unity.Attributes.AttributeUsage.PostCompiling
             if (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(List<>))
                 type = type.GetGenericArguments()[0];
 
+            if (type.IsSubclassOf(typeof(UnityObject)))
+                return true;
+
             if (type.IsAbstract || type.IsGenericType || type.IsInterface)
                 return false;
 
             if (type.IsPrimitive || type.IsEnum || type.IsValueType || unityDefaultNonPrimitiveSerializables.Contains(type))
-                return true;
-
-            if (type.IsSubclassOf(typeof(UnityObject)))
                 return true;
 
             if (type.IsDefined(typeof(SerializableAttribute)))

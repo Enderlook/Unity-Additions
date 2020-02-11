@@ -1,5 +1,4 @@
-﻿using Enderlook.Unity.Attributes;
-using Enderlook.Unity.Utils;
+﻿using Enderlook.Unity.Utils;
 
 using System;
 
@@ -7,7 +6,7 @@ using UnityEngine;
 
 namespace Enderlook.Unity.Components.ScriptableSound
 {
-    [Serializable, AbstractScriptableObject]
+    [Serializable]
     public class Sound : ScriptableObject, IPrototypable<Sound>
     {
         /// <summary>
