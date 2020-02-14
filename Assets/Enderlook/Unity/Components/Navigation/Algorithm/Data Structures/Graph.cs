@@ -59,7 +59,7 @@ namespace Enderlook.Unity.Components.Navigation
 
         public void RemoveConnectionsToNothing()
         {
-            // Generate a temporal hashset to reduce search complexity from O(n) to O(1)
+            // Generate a temporal hashset to reduce search complexity of this function from O(n^2) to O(n)
             HashSet<Node> nodes = new HashSet<Node>(grid);
 
             foreach (Node node in nodes)
@@ -68,7 +68,7 @@ namespace Enderlook.Unity.Components.Navigation
 
         public void AddMissingNodesFromConnections()
         {
-            // Generate a temporal hashset to reduce search complexity from O(n) to O(1)
+            // Generate a temporal hashset to reduce search complexity of this function from O(n^2) to O(n)
             HashSet<Node> nodes = new HashSet<Node>(grid);
 
             foreach (Node node in nodes)
@@ -82,7 +82,7 @@ namespace Enderlook.Unity.Components.Navigation
 
         public void RemoveNodesWithoutToOrFromConnection()
         {
-            // Generate a temporal hashset to reduce search complexity from O(n) to O(1)
+            // Generate a temporal hashset to reduce search complexity of this function from O(n^2) to O(n)
             HashSet<Node> nodes = new HashSet<Node>(grid);
 
             grid = grid.Where(e => e.Connections.Count > 0 || grid.Any(e2 => e2.Connections.Any(e3 => e3.end == e))).ToList();
