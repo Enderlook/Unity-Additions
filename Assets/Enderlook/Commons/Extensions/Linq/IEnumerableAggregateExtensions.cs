@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Enderlook.Extensions
 {
-    public static class LinqAggregateExtensions
+    public static class IEnumerableAggregateExtensions
     {
         public delegate bool AggregatorWhile<TSource>(TSource accumulated, TSource current, out TSource result);
 

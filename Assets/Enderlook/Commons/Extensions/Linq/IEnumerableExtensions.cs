@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace Enderlook.Extensions
 {
-    public static class LinqExtensions
+    public static class IEnumerableExtensions
     {
         /// <summary>
         /// Add a the <paramref name="element"/> at the end of the returned <seealso cref="IEnumerable{T}"/> <paramref name="source"/>.

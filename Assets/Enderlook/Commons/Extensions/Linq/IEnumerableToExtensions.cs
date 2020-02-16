@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace Enderlook.Extensions
 {
-    public static class LinqToExtensions
+    public static class IEnumerableToExtensions
     {
         /// <summary>
         /// Create a <see cref="Dictionary{TKey, TValue}"/> from the <see cref="KeyValuePair{TKey, TValue}"/> of <paramref name="source"/>.

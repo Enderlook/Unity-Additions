@@ -7,7 +7,7 @@ using System.Runtime.CompilerServices;
 
 namespace Enderlook.Extensions
 {
-    public static class LinqRandomExtensions
+    public static class IEnumerableRandomExtensions
     {
 #if !UNITY_BUILD
         private static Random random = new Random();
@@ -20,7 +20,6 @@ namespace Enderlook.Extensions
 #else
             random.Range(max);
 #endif
-
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static float Range(float max) =>
