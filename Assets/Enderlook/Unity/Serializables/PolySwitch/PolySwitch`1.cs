@@ -17,16 +17,17 @@ namespace Enderlook.Unity.Serializables.PolySwitcher
         [SerializeField, Tooltip("Value per difficulty.")]
         private T[] values;
 
-        public T Value => values[master.CurrentIndex];
+        public T Value => values[master.Index];
 
 #if UNITY_EDITOR
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Code Quality", "IDE0051:Remove unused private members", Justification = "Used by Unity.")]
         private void OnValidate()
         {
-            if (values.Length != master.Indexes)
+            if (values != null && master != null && values.Length != master.Indexes)
             {
+                float oldLength = values.Length;
                 Array.Resize(ref values, master.Indexes);
-                Debug.LogWarning($"Length of {nameof(values)} in {GetType()} must be equal to {nameof(master)}.{nameof(master.Indexes)}. Was {values.Length} instead of {master.Indexes}.");
+                Debug.LogWarning($"Length of {nameof(values)} in {GetType()} must be equal to {nameof(master)}.{nameof(master.Indexes)}. Was {oldLength} instead of {master.Indexes}.");
             }
         }
 #endif

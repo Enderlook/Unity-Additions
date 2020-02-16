@@ -5,7 +5,7 @@ using UnityEditor;
 
 using UnityEngine;
 
-namespace Additions.Serializable
+namespace Enderlook.Unity.Serializable
 {
     [CustomEditor(typeof(PolySwitchMaster))]
     internal class PolySwitchMasterEditor : Editor
