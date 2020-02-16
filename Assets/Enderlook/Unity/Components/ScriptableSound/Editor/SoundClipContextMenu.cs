@@ -47,7 +47,7 @@ namespace Enderlook.Unity.Components.ScriptableSound
             return soundClip;
         }
 
-        [MenuItem("Assets/Sound/Create Sound Clip", true), MenuItem("Assets/Sound/Sound Clip/Create all in a single asse", true)]
+        [MenuItem("Assets/Sound/Create Sound Clip", true), MenuItem("Assets/Sound/Sound Clip/Create all in a single asset", true)]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Code Quality", "IDE0051:Remove unused private members", Justification = "Used by Unity.")]
         private static bool CreateSoundClipsValidation() => Selection.GetFiltered<AudioClip>(SelectionMode.DeepAssets).Length > 0;
     }
