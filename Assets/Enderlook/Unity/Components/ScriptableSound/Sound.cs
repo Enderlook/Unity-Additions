@@ -7,7 +7,7 @@ using UnityEngine;
 namespace Enderlook.Unity.Components.ScriptableSound
 {
     [Serializable]
-    public class Sound : ScriptableObject, IPrototypable<Sound>
+    public abstract class Sound : ScriptableObject, IPrototypable<Sound>
     {
         /// <summary>
         /// Whenever this class is playing music.
@@ -58,12 +58,12 @@ namespace Enderlook.Unity.Components.ScriptableSound
         /// Updates behavior.
         /// </summary>
         /// <param name="deltaTime">Time since last update in seconds. <seealso cref="Time.deltaTime"/></param>
-        public virtual void UpdateBehaviour(float deltaTime) => throw new NotImplementedException("This class is 'abstract' and should not be instantiated by its own. Use derived classes instead which override this method.");
+        public abstract void UpdateBehaviour(float deltaTime);
 
         /// <summary>
         /// Instantiate a prototype of this instance using this as a template.
         /// </summary>
         /// <returns>New instance based on this one as template.</returns>
-        public virtual Sound CreatePrototype() => throw new NotImplementedException("This class is 'abstract' and should not be instantiated by its own. Use derived classes instead which override this method.");
+        public abstract Sound CreatePrototype();
     }
 }
