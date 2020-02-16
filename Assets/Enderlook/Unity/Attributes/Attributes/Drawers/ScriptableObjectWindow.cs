@@ -17,7 +17,16 @@ namespace Enderlook.Unity.Attributes
 {
     internal class ScriptableObjectWindow : EditorWindow
     {
+        private static readonly GUIContent TILE_CONTENT = new GUIContent("Scriptable Object Manager");
+        private static readonly GUIContent INSTANTE_TYPE_CONTENT = new GUIContent("Instance type", "Scriptable object instance type to create.");
+        private static readonly GUIContent ADD_TO_ASSET_CONTENT = new GUIContent("Instantiate in field and add to asset", "Create and instance and assign to field. The scriptable object will be added to the scene/prefab file.");
+        private static readonly GUIContent PATH_TO_FILE_CONTENT = new GUIContent("Path to file", "Path where the asset file is stored or will be saved.");
+        private static readonly GUIContent SAVE_ASSET_CONTENT = new GUIContent("Instantiate in field and save asset", "Create and instance, assign to field and save it as an asset file.");
+        private static readonly GUIContent CLEAN_FIELD = new GUIContent("Clean field", "Remove current instance of field.");
+        private static readonly string[] EXTENSIONS = new string[] { ".asset", ".prefab", ".scene" };
+
         private const string DEFAULT_PATH = "Resources/";
+
         private static ILookup<Type, Type> derivedTypes;
 
         private SerializedProperty property;
@@ -149,7 +158,7 @@ namespace Enderlook.Unity.Attributes
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Code Quality", "IDE0051:Remove unused private members", Justification = "Used by Unity.")]
         private void OnGUI()
         {
-            titleContent = new GUIContent("Scriptable Object Manager");
+            titleContent = TILE_CONTENT;
 
             ScriptableObject scriptableObject = (ScriptableObject)get?.Invoke();
             bool hasScriptableObject = scriptableObject != null;
@@ -158,14 +167,14 @@ namespace Enderlook.Unity.Attributes
             EditorGUI.BeginDisabledGroup(hasScriptableObject);
             if (hasScriptableObject)
                 index = GetIndex(scriptableObject.GetType());
-            index = EditorGUILayout.Popup(new GUIContent("Instance type", "Scriptable object instance type to create."), index, allowedTypesNames);
+            index = EditorGUILayout.Popup(INSTANTE_TYPE_CONTENT, index, allowedTypesNames);
             EditorGUI.EndDisabledGroup();
 
             UnityObject targetObject = property.serializedObject.targetObject;
 
             // Get Name
             if (scriptableObjectNameAuto && !hasScriptableObject)
-                scriptableObjectName = path.Split('/').Last().Split(new string[] { ".asset", ".prefab", ".scene" }, StringSplitOptions.None).First();
+                scriptableObjectName = path.Split('/').Last().Split(EXTENSIONS, StringSplitOptions.None).First();
 
             if (hasScriptableObject)
             {
@@ -191,7 +200,7 @@ namespace Enderlook.Unity.Attributes
             {
                 // Create
                 EditorGUI.BeginDisabledGroup(index == -1 || string.IsNullOrEmpty(scriptableObjectName));
-                if (GUILayout.Button(new GUIContent("Instantiate in field and add to asset", "Create and instance and assign to field. The scriptable object will be added to the scene/prefab file.")))
+                if (GUILayout.Button(ADD_TO_ASSET_CONTENT))
                 {
                     scriptableObject = InstantiateAndApply(targetObject, scriptableObjectName);
                     AssetDatabaseHelper.AddObjectToAsset(scriptableObject, propertyPath);
@@ -206,7 +215,7 @@ namespace Enderlook.Unity.Attributes
             string pathToAsset = AssetDatabase.GetAssetPath(scriptableObject);
             bool hasAsset = !string.IsNullOrEmpty(pathToAsset);
             path = hasAsset ? pathToAsset : path;
-            path = EditorGUILayout.TextField(new GUIContent("Path to file", "Path where the asset file is stored or will be saved."), path);
+            path = EditorGUILayout.TextField(PATH_TO_FILE_CONTENT, path);
             string _path = path.StartsWith("Assets/") ? path : "Assets/" + path;
             _path = _path.EndsWith(".asset") ? _path : _path + ".asset";
             if (!hasAsset)
@@ -217,7 +226,7 @@ namespace Enderlook.Unity.Attributes
             if (!hasScriptableObject)
             {
                 EditorGUI.BeginDisabledGroup(index == -1);
-                if (GUILayout.Button(new GUIContent("Instantiate in field and save asset", "Create and instance, assign to field and save it as an asset file.")))
+                if (GUILayout.Button(SAVE_ASSET_CONTENT))
                 {
                     scriptableObject = InstantiateAndApply(targetObject, scriptableObjectName);
                     AssetDatabaseHelper.CreateAsset(scriptableObject, _path);
@@ -227,7 +236,7 @@ namespace Enderlook.Unity.Attributes
             else
             {
                 /// Clean
-                if (GUILayout.Button(new GUIContent("Clean field", "Remove current instance of field.")))
+                if (GUILayout.Button(CLEAN_FIELD))
                 {
                     Undo.RecordObject(targetObject, "Clean field");
                     set(null);

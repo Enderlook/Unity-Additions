@@ -11,6 +11,8 @@ namespace Enderlook.Unity.Components.ScriptableSound
     [CustomEditor(typeof(SoundClip))]
     internal class SoundClipEditor : Editor
     {
+        private static readonly GUIContent DURATION_CONTENT = new GUIContent("Duration", "Duration of the clip.");
+
         public override void OnInspectorGUI()
         {
             this.DrawScriptField();
@@ -23,7 +25,7 @@ namespace Enderlook.Unity.Components.ScriptableSound
             if (audioClip != null)
             {
                 EditorGUI.BeginDisabledGroup(true);
-                EditorGUILayout.TextField(new GUIContent("Duration", "Duration of the clip."), TimeSpan.FromSeconds(((AudioClip)audioClip).length).ToString(@"hh\:mm\:ss\:ff"));
+                EditorGUILayout.TextField(DURATION_CONTENT, TimeSpan.FromSeconds(((AudioClip)audioClip).length).ToString(@"hh\:mm\:ss\:ff"));
                 EditorGUI.EndDisabledGroup();
             }
             EditorGUILayout.PropertyField(serializedObject.FindProperty("modifiers"), true);

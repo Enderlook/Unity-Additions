@@ -10,14 +10,15 @@ namespace Enderlook.Unity.Attributes
     [CustomPropertyDrawer(typeof(ScriptableObject), true)]
     internal class ScriptableObjectDrawer : AdditionalPropertyDrawer
     {
+        private static readonly GUIContent ADD_BUTTON_CONTENT = new GUIContent("+", "Open Scriptable Object Menu.");
+
         protected override void OnGUIAdditional(Rect position, SerializedProperty property, GUIContent label) => DrawPropiertyField(position, property, label, fieldInfo);
 
         public static void DrawPropiertyField(Rect position, SerializedProperty property, GUIContent label, FieldInfo fieldInfo)
         {
-            GUIContent buttonLabel = new GUIContent("+", "Open Scriptable Object Menu.");
-            float buttonWidth = GUI.skin.button.CalcSize(buttonLabel).x;
+            float buttonWidth = GUI.skin.button.CalcSize(ADD_BUTTON_CONTENT).x;
             EditorGUI.PropertyField(new Rect(position.x, position.y, position.width - buttonWidth, position.height), property, label);
-            if (GUI.Button(new Rect(position.x + position.width - buttonWidth, position.y, buttonWidth, position.height), buttonLabel))
+            if (GUI.Button(new Rect(position.x + position.width - buttonWidth, position.y, buttonWidth, position.height), ADD_BUTTON_CONTENT))
                 ScriptableObjectWindow.CreateWindow(property, fieldInfo);
         }
 

@@ -7,12 +7,26 @@ using UnityEditor;
 using UnityEngine;
 using Enderlook.Unity.Utils;
 using Enderlook.Unity.Utils.UnityEditor;
+using System;
 
 namespace Enderlook.Unity.Components.Navigation
 {
     [CustomEditor(typeof(NavigationGraph))]
     internal class NavigationGraphEditor : Editor
     {
+        private static readonly GUIContent TOGGLE_ALL_CONNECTIONS = new GUIContent("Toggle all connections", "Disable connections nodes and active disabled connections.");
+        private static readonly GUIContent TOGGLE_ALL_NODES = new GUIContent("Toggle all nodes", "Disable active nodes and active disabled nodes.");
+        private static readonly GUIContent REMOVE_ISOLATED_NODES = new GUIContent("Remove Isolated Nodes", "Remove nodes which doesn't have connection to any other node or no node is connected to them.");
+        private static readonly GUIContent PATHS_COLOR = new GUIContent("Paths", "Color used to show nodes and connections than can be traveled from selected node.");
+        private static readonly GUIContent SHOW_ALL_PATHS = new GUIContent("Show All Paths", "Show nodes and connections that can be traveled from selected node.");
+        private static readonly GUIContent EXPLORED_COLOR = new GUIContent("Explored", "Color used to show nodes and connections that were explored.");
+        private static readonly GUIContent SHOW_EXPLORED = new GUIContent("Show Explored", "Show nodes and connections that were explored in order to find the path.");
+        private static readonly GUIContent HEURISTIC = new GUIContent("Heuristic", "Heuristic used to determine path.");
+        private static readonly GUIContent TRAVEL_COLOR = new GUIContent("Travel", "Color used to show nodes and connections that must be traveled to move from selected node to closes.");
+        private static readonly GUIContent SHOW_TRAVEL = new GUIContent("Show Travel", "Show nodes and connections that must be travel in order to move from selected node to closest.");
+        private static readonly GUIContent EDITING_TOOL = new GUIContent("Editing Tool", "While open, enable editing tools and lock inspector window.\nTo unlock inspector this must be closed.");
+        private static readonly GUIContent EXTREME_COLOR = new GUIContent("Extreme", "Color used to show extreme nodes and connections.");
+
         private NavigationGraph navigationGraph;
         private List<Node> Grid => navigationGraph.Grid;
 
@@ -146,14 +160,14 @@ namespace Enderlook.Unity.Components.Navigation
                 {
                     activeColor = EditorGUILayout.ColorField("Active", activeColor);
                     disabledColor = EditorGUILayout.ColorField("Disabled", disabledColor);
-                    extremeColor = EditorGUILayout.ColorField(new GUIContent("Extreme", "Color used to show extreme nodes and connections."), extremeColor);
+                    extremeColor = EditorGUILayout.ColorField(EXTREME_COLOR, extremeColor);
                 }
             }
         }
 
         private void ShowEditingMenu()
         {
-            isEditingEnable = EditorGUILayout.Foldout(isEditingEnable, new GUIContent("Editing Tool", "While open, enable editing tools and lock inspector window.\nTo unlock inspector this must be closed."), true, BOLDED_FOLDOUT);
+            isEditingEnable = EditorGUILayout.Foldout(isEditingEnable, EDITING_TOOL, true, BOLDED_FOLDOUT);
             if (isEditingEnable)
             {
                 // We activate the editing mode
@@ -176,15 +190,15 @@ namespace Enderlook.Unity.Components.Navigation
                     closestColor = EditorGUILayout.ColorField("Closest", closestColor);
                 }
 
-                if (showTravel = EditorGUILayout.Toggle(new GUIContent("Show Travel", "Show nodes and connections that must be travel in order to move from selected node to closest."), showTravel))
+                if (showTravel = EditorGUILayout.Toggle(SHOW_TRAVEL, showTravel))
                 {
                     EditorGUI.indentLevel++;
-                    travelColor = EditorGUILayout.ColorField(new GUIContent("Travel", "Color used to show nodes and connections that must be traveled to move from selected node to closes."), travelColor);
-                    distanceFormula = (DistanceFormula)EditorGUILayout.EnumPopup(new GUIContent("Heuristic", "Heuristic used to determine path."), distanceFormula);
-                    if (showExplored = EditorGUILayout.Toggle(new GUIContent("Show Explored", "Show nodes and connections that were explored in order to find the path."), showExplored))
-                        exploredColor = EditorGUILayout.ColorField(new GUIContent("Explored", "Color used to show nodes and connections that were explored."), exploredColor);
-                    if (showAll = EditorGUILayout.Toggle(new GUIContent("Show All Paths", "Show nodes and connections that can be traveled from selected node."), showAll))
-                        allColor = EditorGUILayout.ColorField(new GUIContent("Paths", "Color used to show nodes and connections than can be traveled from selected node."), allColor);
+                    travelColor = EditorGUILayout.ColorField(TRAVEL_COLOR, travelColor);
+                    distanceFormula = (DistanceFormula)EditorGUILayout.EnumPopup(HEURISTIC, distanceFormula);
+                    if (showExplored = EditorGUILayout.Toggle(SHOW_EXPLORED, showExplored))
+                        exploredColor = EditorGUILayout.ColorField(EXPLORED_COLOR, exploredColor);
+                    if (showAll = EditorGUILayout.Toggle(SHOW_ALL_PATHS, showAll))
+                        allColor = EditorGUILayout.ColorField(PATHS_COLOR, allColor);
                     EditorGUI.indentLevel--;
                 }
 
@@ -234,7 +248,7 @@ namespace Enderlook.Unity.Components.Navigation
                     if (GUILayout.Button("Add Missing Nodes from Connections"))
                         navigationGraph.AddMissingNodesFromConnections();
 
-                    if (GUILayout.Button(new GUIContent("Remove Isolated Nodes", "Remove nodes which doesn't have connection to any other node or no node is connected to them.")))
+                    if (GUILayout.Button(REMOVE_ISOLATED_NODES))
                         navigationGraph.RemoveNodesWithoutToOrFromConnection();
                 }
 
@@ -272,7 +286,7 @@ namespace Enderlook.Unity.Components.Navigation
                         navigationGraph.ToggleAllNodes(ToggleMode.Enable);
                     }
 
-                    if (GUILayout.Button(new GUIContent("Toggle all nodes", "Disable active nodes and active disabled nodes.")))
+                    if (GUILayout.Button(TOGGLE_ALL_NODES))
                     {
                         navigationGraph.ToggleAllNodes(ToggleMode.Toggle);
                     }
@@ -287,7 +301,7 @@ namespace Enderlook.Unity.Components.Navigation
                         navigationGraph.ToggleAllConnections(ToggleMode.Enable);
                     }
 
-                    if (GUILayout.Button(new GUIContent("Toggle all connections", "Disable connections nodes and active disabled connections.")))
+                    if (GUILayout.Button(TOGGLE_ALL_CONNECTIONS))
                     {
                         navigationGraph.ToggleAllConnections(ToggleMode.Toggle);
                     }
