@@ -132,8 +132,14 @@ namespace Enderlook.Unity.Attributes
                     window.set = (value) => set(targetObject, value);
                 }
             }
+            IEnumerable<Type> allowedTypes = GetDerivedTypes(type).Where(e => !e.IsAbstract);
 
-            window.allowedTypes = GetDerivedTypes(type).Where(e => !e.IsAbstract).ToArray();
+            // RestrictTypeAttribute compatibility
+            RestrictTypeAttribute restrictTypeAttribute = fieldInfo.GetCustomAttribute<RestrictTypeAttribute>();
+            if (restrictTypeAttribute != null)
+                allowedTypes = allowedTypes.Where(e => restrictTypeAttribute.CheckIfTypeIsAllowed(e, out string _)).ToArray();
+
+            window.allowedTypes = allowedTypes.ToArray();
 
             window.allowedTypesNames = window.allowedTypes.Select(e => e.Name).ToArray();
             window.index = window.GetIndex(type);
