@@ -1,5 +1,5 @@
 ﻿using Enderlook.Unity.Components.FloatPool.Internal;
-using Enderlook.Unity.Components.SoundSystem;
+using Enderlook.Unity.Components.ScriptableSound;
 
 using System;
 
@@ -21,10 +21,7 @@ namespace Enderlook.Unity.Components.FloatPool.Decorators
         private float _currentRechargingDelay;
 
         [SerializeField, Tooltip("Sound played while recharging.")]
-        private Playlist playlist;
-
-        [SerializeField, Tooltip("Audio Source used to play sound.")]
-        private AudioSource audioSource;
+        private SoundPlay rechargingSound;
 
         [SerializeField, Tooltip("Event executed when start recharging.")]
         private UnityEvent startCallback;
@@ -37,6 +34,12 @@ namespace Enderlook.Unity.Components.FloatPool.Decorators
         [SerializeField, Tooltip("Event executed when can recharge.\nIf it is recharging it will be true")]
         private UnityEventBoolean activeCallback;
 #pragma warning restore CS0649
+
+        public override void Initialize()
+        {
+            rechargingSound.Init();
+            base.Initialize();
+        }
 
         public override (float remaining, float taken) Decrease(float amount, bool allowUnderflow = false)
         {
@@ -113,14 +116,8 @@ namespace Enderlook.Unity.Components.FloatPool.Decorators
 
         private void PlayRechargingSound()
         {
-            if (audioSource != null)
-                if (playlist != null)
-                    if (!audioSource.isPlaying && Pool.IsSoundActive)
-                        playlist.Play(audioSource);
-                    else
-                        Debug.LogWarning($"{nameof(RechargerDecorator)} doesn't have an {nameof(playlist)}.");
-                else
-                    Debug.LogWarning($"{nameof(RechargerDecorator)} doesn't have an {nameof(audioSource)}.");
+            if (!rechargingSound.IsPlaying)
+                rechargingSound.Play();
         }
 
         [Serializable]
