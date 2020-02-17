@@ -293,7 +293,7 @@ namespace Enderlook.Unity.Attributes
         private void ShowError(Rect position, string tooltip)
         {
             EditorGUI.HelpBox(position, tooltip, MessageType.Error);
-            Debug.LogException(new ArgumentException(tooltip));
+            Debug.LogError(tooltip);
         }
     }
 }

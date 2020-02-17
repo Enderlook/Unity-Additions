@@ -26,7 +26,7 @@ namespace Enderlook.Unity.Attributes.AttributeUsage
         public void CheckAllowance(MemberInfo memberInfo, string attributeName)
         {
             if (memberInfo.ReflectedType.GetMember(memberInfo.Name, bindingFlags).Length == 0)
-                Debug.LogException(new ArgumentException($"According to {nameof(AttributeUsageAccessibilityAttribute)}, the attribute {attributeName} can only be applied in members with the following {nameof(BindingFlags)}: {bindingFlags}."));
+                Debug.LogError($"According to {nameof(AttributeUsageAccessibilityAttribute)}, the attribute {attributeName} can only be applied in members with the following {nameof(BindingFlags)}: {bindingFlags}.");
         }
 #endif
     }

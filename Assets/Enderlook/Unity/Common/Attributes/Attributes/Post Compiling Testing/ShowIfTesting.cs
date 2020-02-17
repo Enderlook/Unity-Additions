@@ -43,7 +43,7 @@ namespace Enderlook.Unity.Attributes
                 confirmFields.ExceptWith(new HashSet<string>(classType.FieldsPropertiesAndMethodsWithReturnTypeOf<bool>()));
 
                 foreach (string field in confirmFields)
-                    Debug.LogException(new ArgumentException($"{classType} does not have a field, property (with Get Method) or method (without mandatory parameters and with return type) of type {typeof(bool)} named {field} necessary for attribute {nameof(ShowIfAttribute)}."));
+                    Debug.LogError($"{classType} does not have a field, property (with Get Method) or method (without mandatory parameters and with return type) of type {typeof(bool)} named {field} necessary for attribute {nameof(ShowIfAttribute)}.");
             }
         }
     }

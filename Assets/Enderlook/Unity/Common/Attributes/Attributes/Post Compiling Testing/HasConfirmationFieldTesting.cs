@@ -29,7 +29,7 @@ namespace Enderlook.Unity.Attributes
             }
         }
 
-        private static readonly string errorMissingFieldMessage = $"{{0}} does not have a field of type {typeof(bool)} named {{1}} necessary for attribute {nameof(HasConfirmationFieldAttribute)}.";
+        private const string ERROR_MISSING_FIELD_MESSAGE = "{0} does not have a field of type " + nameof(Boolean) + " named {1} necessary for attribute " + nameof(HasConfirmationFieldAttribute) + ".";
 
         [ExecuteWhenScriptsReloads(1)]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Code Quality", "IDE0051:Remove unused private members", Justification = "Used by PostCompilingAssembliesHelper")]
@@ -49,9 +49,7 @@ namespace Enderlook.Unity.Attributes
                 );
 
                 foreach (string field in confirmFields)
-                {
-                    Debug.LogException(new ArgumentException(string.Format(errorMissingFieldMessage, classType, field)));
-                }
+                    Debug.LogError(string.Format(ERROR_MISSING_FIELD_MESSAGE, classType, field));
             }
         }
     }

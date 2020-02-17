@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Enderlook.Utils.Exceptions;
+
+using System;
 using System.Collections.Generic;
 using System.Reflection;
 
@@ -57,7 +59,7 @@ namespace Enderlook.Unity.Attributes.AttributeUsage
         private string allowedTypes;
         private string AllowedTypes => allowedTypes ?? (allowedTypes = AttributeUsageHelper.GetTextTypes(types, checkingFlags, false));
 
-        private readonly string messageBase = $"According to {nameof(AttributeUsageMethodAttribute)},";
+        private const string MESSAGE_BASE = "According to " + nameof(AttributeUsageMethodAttribute) + ",";
 
         /// <summary>
         /// Unity Editor only.
@@ -67,23 +69,22 @@ namespace Enderlook.Unity.Attributes.AttributeUsage
         /// <remarks>Only use in Unity Editor.</remarks>
         public void CheckAllowance(MethodInfo methodInfo, string attributeName)
         {
-            string GetMessageInit() => $"{messageBase} {attributeName} require a method with";
+            string GetMessageInit() => $"{MESSAGE_BASE} {attributeName} require a method with";
 
             if (parameterNumber == 0)
             {
-                Debug.Log(parameterNumber);
                 // Check return type
                 Type type = methodInfo.ReturnType;
 
                 if (parameterType == ParameterMode.VoidOrNone)
                 {
                     if (type == typeof(void))
-                        Debug.LogException(new ArgumentException($"{GetMessageInit()} a return type must be {typeof(void).Name}. {methodInfo.Name} is {type} type."));
+                        Debug.LogError($"{GetMessageInit()} a return type must be {typeof(void).Name}. {methodInfo.Name} is {type} type.");
                 }
                 else if (parameterType == ParameterMode.Common)
                     AttributeUsageHelper.CheckContains(nameof(AttributeUsageMethodAttribute), Types, checkingFlags, false, AllowedTypes, type, attributeName, "Return Type");
                 else
-                    Debug.LogException(new ArgumentException($"{nameof(AttributeUsageMethodAttribute)} can only have as {nameof(parameterType)} {nameof(ParameterMode.Common)} or {nameof(ParameterMode.VoidOrNone)} if used with {nameof(parameterNumber)} 0. Attribute in {attributeName} has a {nameof(parameterNumber)} 0 but {nameof(parameterType)} {parameterType}."));
+                    Debug.LogError($"{nameof(AttributeUsageMethodAttribute)} can only have as {nameof(parameterType)} {nameof(ParameterMode.Common)} or {nameof(ParameterMode.VoidOrNone)} if used with {nameof(parameterNumber)} 0. Attribute in {attributeName} has a {nameof(parameterNumber)} 0 but {nameof(parameterType)} {parameterType}.");
             }
             else
             {
@@ -95,18 +96,18 @@ namespace Enderlook.Unity.Attributes.AttributeUsage
                 {
                     parameterInfo = parameterInfos[parameterNumber - 1];
                 }
-                catch (IndexOutOfRangeException e)
+                catch (IndexOutOfRangeException)
                 {
                     // Parameter doesn't exist, check if was on purpose
                     if (parameterType != ParameterMode.VoidOrNone)
-                        Debug.LogException(new ArgumentOutOfRangeException($"{GetMessageInit()} a {parameterNumber}º parameter. {methodInfo.Name} only have {parameterInfos.Length} parameter{(parameterInfos.Length > 0 ? "s" : "")}.", e));
+                        Debug.LogError($"{GetMessageInit()} a {parameterNumber}º parameter. {methodInfo.Name} only have {parameterInfos.Length} parameter{(parameterInfos.Length > 0 ? "s" : "")}.");
                     return;
                 }
 
                 // Check if should exist
                 if (parameterType == ParameterMode.VoidOrNone)
                 {
-                    Debug.LogException(new ArgumentException($"{GetMessageInit()} only {parameterNumber - 1} parameter{(parameterNumber - 1 > 0 ? "s" : "")}.")); // - 1 because the last parameter is ParameterMode.VoidOrNone
+                    Debug.LogError($"{GetMessageInit()} only {parameterNumber - 1} parameter{(parameterNumber - 1 > 0 ? "s" : "")}."); // - 1 because the last parameter is ParameterMode.VoidOrNone
                     return;
                 }
 
@@ -125,34 +126,31 @@ namespace Enderlook.Unity.Attributes.AttributeUsage
                     mode = ParameterMode.In;
 
                 // Check parameter keyword
-                void RaiseKeyWordException(string keywordString) => Debug.LogException(new ArgumentException($"{GetMessageInit()} a parameter at {parameterInfo.Position} position named {parameterInfo.Name} that has {keywordString} keyword, according to {nameof(parameterType)} {nameof(ParameterMode)} {mode}. Instead has {parameterType}."));
+                void RaiseKeyWordError(string keywordString) => Debug.LogError($"{GetMessageInit()} a parameter at {parameterInfo.Position} position named {parameterInfo.Name} that has {keywordString} keyword, according to {nameof(parameterType)} {nameof(ParameterMode)} {mode}. Instead has {parameterType}.");
                 if (parameterType != mode)
                 {
                     if (parameterType != ParameterMode.Out)
                     {
-                        RaiseKeyWordException("'out'");
+                        RaiseKeyWordError("'out'");
                         return;
                     }
                     else if (parameterType != ParameterMode.Ref)
                     {
-                        RaiseKeyWordException("'ref'");
+                        RaiseKeyWordError("'ref'");
                         return;
                     }
                     else if (parameterType != ParameterMode.In)
                     {
-                        RaiseKeyWordException("'in'");
+                        RaiseKeyWordError("'in'");
                         return;
                     }
                     else if (parameterType != ParameterMode.Common)
                     {
-                        RaiseKeyWordException("no");
+                        RaiseKeyWordError("no");
                         return;
                     }
                     else
-                    {
-                        Debug.LogException(new InvalidOperationException("Invalid state. This should never happen... if you can see this, it means it wasn't so 'unreachable state' after all..."));
-                        return;
-                    }
+                        throw new ImpossibleStateException();
                 }
 
                 if (Types.Count != 0) // It 0, any type is allowed

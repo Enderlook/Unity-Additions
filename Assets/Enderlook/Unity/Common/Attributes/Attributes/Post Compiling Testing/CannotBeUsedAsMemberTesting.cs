@@ -28,7 +28,7 @@ namespace Enderlook.Unity.Attributes
             if (fieldInfo.CheckIfShouldBeIgnored(typeof(ShowIfAttribute)))
                 return;
             if (types.Contains(fieldInfo.FieldType)) // We do this instead of checking if IsDefined because that method is quite slow (not tested)
-                Debug.LogException(new ArgumentException($"{fieldInfo.DeclaringType} has a field {fieldInfo.Name} of type {fieldInfo.FieldType} which can not be used as member because it has defined the attribute {nameof(CannotBeUsedAsMemberAttribute)}."));
+                Debug.LogError($"{fieldInfo.DeclaringType} has a field {fieldInfo.Name} of type {fieldInfo.FieldType} which can not be used as member because it has defined the attribute {nameof(CannotBeUsedAsMemberAttribute)}.");
         }
     }
 }

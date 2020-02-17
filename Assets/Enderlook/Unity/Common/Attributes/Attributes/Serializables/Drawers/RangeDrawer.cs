@@ -54,7 +54,7 @@ namespace Enderlook.Unity.Attributes
                 default:
                     string tooltip = error + $" Property {property.name} is {property.propertyType}.";
                     EditorGUI.HelpBox(position, tooltip, MessageType.Error);
-                    Debug.LogException(new ArgumentException(tooltip));
+                    Debug.LogError(tooltip);
                     break;
             }
         }

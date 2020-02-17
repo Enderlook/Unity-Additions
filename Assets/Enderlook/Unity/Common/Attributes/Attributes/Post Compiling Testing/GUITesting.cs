@@ -57,7 +57,7 @@ namespace Enderlook.Unity.Attributes
                 strings.ExceptWith(members);
 
                 foreach (string field in strings)
-                    Debug.LogException(new ArgumentException($"Type {classType} does not have a field, property (with Get Method) or method (with only optional or params pameters and with a return type other than void) of type {typeof(string)} named {field} necessary for attribute {nameof(GUIAttribute)}."));
+                    Debug.LogError($"Type {classType} does not have a field, property (with Get Method) or method (with only optional or params pameters and with a return type other than void) of type {typeof(string)} named {field} necessary for attribute {nameof(GUIAttribute)}.");
 
                 HashSet<string> stringOrGUIContent = new HashSet<string>(
                     attributes

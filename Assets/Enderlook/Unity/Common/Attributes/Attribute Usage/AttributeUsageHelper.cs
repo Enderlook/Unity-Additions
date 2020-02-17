@@ -110,7 +110,7 @@ namespace Enderlook.Unity.Attributes.AttributeUsage
             }
 
             if (contains == isBlackList)
-                Debug.LogException(new ArgumentException($"According to {attributeCheckerName}, {attributeName} {allowedTypes}. {toCheckName} is {toCheckType.Name} type."));
+                Debug.LogError($"According to {attributeCheckerName}, {attributeName} {allowedTypes}. {toCheckName} is {toCheckType.Name} type.");
         }
     }
 }

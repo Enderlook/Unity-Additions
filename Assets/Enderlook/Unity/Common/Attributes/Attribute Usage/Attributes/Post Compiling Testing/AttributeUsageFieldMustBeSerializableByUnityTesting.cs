@@ -32,7 +32,7 @@ namespace Enderlook.Unity.Attributes.AttributeUsage
                 if (types.Contains(attributeType)
                     && !fieldInfo.CanBeSerializedByUnity()
                     && !fieldInfo.CheckIfShouldBeIgnored(attributeType))
-                    Debug.LogException(new ArgumentException($"The attribute {attribute.GetType().Name} can only be used in fields that can be serialized by Unity, but field {fieldInfo.Name} from class {fieldInfo.DeclaringType.Name} (type {fieldInfo.FieldType}) can't be serialized."));
+                    Debug.LogError($"The attribute {attribute.GetType().Name} can only be used in fields that can be serialized by Unity, but field {fieldInfo.Name} from class {fieldInfo.DeclaringType.Name} (type {fieldInfo.FieldType}) can't be serialized.");
             }
         }
     }

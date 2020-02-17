@@ -18,7 +18,7 @@ namespace Enderlook.Unity.Attributes.AttributeUsage
         {
             foreach (Type type in attribute?.ignoreTypes ?? Enumerable.Empty<Type>())
                 if (!type.IsSubclassOf(typeof(Attribute)))
-                    Debug.LogException(new ArgumentException(string.Format(MUST_INHERIT_FROM_ATTRIBUTE, type, foundIn)));
+                    Debug.LogError(string.Format(MUST_INHERIT_FROM_ATTRIBUTE, type, foundIn));
         }
 
         [ExecuteOnEachTypeWhenScriptsReloads(0)]
