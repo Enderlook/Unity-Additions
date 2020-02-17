@@ -1,8 +1,6 @@
 {
     "name": "Enderlook.Unity.Extensions",
-    "references": [
-        "Enderlook.Extensions"
-    ],
+    "references": [],
     "optionalUnityReferences": [],
     "includePlatforms": [],
     "excludePlatforms": [],

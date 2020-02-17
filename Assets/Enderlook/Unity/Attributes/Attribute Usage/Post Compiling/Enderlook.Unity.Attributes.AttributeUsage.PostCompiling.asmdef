@@ -1,8 +1,7 @@
 {
     "name": "Enderlook.Unity.Attributes.AttributeUsage.PostCompiling",
     "references": [
-        "Enderlook.Unity.Attributes.AttributeUsage",
-        "Enderlook.Extensions"
+        "Enderlook.Unity.Attributes.AttributeUsage"
     ],
     "optionalUnityReferences": [],
     "includePlatforms": [

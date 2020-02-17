@@ -1,8 +1,7 @@
 {
     "name": "Enderlook.Unity.Utils.UnityEditor",
     "references": [
-        "Enderlook.Unity.Attributes",
-        "Enderlook.Extensions"
+        "Enderlook.Unity.Attributes"
     ],
     "optionalUnityReferences": [],
     "includePlatforms": [
