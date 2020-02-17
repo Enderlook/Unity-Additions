@@ -1,0 +1,14 @@
+{
+    "name": "Enderlook.Unity.Serializables.Physics",
+    "references": [
+        "Enderlook.Unity.Attributes"
+    ],
+    "optionalUnityReferences": [],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": []
+}

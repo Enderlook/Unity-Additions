@@ -1,0 +1,16 @@
+{
+    "name": "Enderlook.Unity.Utils.ColorCombiner-SpriteRenderer",
+    "references": [
+        "Enderlook.Unity.Utils.ColorCombiner",
+        "Enderlook.Unity.Utils.Interfaces",
+        "Enderlook.Unity.Attributes"
+    ],
+    "optionalUnityReferences": [],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": []
+}

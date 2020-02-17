@@ -1,0 +1,17 @@
+{
+    "name": "Enderlook.Unity.Serializables.Physics-Drawers",
+    "references": [
+        "Enderlook.Unity.Serializables.Physics",
+        "Enderlook.Unity.Utils.UnityEditor"
+    ],
+    "optionalUnityReferences": [],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": []
+}

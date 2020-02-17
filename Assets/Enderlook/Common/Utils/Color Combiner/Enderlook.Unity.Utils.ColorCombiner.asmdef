@@ -1,0 +1,14 @@
+{
+    "name": "Enderlook.Unity.Utils.ColorCombiner",
+    "references": [
+        "Enderlook.Unity.Utils.Interfaces"
+    ],
+    "optionalUnityReferences": [],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": []
+}

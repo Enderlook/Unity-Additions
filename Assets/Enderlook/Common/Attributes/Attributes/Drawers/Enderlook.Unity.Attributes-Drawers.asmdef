@@ -1,0 +1,21 @@
+{
+    "name": "Enderlook.Unity.Attributes-Drawers",
+    "references": [
+        "Enderlook.Unity.Attributes",
+        "Enderlook.Unity.Attributes.AttributeUsage",
+        "Enderlook.Unity.Attributes.AttributeUsage.PostCompiling",
+        "Enderlook.Unity.Extensions",
+        "Enderlook.Unity.Utils.UnityEditor",
+        "Enderlook.Unity.Utils.Rects"
+    ],
+    "optionalUnityReferences": [],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": []
+}

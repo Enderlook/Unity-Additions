@@ -1,0 +1,17 @@
+{
+    "name": "Enderlook.Unity.Serializables.Collections-Drawers",
+    "references": [
+        "Enderlook.Unity.Serializables.Collections",
+        "Enderlook.Unity.Utils.Rects"
+    ],
+    "optionalUnityReferences": [],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": []
+}

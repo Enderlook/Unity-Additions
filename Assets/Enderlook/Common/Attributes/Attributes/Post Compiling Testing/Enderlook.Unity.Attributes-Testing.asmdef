@@ -1,0 +1,19 @@
+{
+    "name": "Enderlook.Unity.Attributes-Testing",
+    "references": [
+        "Enderlook.Unity.Attributes",
+        "Enderlook.Unity.Attributes.AttributeUsage",
+        "Enderlook.Unity.Attributes.AttributeUsage.PostCompiling",
+        "Enderlook.Unity.Attributes.AttributeUsage.Attributes-Testing"
+    ],
+    "optionalUnityReferences": [],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": []
+}
