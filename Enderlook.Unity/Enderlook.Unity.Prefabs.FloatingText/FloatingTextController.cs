@@ -21,42 +21,42 @@ namespace Enderlook.Unity.Prefabs.FloatingText
         private bool overrideTimeBeforeDestroy;
 
         [Header("Floating Text Override Configuration")]
-        [HasConfirmationField(nameof(overrideTimeBeforeDestroy))]
+        [ShowIf(nameof(overrideTimeBeforeDestroy))]
         [SerializeField, Tooltip("Time before self destroy in seconds. If 0, duration of the animation will be used.")]
         private float timeBeforeDestroy;
 
         [SerializeField, HideInInspector]
         private bool overrideTextColor;
 
-        [HasConfirmationField(nameof(overrideTextColor))]
+        [ShowIf(nameof(overrideTextColor))]
         [SerializeField, Tooltip("Color used by text")]
         private Color textColor = Color.red;
 
         [SerializeField, HideInInspector]
         private bool overrideRandomOffset;
 
-        [HasConfirmationField(nameof(overrideRandomOffset))]
+        [ShowIf(nameof(overrideRandomOffset))]
         [SerializeField, Tooltip("Random spawn offset.")]
         private Vector2 randomOffset = Vector2.one;
 
         [SerializeField, HideInInspector]
         private bool overrideScaleMultiplier;
 
-        [HasConfirmationField(nameof(overrideScaleMultiplier))]
+        [ShowIf(nameof(overrideScaleMultiplier))]
         [SerializeField, Tooltip("Multiply the scale of the canvas by this value.")]
         private float scaleMultiplier = 1;
 
         [SerializeField, HideInInspector]
         private bool overrideDigitPrecision;
 
-        [HasConfirmationField(nameof(overrideDigitPrecision))]
+        [ShowIf(nameof(overrideDigitPrecision))]
         [SerializeField, Tooltip("Digit precision (decimals) for numbers .Whenever a float is given to show, the number is rounded by a certain amount of digits.")]
         private int digitPrecision = 0;
 
         [SerializeField, HideInInspector]
         private bool overrideTypeOfRounding;
 
-        [HasConfirmationField(nameof(overrideTypeOfRounding))]
+        [ShowIf(nameof(overrideTypeOfRounding))]
         [SerializeField, Tooltip("Determines how decimal digits are rounded.")]
         private FloatingTextItem.TYPE_OF_ROUNDING typeOfRounding = FloatingTextItem.TYPE_OF_ROUNDING.ROUND;
 
