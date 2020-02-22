@@ -215,7 +215,7 @@ namespace Enderlook.Unity.Components.Navigation
                     EditorGUILayout.HelpBox(
                             "L: Select Closest / Create Node."
                           + "\nL+C: Enable / Disable Node."
-                          + "\nL+S: Remove Selected Node."
+                          + "\nL+S: Remove Closest Node."
                           + "\nL+A: Switch node to extreme or not."
                           + "\nR+S: Enable / Disable / Add Connection from Selected to Closest (Add)."
                           + "\nR+C: Enable / Disable / Add Connection from Closest to Selected (Add)."
