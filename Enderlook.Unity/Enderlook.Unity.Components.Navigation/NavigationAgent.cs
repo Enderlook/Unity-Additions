@@ -50,9 +50,14 @@ namespace Enderlook.Unity.Components.Navigation
 
         public static void InjectNavigationGraph(GameObject gameObject, NavigationGraph navigationGraph)
         {
+			if (gameObject == null) throw new ArgumentNullException(nameof(gameObject));
+            if (navigationGraph == null) throw new ArgumentNullException(nameof(navigationGraph));
+			
             NavigationAgent navigationAgent = gameObject.GetComponent<NavigationAgent>();
             if (navigationAgent != null)
                 navigationAgent.NavigationGraph = navigationGraph;
+			else
+                Debug.LogError($"GameObject {gameObject} doesn't have a {nameof(NavigationAgent)} component.");
         }
 
 #if UNITY_EDITOR
