@@ -50,7 +50,7 @@ namespace Enderlook.Unity.Prefabs.FloatingText
         private bool overrideDigitPrecision;
 
         [ShowIf(nameof(overrideDigitPrecision))]
-        [SerializeField, Tooltip("Digit precision (decimals) for numbers .Whenever a float is given to show, the number is rounded by a certain amount of digits.")]
+        [SerializeField, Tooltip("Digit precision (decimals) for numbers. Whenever a float is given to show, the number is rounded by a certain amount of digits.")]
         private int digitPrecision = 0;
 
         [SerializeField, HideInInspector]
