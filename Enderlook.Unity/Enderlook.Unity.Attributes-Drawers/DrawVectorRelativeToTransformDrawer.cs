@@ -21,7 +21,7 @@ namespace Enderlook.Unity.Attributes
             EditorGUI.EndProperty();
         }
 
-        static DrawVectorRelativeToTransformEditor() => SceneView.onSceneGUIDelegate += RenderSceneGUI;
+        static DrawVectorRelativeToTransformEditor() => SceneView.duringSceneGui += RenderSceneGUI;
 
         private static Vector3 DrawHandle(Vector3 position, bool usePositionHandle) => usePositionHandle
                 ? Handles.PositionHandle(position, Quaternion.identity)

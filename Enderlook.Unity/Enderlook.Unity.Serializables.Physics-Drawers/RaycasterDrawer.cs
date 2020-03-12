@@ -20,7 +20,7 @@ namespace Enderlook.Unity.Serializables.Physics
 
         public override float GetPropertyHeight(SerializedProperty property, GUIContent label) => EditorGUI.GetPropertyHeight(property);
 
-        static RaycasterDrawer() => SceneView.onSceneGUIDelegate += RenderSceneGUI;
+        static RaycasterDrawer() => SceneView.duringSceneGui += RenderSceneGUI;
 
         private const BindingFlags bindingFlags = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.FlattenHierarchy;
 
