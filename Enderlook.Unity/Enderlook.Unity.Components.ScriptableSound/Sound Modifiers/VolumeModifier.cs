@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Enderlook.Unity.Components.ScriptableSound.Modifiers
 {
-    [Serializable, CreateAssetMenu(fileName = "Volume", menuName = "Scriptable Sound/Modifiers/Volume")]
+    [Serializable, CreateAssetMenu(fileName = "Volume", menuName = "Enderlook/Scriptable Sound/Modifiers/Volume")]
     public class VolumeModifier : SoundModifier
     {
         [SerializeField, Tooltip("Volume multiplier.")]

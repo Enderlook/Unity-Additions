@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Enderlook.Unity.ScriptableObjects.PolySwitchers
 {
-    [CreateAssetMenu(fileName = "PolySwitchMaster", menuName = "PolySwitcher/PolySwitchMaster")]
+    [CreateAssetMenu(fileName = "PolySwitchMaster", menuName = "Enderlook/PolySwitchers/PolySwitchMaster")]
     public class PolySwitchMaster : ScriptableObject
     {
         // Keep members names in sync with PolySwitchMasterEditor

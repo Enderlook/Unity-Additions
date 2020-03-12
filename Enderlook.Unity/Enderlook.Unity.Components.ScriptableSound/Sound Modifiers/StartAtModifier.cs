@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace Enderlook.Unity.Components.ScriptableSound.Modifiers
 {
-    [Serializable, CreateAssetMenu(fileName = "StartAt", menuName = "Scriptable Sound/Modifiers/Start At")]
+    [Serializable, CreateAssetMenu(fileName = "StartAt", menuName = "Enderlook/Scriptable Sound/Modifiers/Start At")]
     public class StartAtModifier : SoundModifier
     {
 #pragma warning disable CS0649

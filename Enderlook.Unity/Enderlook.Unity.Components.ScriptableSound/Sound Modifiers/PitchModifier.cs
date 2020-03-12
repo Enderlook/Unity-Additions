@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Enderlook.Unity.Components.ScriptableSound.Modifiers
 {
-    [Serializable, CreateAssetMenu(fileName = "Pitch", menuName = "Scriptable Sound/Modifiers/Pitch")]
+    [Serializable, CreateAssetMenu(fileName = "Pitch", menuName = "Enderlook/Scriptable Sound/Modifiers/Pitch")]
     public class PitchModifier : SoundModifier
     {
         [SerializeField, Tooltip("Pitch multiplier.")]

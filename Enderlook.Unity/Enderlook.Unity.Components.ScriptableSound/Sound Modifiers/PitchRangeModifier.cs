@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace Enderlook.Unity.Components.ScriptableSound.Modifiers
 {
-    [Serializable, CreateAssetMenu(fileName = "PitchRange", menuName = "Scriptable Sound/Modifiers/Pitch Range")]
+    [Serializable, CreateAssetMenu(fileName = "PitchRange", menuName = "Enderlook/Scriptable Sound/Modifiers/Pitch Range")]
     public class PitchRangeModifier : SoundModifier
     {
 #pragma warning disable CS0649
