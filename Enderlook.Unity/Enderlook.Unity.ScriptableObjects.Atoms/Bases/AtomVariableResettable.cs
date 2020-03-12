@@ -12,7 +12,7 @@ namespace Enderlook.Unity.Serializables.Atoms
         /// <summary>
         /// <see cref="initialValue"/> as property.
         /// </summary>
-        public T InitialValuie => initialValue;
+        public T InitialValue => initialValue;
 
         /// <summary>
         /// Reset the value of <see cref="Value"/> using <see cref="initialValue"/>.
