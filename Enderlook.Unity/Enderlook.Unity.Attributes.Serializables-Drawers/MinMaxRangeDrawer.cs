@@ -282,7 +282,7 @@ namespace Enderlook.Unity.Attributes
                 max = field(rectBuilder.GetRect(blockWidth), max);
 
                 // Only save if there was a change
-                if (min.Equals(oldMin) || max.Equals(oldMax))
+                if (!(min.Equals(oldMin) && max.Equals(oldMax)))
                     setter(property, min, max);
             };
         }
