@@ -14,6 +14,8 @@ set name=Enderlook.Unity
 set framework=netstandard2.0
 set source=%bin%\%in%\%framework%
 
+cd ..
+
 xcopy "%source%\%name%*.dll" %output%\%dlls%\%out%\ /y
 
 del %ouput%\%debuggers%\*
