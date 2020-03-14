@@ -84,11 +84,11 @@ namespace Enderlook.Unity.ScriptableObjects.Atoms
         WriteHeader();
 #>
     [Serializable]
-    [CreateAssetMenu(fileName = "<#= atomGetAdapter #>", menuName = "<#= menuName #>/Variables/Adapters/Readonly/<#= name #>")]
+    [CreateAssetMenu(fileName = "<#= atomGetAdapter #>", menuName = "<#= menuName #>/Variables/Adapters/Get/<#= name #>")]
     public class <#= atomGetAdapter #> : <#= atomGet #>
     {
 #pragma warning disable CA2235
-        [SerializeField, RestrictType(typeof(<#= dataType #>)), Tooltip("Object that produces value of this atom.\nIf you change this value in Editor you must execute Refesh method.")]
+        [SerializeField, RestrictType(typeof(IGet<<#= dataType #>>)), Tooltip("Object that produces value of this atom.\nIf you change this value in Editor you must execute Refesh method.")]
         private UnityObject wrapped;
 #pragma warning restore CA2235
 
@@ -106,13 +106,13 @@ namespace Enderlook.Unity.ScriptableObjects.Atoms
         /// <summary>
         <#= "///" #> Create new <see cref="<#= atomConstant #>"/> with given wrapped.
         /// </summary>
-        <#= "///" #> <param name="getter">Value of new <see cref="<#= atomGetAdapter #>"/>.</param>
+        <#= "///" #> <param name="wrapped">Value of new <see cref="<#= atomGetAdapter #>"/>.</param>
         <#= "///" #> <returns>New <see cref="<#= atomGetAdapter #>"/>.</returns>
-        public static <#= atomGetAdapter #> CreateConstant<T>(T getter) where T : UnityObject, IGet<<#= dataType #>>
+        public static <#= atomGetAdapter #> CreateConstant<T>(T wrapped) where T : UnityObject, IGet<<#= dataType #>>
         {
             <#= atomGetAdapter #> atom = CreateInstance<<#= atomGetAdapter #>>();
-            atom.getter = getter;
-            atom.wrapped = getter;
+            atom.getter = wrapped;
+            atom.wrapped = wrapped;
             return atom;
         }
     }
@@ -152,11 +152,11 @@ namespace Enderlook.Unity.ScriptableObjects.Atoms
         WriteHeader();
 #>
     [Serializable]
-    [CreateAssetMenu(fileName = "<#= name #>Constant", menuName = "<#= menuName #>/Variables/Adapters/Readonly/<#= name #>")]
+    [CreateAssetMenu(fileName = "<#= name #>Constant", menuName = "<#= menuName #>/Variables/Adapters/GetSet/<#= name #>")]
     public class <#= atomGetSetAdapter #> : <#= atomGet #>
     {
 #pragma warning disable CA2235
-        [SerializeField, RestrictType(typeof(<#= dataType #>)), Tooltip("Object that produces value of this atom.\nIf you change this value in Editor you must execute Refesh method.")]
+        [SerializeField, RestrictType(typeof(IGetSet<<#= dataType #>>)), Tooltip("Object that produces value of this atom.\nIf you change this value in Editor you must execute Refesh method.")]
         private UnityObject wrapped;
 #pragma warning restore CA2235
 
@@ -173,13 +173,13 @@ namespace Enderlook.Unity.ScriptableObjects.Atoms
         /// <summary>
         <#= "///" #> Create new <see cref="<#= atomConstant #>"/> with given wrapped.
         /// </summary>
-        <#= "///" #> <param name="getter">Value of new <see cref="<#= atomGetSetAdapter #>"/>.</param>
+        <#= "///" #> <param name="wrapped">Value of new <see cref="<#= atomGetSetAdapter #>"/>.</param>
         <#= "///" #> <returns>New <see cref="<#= atomGetSetAdapter #>"/>.</returns>
-        public static <#= atomGetSetAdapter #> CreateConstant<T>(T getter) where T : UnityObject, IGet<<#= dataType #>>
+        public static <#= atomGetSetAdapter #> CreateConstant<T>(T wrapped) where T : UnityObject, IGet<<#= dataType #>>
         {
             <#= atomGetSetAdapter #> atom = CreateInstance<<#= atomGetSetAdapter #>>();
-            atom.getter = getter;
-            atom.wrapped = getter;
+            atom.getter = wrapped;
+            atom.wrapped = wrapped;
             return atom;
         }
     }

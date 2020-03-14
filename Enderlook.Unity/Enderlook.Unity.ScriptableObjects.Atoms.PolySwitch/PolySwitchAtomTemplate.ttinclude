@@ -21,7 +21,7 @@ using UnityEngine;
 
 namespace Enderlook.Unity.ScriptableObjects.PolySwitchers
 {
-    [Serializable, CreateAssetMenu(fileName = "<#= className #>", menuName = "Enderlook/PolySwitcher/Atom Types/<#= className #>")]
+    [Serializable, CreateAssetMenu(fileName = "<#= className #>", menuName = "Enderlook/PolySwitchers/Atom Types/<#= className #>")]
     public class <#= className #> : <#= name #>Get
     {
         [SerializeField, Tooltip("Poly switcher where values are gotten.")]

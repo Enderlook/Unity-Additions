@@ -17,7 +17,7 @@ using UnityEngine;
 
 namespace Enderlook.Unity.ScriptableObjects.PolySwitchers
 {
-    [Serializable, CreateAssetMenu(fileName = "<#= className #>", menuName = "Enderlook/PolySwitcher/Types/<#= className #>")]
+    [Serializable, CreateAssetMenu(fileName = "<#= className #>", menuName = "Enderlook/PolySwitchers/Types/<#= className #>")]
     public class <#= className #> : PolySwitch<<#= dataType #>> { }
 }
 <#+ } #>
