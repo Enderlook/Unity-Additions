@@ -37,23 +37,30 @@ namespace Enderlook.Unity.ScriptableObjects.Atoms
         string atomGetAdapter = name + "GetAdapter";
         string atomGetSetAdapter = name + "GetSetAdapter";
 
+        string interfaceGet = "I" + name + "Get";
+        string interfaceGetSet = "I" + name + "GetSet";
+
         string path = "Atoms/" + name;
 
         WriteHeader();
 #>
+    public interface <#= interfaceGet #> : IGet<<#= dataType #>> { }
+
+    public interface <#= interfaceGetSet #> : IGet<<#= dataType #>>, <#= interfaceGet #> { }
+
     [Serializable]
-    public abstract class <#= atomGet #> : Atom, IAtomConstant<<#= dataType #>>
+    public abstract class <#= atomGet #> : Atom, IAtomConstant<<#= dataType #>>, <#= interfaceGet #>
     {
         public abstract <#= dataType #> GetValue();
     }
 
     [Serializable]
-    public abstract class <#= atomGetSet #> : <#= atomGet #>, IAtomVariable<<#= dataType #>>
+    public abstract class <#= atomGetSet #> : <#= atomGet #>, IAtomVariable<<#= dataType #>>, <#= interfaceGetSet #>
     {
         public abstract void SetValue(<#= dataType #> value);
     }
 <#+
-        SaveOutput(name + "Abstracts", path);
+        SaveOutput(name + "Others", path);
         WriteHeader();
 #>
     [Serializable]
