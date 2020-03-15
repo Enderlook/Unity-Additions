@@ -51,10 +51,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Enderlook.Unity.Serializabl
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Enderlook.Unity.ScriptableObjects.PolySwitchers", "Enderlook.Unity.ScriptableObjects.PolySwitchers\Enderlook.Unity.ScriptableObjects.PolySwitchers.csproj", "{BBF9E5D5-1831-425F-B27E-F37D0804AA00}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Enderlook.Unity.ScriptableObjects.Atoms", "Enderlook.Unity.ScriptableObjects.Atoms\Enderlook.Unity.ScriptableObjects.Atoms.csproj", "{915A797B-F024-4352-8837-6F84773C5748}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Enderlook.Unity.ScriptableObjects.Atoms.PolySwitch", "Enderlook.Unity.ScriptableObjects.Atoms.PolySwitch\Enderlook.Unity.ScriptableObjects.Atoms.PolySwitch.csproj", "{593ED58B-9B2B-4795-942D-D2934ED6AC23}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Enderlook.Unity.Components.ScriptableSound", "Enderlook.Unity.Components.ScriptableSound\Enderlook.Unity.Components.ScriptableSound.csproj", "{285C0E94-292F-4034-8A23-CEA5C429A319}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Enderlook.Unity.Utils.UnityEditor", "Enderlook.Unity.Utils.UnityEditor\Enderlook.Unity.Utils.UnityEditor.csproj", "{3BDB2493-B44F-4C24-9037-AA4C84F85EE4}"
@@ -64,8 +60,6 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Enderlook.Unity.Serializables.Physics-Drawers", "Enderlook.Unity.Serializables.Physics-Drawers\Enderlook.Unity.Serializables.Physics-Drawers.csproj", "{599D754B-FFB3-4D45-8BC3-3E3C45F51220}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Enderlook.Unity.Serializables.Collections-Drawers", "Enderlook.Unity.Serializables.Collections-Drawers\Enderlook.Unity.Serializables.Collections-Drawers.csproj", "{06291333-2B5B-43A1-959D-13367FD27A3C}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Enderlook.Unity.ScriptableObjects.PolySwitchers-Editor", "Enderlook.Unity.ScriptableObjects.PolySwitchers-Editor\Enderlook.Unity.ScriptableObjects.PolySwitchers-Editor.csproj", "{71066A39-6071-42DA-8418-594B93567339}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Enderlook.Unity.Components.ScriptableSound-Editor", "Enderlook.Unity.Components.ScriptableSound-Editor\Enderlook.Unity.Components.ScriptableSound-Editor.csproj", "{EB9E47D4-BB0A-4F0E-89F9-149796CD7C6D}"
 EndProject
@@ -80,6 +74,12 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Enderlook.Unity.Attributes.AttributeUsage-Testing", "Enderlook.Unity.Attributes.AttributeUsage-Testing\Enderlook.Unity.Attributes.AttributeUsage-Testing.csproj", "{DC35BB13-41A7-4F9F-87D5-D7B7F7C94D5C}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Enderlook.Unity.Attributes.AttributeUsage.PostCompiling", "Enderlook.Unity.Attributes.AttributeUsage.PostCompiling\Enderlook.Unity.Attributes.AttributeUsage.PostCompiling.csproj", "{0739BAA7-900D-4C6F-9142-786149489912}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Enderlook.Unity.Atoms", "Enderlook.Unity.Atoms\Enderlook.Unity.Atoms.csproj", "{50C595BA-D8FE-4AD5-9E83-99495C2071C8}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Enderlook.Unity.ScriptableObjects.PolySwitchers-Editor", "Enderlook.Unity.ScriptableObjects.PolySwitchers-Editor\Enderlook.Unity.ScriptableObjects.PolySwitchers-Editor.csproj", "{070164B8-215A-4847-A306-CB4891CCFADA}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Enderlook.Unity.Atoms.PolySwitch", "Enderlook.Unity.Atoms.PolySwitch\Enderlook.Unity.Atoms.PolySwitch.csproj", "{1F41D5EA-0FE3-431D-8694-FDE0D4BE58CD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -281,22 +281,6 @@ Global
 		{BBF9E5D5-1831-425F-B27E-F37D0804AA00}.Release Editor|Any CPU.Build.0 = Release Editor|Any CPU
 		{BBF9E5D5-1831-425F-B27E-F37D0804AA00}.Release Game|Any CPU.ActiveCfg = Release Game|Any CPU
 		{BBF9E5D5-1831-425F-B27E-F37D0804AA00}.Release Game|Any CPU.Build.0 = Release Game|Any CPU
-		{915A797B-F024-4352-8837-6F84773C5748}.Debug Editor|Any CPU.ActiveCfg = Debug Editor|Any CPU
-		{915A797B-F024-4352-8837-6F84773C5748}.Debug Editor|Any CPU.Build.0 = Debug Editor|Any CPU
-		{915A797B-F024-4352-8837-6F84773C5748}.Debug Game|Any CPU.ActiveCfg = Debug Game|Any CPU
-		{915A797B-F024-4352-8837-6F84773C5748}.Debug Game|Any CPU.Build.0 = Debug Game|Any CPU
-		{915A797B-F024-4352-8837-6F84773C5748}.Release Editor|Any CPU.ActiveCfg = Release Editor|Any CPU
-		{915A797B-F024-4352-8837-6F84773C5748}.Release Editor|Any CPU.Build.0 = Release Editor|Any CPU
-		{915A797B-F024-4352-8837-6F84773C5748}.Release Game|Any CPU.ActiveCfg = Release Game|Any CPU
-		{915A797B-F024-4352-8837-6F84773C5748}.Release Game|Any CPU.Build.0 = Release Game|Any CPU
-		{593ED58B-9B2B-4795-942D-D2934ED6AC23}.Debug Editor|Any CPU.ActiveCfg = Debug Editor|Any CPU
-		{593ED58B-9B2B-4795-942D-D2934ED6AC23}.Debug Editor|Any CPU.Build.0 = Debug Editor|Any CPU
-		{593ED58B-9B2B-4795-942D-D2934ED6AC23}.Debug Game|Any CPU.ActiveCfg = Debug Game|Any CPU
-		{593ED58B-9B2B-4795-942D-D2934ED6AC23}.Debug Game|Any CPU.Build.0 = Debug Game|Any CPU
-		{593ED58B-9B2B-4795-942D-D2934ED6AC23}.Release Editor|Any CPU.ActiveCfg = Release Editor|Any CPU
-		{593ED58B-9B2B-4795-942D-D2934ED6AC23}.Release Editor|Any CPU.Build.0 = Release Editor|Any CPU
-		{593ED58B-9B2B-4795-942D-D2934ED6AC23}.Release Game|Any CPU.ActiveCfg = Release Game|Any CPU
-		{593ED58B-9B2B-4795-942D-D2934ED6AC23}.Release Game|Any CPU.Build.0 = Release Game|Any CPU
 		{285C0E94-292F-4034-8A23-CEA5C429A319}.Debug Editor|Any CPU.ActiveCfg = Debug Editor|Any CPU
 		{285C0E94-292F-4034-8A23-CEA5C429A319}.Debug Editor|Any CPU.Build.0 = Debug Editor|Any CPU
 		{285C0E94-292F-4034-8A23-CEA5C429A319}.Debug Game|Any CPU.ActiveCfg = Debug Game|Any CPU
@@ -329,12 +313,6 @@ Global
 		{06291333-2B5B-43A1-959D-13367FD27A3C}.Release Editor|Any CPU.ActiveCfg = Release Editor|Any CPU
 		{06291333-2B5B-43A1-959D-13367FD27A3C}.Release Editor|Any CPU.Build.0 = Release Editor|Any CPU
 		{06291333-2B5B-43A1-959D-13367FD27A3C}.Release Game|Any CPU.ActiveCfg = Release Editor|Any CPU
-		{71066A39-6071-42DA-8418-594B93567339}.Debug Editor|Any CPU.ActiveCfg = Debug Editor|Any CPU
-		{71066A39-6071-42DA-8418-594B93567339}.Debug Editor|Any CPU.Build.0 = Debug Editor|Any CPU
-		{71066A39-6071-42DA-8418-594B93567339}.Debug Game|Any CPU.ActiveCfg = Debug Editor|Any CPU
-		{71066A39-6071-42DA-8418-594B93567339}.Release Editor|Any CPU.ActiveCfg = Release Editor|Any CPU
-		{71066A39-6071-42DA-8418-594B93567339}.Release Editor|Any CPU.Build.0 = Release Editor|Any CPU
-		{71066A39-6071-42DA-8418-594B93567339}.Release Game|Any CPU.ActiveCfg = Release Editor|Any CPU
 		{EB9E47D4-BB0A-4F0E-89F9-149796CD7C6D}.Debug Editor|Any CPU.ActiveCfg = Debug Editor|Any CPU
 		{EB9E47D4-BB0A-4F0E-89F9-149796CD7C6D}.Debug Editor|Any CPU.Build.0 = Debug Editor|Any CPU
 		{EB9E47D4-BB0A-4F0E-89F9-149796CD7C6D}.Debug Game|Any CPU.ActiveCfg = Debug Editor|Any CPU
@@ -377,6 +355,30 @@ Global
 		{0739BAA7-900D-4C6F-9142-786149489912}.Release Editor|Any CPU.ActiveCfg = Release Editor|Any CPU
 		{0739BAA7-900D-4C6F-9142-786149489912}.Release Editor|Any CPU.Build.0 = Release Editor|Any CPU
 		{0739BAA7-900D-4C6F-9142-786149489912}.Release Game|Any CPU.ActiveCfg = Release Editor|Any CPU
+		{50C595BA-D8FE-4AD5-9E83-99495C2071C8}.Debug Editor|Any CPU.ActiveCfg = Debug Editor|Any CPU
+		{50C595BA-D8FE-4AD5-9E83-99495C2071C8}.Debug Editor|Any CPU.Build.0 = Debug Editor|Any CPU
+		{50C595BA-D8FE-4AD5-9E83-99495C2071C8}.Debug Game|Any CPU.ActiveCfg = Debug Game|Any CPU
+		{50C595BA-D8FE-4AD5-9E83-99495C2071C8}.Debug Game|Any CPU.Build.0 = Debug Game|Any CPU
+		{50C595BA-D8FE-4AD5-9E83-99495C2071C8}.Release Editor|Any CPU.ActiveCfg = Release Editor|Any CPU
+		{50C595BA-D8FE-4AD5-9E83-99495C2071C8}.Release Editor|Any CPU.Build.0 = Release Editor|Any CPU
+		{50C595BA-D8FE-4AD5-9E83-99495C2071C8}.Release Game|Any CPU.ActiveCfg = Release Game|Any CPU
+		{50C595BA-D8FE-4AD5-9E83-99495C2071C8}.Release Game|Any CPU.Build.0 = Release Game|Any CPU
+		{070164B8-215A-4847-A306-CB4891CCFADA}.Debug Editor|Any CPU.ActiveCfg = Debug Editor|Any CPU
+		{070164B8-215A-4847-A306-CB4891CCFADA}.Debug Editor|Any CPU.Build.0 = Debug Editor|Any CPU
+		{070164B8-215A-4847-A306-CB4891CCFADA}.Debug Game|Any CPU.ActiveCfg = Debug Editor|Any CPU
+		{070164B8-215A-4847-A306-CB4891CCFADA}.Debug Game|Any CPU.Build.0 = Debug Editor|Any CPU
+		{070164B8-215A-4847-A306-CB4891CCFADA}.Release Editor|Any CPU.ActiveCfg = Release Editor|Any CPU
+		{070164B8-215A-4847-A306-CB4891CCFADA}.Release Editor|Any CPU.Build.0 = Release Editor|Any CPU
+		{070164B8-215A-4847-A306-CB4891CCFADA}.Release Game|Any CPU.ActiveCfg = Release Editor|Any CPU
+		{070164B8-215A-4847-A306-CB4891CCFADA}.Release Game|Any CPU.Build.0 = Release Editor|Any CPU
+		{1F41D5EA-0FE3-431D-8694-FDE0D4BE58CD}.Debug Editor|Any CPU.ActiveCfg = Debug Editor|Any CPU
+		{1F41D5EA-0FE3-431D-8694-FDE0D4BE58CD}.Debug Editor|Any CPU.Build.0 = Debug Editor|Any CPU
+		{1F41D5EA-0FE3-431D-8694-FDE0D4BE58CD}.Debug Game|Any CPU.ActiveCfg = Debug Game|Any CPU
+		{1F41D5EA-0FE3-431D-8694-FDE0D4BE58CD}.Debug Game|Any CPU.Build.0 = Debug Game|Any CPU
+		{1F41D5EA-0FE3-431D-8694-FDE0D4BE58CD}.Release Editor|Any CPU.ActiveCfg = Release Editor|Any CPU
+		{1F41D5EA-0FE3-431D-8694-FDE0D4BE58CD}.Release Editor|Any CPU.Build.0 = Release Editor|Any CPU
+		{1F41D5EA-0FE3-431D-8694-FDE0D4BE58CD}.Release Game|Any CPU.ActiveCfg = Release Game|Any CPU
+		{1F41D5EA-0FE3-431D-8694-FDE0D4BE58CD}.Release Game|Any CPU.Build.0 = Release Game|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

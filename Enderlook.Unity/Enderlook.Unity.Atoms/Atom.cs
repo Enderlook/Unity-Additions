@@ -4,7 +4,7 @@ using System;
 
 using UnityEngine;
 
-namespace Enderlook.Unity.ScriptableObjects.Atoms
+namespace Enderlook.Unity.Atoms
 {
     [Serializable, CannotBeUsedAsMember]
     public abstract class Atom : ScriptableObject, IAtom

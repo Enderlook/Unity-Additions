@@ -1,7 +1,9 @@
 ﻿using Enderlook.Unity.Attributes;
-using Enderlook.Unity.ScriptableObjects.Atoms;
+using Enderlook.Unity.Interfaces;
+
 using System;
 using System.Runtime.CompilerServices;
+
 using UnityEngine;
 
 namespace Enderlook.Unity.ScriptableObjects.PolySwitchers

@@ -1,4 +1,4 @@
-﻿namespace Enderlook.Unity.ScriptableObjects.Atoms
+﻿namespace Enderlook.Unity.Interfaces
 {
     public interface IGet<T>
     {
