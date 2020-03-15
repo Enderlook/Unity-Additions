@@ -12,7 +12,7 @@
         WriteHeader();
 #>
     [Serializable]
-    [CreateAssetMenu(fileName = "<#= atomVariable #>", menuName = "<#= menuName #>/Variables/Commons/<#= name #>")]
+    [CreateAssetMenu(fileName = "<#= atomVariable #>", menuName = "<#= menuName #>/Variables/Variables/<#= name #>")]
     public class <#= atomVariable #> : <#= atomGetSet #>
     {
         [SerializeField, Tooltip("Value stored in this atom.")]
