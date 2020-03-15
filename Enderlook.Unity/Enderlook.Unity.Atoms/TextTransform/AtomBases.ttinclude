@@ -1,0 +1,34 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#+
+    void GenerateAtomBases(string name, string dataType)
+    {
+        string interfaceGet = InterfaceGetName(name);
+        string interfaceGetSet = InterfaceGetSetName(name);
+        string atomGet = AtomGetName(name);
+        string atomGetSet = AtomGetSetName(name);
+
+        WriteHeader();
+#>
+        public interface <#= interfaceGet #> : IGet<<#= dataType #>> { }
+
+        public interface <#= interfaceGetSet #> : IGet<<#= dataType #>>, <#= interfaceGet #> { }
+
+        [Serializable]
+        public abstract class <#= atomGet #> : BaseAtom, IAtomConstant<<#= dataType #>>, <#= interfaceGet #>
+        {
+            public abstract <#= dataType #> GetValue();
+        }
+
+        [Serializable]
+        public abstract class <#= atomGetSet #> : <#= atomGet #>, IAtomVariable<<#= dataType #>>, <#= interfaceGetSet #>
+        {
+            public abstract void SetValue(<#= dataType #> value);
+        }
+<#+
+        SaveOutput(name + "Others", name);
+    }
+#>

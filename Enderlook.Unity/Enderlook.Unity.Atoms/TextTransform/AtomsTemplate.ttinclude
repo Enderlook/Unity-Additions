@@ -1,0 +1,21 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ include file="$(TextTransformDir)\AtomsBaseTemplate.ttinclude" #>
+<#@ include file="$(TextTransformDir)\AtomBases.ttinclude" #>
+<#@ include file="$(TextTransformDir)\AtomConstant.ttinclude" #>
+<#@ include file="$(TextTransformDir)\AtomVariable.ttinclude" #>
+<#@ include file="$(TextTransformDir)\AtomGetAdapter.ttinclude" #>
+<#@ include file="$(TextTransformDir)\AtomGetSetAdapter.ttinclude" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#+
+    void Generate(string name, string dataType)
+    {
+        GenerateAtomBases(name, dataType);
+        GenerateAtomConstant(name, dataType);
+        GenerateAtomVariable(name, dataType);
+        GenerateAtomGetAdapter(name, dataType);
+        GenerateAtomGetSetAdapter(name, dataType);
+    }
+#>

@@ -1,0 +1,39 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#+
+    void GenerateAtomConstant(string name, string dataType)
+    {
+        string atomConstant = AtomConstantName(name);
+        string atomGet = AtomGetName(name);
+
+        WriteHeader();
+#>
+    [Serializable]
+    [CreateAssetMenu(fileName = "<#= atomConstant #>", menuName = "<#= menuName #>/Variables/Constants/<#= name #>")]
+    public class <#= atomConstant #> : <#= atomGet #>
+    {
+        [SerializeField, Tooltip("Value stored in this atom.")]
+        protected <#= dataType #> value;
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public override <#= dataType #> GetValue() => value;
+
+        /// <summary>
+        <#= "///" #> Create new <see cref="<#= atomConstant #>"/> with given value.
+        /// </summary>
+        <#= "///" #> <param name="value">Value of new <see cref="<#= atomConstant #>"/>.</param>
+        <#= "///" #> <returns>New <see cref="<#= atomConstant #>"/>.</returns>
+        public static <#= atomConstant #> CreateConstant(<#= dataType #> value)
+        {
+            <#= atomConstant #> atom = CreateInstance<<#= atomConstant #>>();
+            atom.value = value;
+            return atom;
+        }
+    }
+<#+
+        SaveOutput(name + "Constant", name);
+    }
+#>

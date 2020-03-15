@@ -7,11 +7,11 @@ using UnityEngine;
 namespace Enderlook.Unity.Atoms
 {
     [Serializable, CannotBeUsedAsMember]
-    public abstract class Atom : ScriptableObject, IAtom
+    public abstract class BaseAtom : ScriptableObject, IAtom
     {
 #if UNITY_EDITOR
         /// <summary>
-        /// Description of this <see cref="Atom"/>. Only use inside Unity Editor.
+        /// Description of this <see cref="BaseAtom"/>. Only use inside Unity Editor.
         /// </summary>
         [field: SerializeField, IsProperty, Multiline, Tooltip("Description of this specific atom.")]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "CA2235:Mark all non-serializable fields", Justification = "")]

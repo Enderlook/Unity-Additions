@@ -1,0 +1,50 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#+
+    void GenerateAtomGetAdapter(string name, string dataType)
+    {
+        string atomGetAdapter = AtomGetAdapterName(name);
+        string atomGet = AtomGetName(name);
+
+        WriteHeader();
+#>
+    [Serializable]
+    [CreateAssetMenu(fileName = "<#= atomGetAdapter #>", menuName = "<#= menuName #>/Variables/Adapters/Get/<#= name #>")]
+    public class <#= atomGetAdapter #> : <#= atomGet #>
+    {
+#pragma warning disable CA2235
+        [SerializeField, RestrictType(typeof(IGet<<#= dataType #>>)), Tooltip("Object that produces value of this atom.\nIf you change this value in Editor you must execute Refesh method.")]
+        private UnityObject wrapped;
+#pragma warning restore CA2235
+
+        private IGet<<#= dataType #>> getter;
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public override <#= dataType #> GetValue() => getter.GetValue();
+
+        public void OnEnable() => getter = (IGet<<#= dataType #>>)wrapped;
+
+#if UNITY_EDITOR
+        public void Refesh() => getter = (IGet<<#= dataType #>>)wrapped;
+#endif
+
+        /// <summary>
+        <#= "///" #> Create new <see cref="<#= atomGetAdapter #>"/> with given wrapped.
+        /// </summary>
+        <#= "///" #> <param name="wrapped">Value of new <see cref="<#= atomGetAdapter #>"/>.</param>
+        <#= "///" #> <returns>New <see cref="<#= atomGetAdapter #>"/>.</returns>
+        public static <#= atomGetAdapter #> CreateConstant<T>(T wrapped) where T : UnityObject, IGet<<#= dataType #>>
+        {
+            <#= atomGetAdapter #> atom = CreateInstance<<#= atomGetAdapter #>>();
+            atom.getter = wrapped;
+            atom.wrapped = wrapped;
+            return atom;
+        }
+    }
+<#+
+        SaveOutput(name + "GetAdapter", name);
+    }
+#>
