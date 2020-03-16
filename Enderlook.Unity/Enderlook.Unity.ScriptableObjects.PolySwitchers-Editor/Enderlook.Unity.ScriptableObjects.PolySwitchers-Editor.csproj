@@ -42,7 +42,7 @@
   </ItemGroup>
 
   <PropertyGroup Label="UserMacros">
-    <UnityVersion>2018.3.0f2</UnityVersion>
+    <UnityVersion>2019.2.17f1</UnityVersion>
   </PropertyGroup>
 
   <ItemGroup>
