@@ -5,6 +5,8 @@
 <#@ include file="$(TextTransformDir)\Variable.ttinclude" #>
 <#@ include file="$(TextTransformDir)\GetAdapter.ttinclude" #>
 <#@ include file="$(TextTransformDir)\GetSetAdapter.ttinclude" #>
+<#@ include file="$(TextTransformDir)\ReferenceGet.ttinclude" #>
+<#@ include file="$(TextTransformDir)\ReferenceGetSet.ttinclude" #>
 <#@ assembly name="System.Core" #>
 <#@ import namespace="System.Linq" #>
 <#@ import namespace="System.Text" #>
@@ -17,5 +19,7 @@
         GenerateAtomVariable(name, dataType);
         GenerateAtomGetAdapter(name, dataType);
         GenerateAtomGetSetAdapter(name, dataType);
+        GenerateReferenceGet(name, dataType);
+        GenerateReferenceGetSet(name, dataType);
     }
 #>

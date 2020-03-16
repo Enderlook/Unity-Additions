@@ -14,6 +14,7 @@
 //====================================================================================================
 using Enderlook.Unity.Attributes;
 using Enderlook.Unity.Interfaces;
+using Enderlook.Utils.Exceptions;
 
 using System;
 using System.Collections.Generic;
@@ -66,6 +67,16 @@ namespace Enderlook.Unity.Atoms
     string InterfaceGetSetName(string name)
     {
         return "I" + name + "Set";
+    }
+
+    string ReferenceGetName(string name)
+    {
+        return name + "ReferenceGet";
+    }
+
+    string ReferenceGetSetName(string name)
+    {
+        return name + "ReferenceGetSet";
     }
 
     void SaveOutput(string fileName, string path)

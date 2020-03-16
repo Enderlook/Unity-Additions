@@ -18,13 +18,13 @@
         public interface <#= interfaceGetSet #> : IGet<<#= dataType #>>, <#= interfaceGet #> { }
 
         [Serializable]
-        public abstract class <#= atomGet #> : BaseAtom, IAtomConstant<<#= dataType #>>, <#= interfaceGet #>
+        public abstract class <#= atomGet #> : BaseScriptableObjectAtom, <#= interfaceGet #>
         {
             public abstract <#= dataType #> GetValue();
         }
 
         [Serializable]
-        public abstract class <#= atomGetSet #> : <#= atomGet #>, IAtomVariable<<#= dataType #>>, <#= interfaceGetSet #>
+        public abstract class <#= atomGetSet #> : <#= atomGet #>, <#= interfaceGetSet #>
         {
             public abstract void SetValue(<#= dataType #> value);
         }
