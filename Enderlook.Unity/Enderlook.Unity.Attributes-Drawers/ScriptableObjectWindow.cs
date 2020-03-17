@@ -42,7 +42,9 @@ namespace Enderlook.Unity.Attributes
 
         private static void InitializeDerivedTypes()
         {
-            Stack<Type> types = new Stack<Type>(AssembliesHelper.GetAllAssembliesOfPlayerAndEditorAssemblies()
+            // We don't use AssembliesHelper.GetAllAssembliesOfPlayerAndEditorAssemblies() because that doesn't include dll files from Assets folder
+            Stack<Type> types = new Stack<Type>(
+                AppDomain.CurrentDomain.GetAssemblies()
                 .SelectMany(e => e.GetTypes())
                 .Where(e => typeof(ScriptableObject).IsAssignableFrom(e)));
 
