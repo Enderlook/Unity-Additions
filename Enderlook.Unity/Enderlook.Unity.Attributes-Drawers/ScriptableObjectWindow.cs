@@ -1,5 +1,4 @@
 ﻿using Enderlook.Extensions;
-using Enderlook.Unity.Attributes.AttributeUsage.PostCompiling;
 using Enderlook.Unity.Utils.UnityEditor;
 
 using System;
@@ -19,9 +18,8 @@ namespace Enderlook.Unity.Attributes
     {
         private static readonly GUIContent TILE_CONTENT = new GUIContent("Scriptable Object Manager");
         private static readonly GUIContent INSTANTIATE_TYPE_CONTENT = new GUIContent("Instance type", "Scriptable object instance type to create.");
-        private static readonly GUIContent ADD_TO_ASSET_CONTENT = new GUIContent("Instantiate in field and add to asset", "Create and instance and assign to field. The scriptable object will be added to the asset file.");
+        private static readonly GUIContent ADD_TO_ASSET_CONTENT = new GUIContent("Instantiate in field and add to asset", "Create and instance and assign to field. The scriptable object will be added to the asset or prefab file.");
         private static readonly GUIContent ADD_TO_SCENE_CONTENT = new GUIContent("Instantiate in field and add to scene", "Create and instance and assign to field. The scriptable object will be added to the scene file.");
-        private static readonly GUIContent ADD_TO_PREFAB_CONTENT = new GUIContent("Instantiate in field and add to prefab", "Create and instance and assign to field. The scriptable object will be added to the prefab file.");
         private static readonly GUIContent PATH_TO_FILE_CONTENT = new GUIContent("Path to file", "Path where the asset file is stored or will be saved.");
         private static readonly GUIContent SAVE_ASSET_CONTENT = new GUIContent("Instantiate in field and save asset", "Create and instance, assign to field and save it as an asset file.");
         private static readonly GUIContent CLEAN_FIELD = new GUIContent("Clean field", "Remove current instance of field.");
@@ -37,10 +35,15 @@ namespace Enderlook.Unity.Attributes
         private Type[] allowedTypes;
         private string[] allowedTypesNames;
         private int index;
+
         private string path = DEFAULT_PATH;
         private string scriptableObjectName;
         private string propertyPath;
         private bool scriptableObjectNameAuto = true;
+
+        private HideFlags scriptableObjectHideFlags;
+
+        private ScriptableObject oldScriptableObject;
 
         private static void InitializeDerivedTypes()
         {
@@ -167,18 +170,28 @@ namespace Enderlook.Unity.Attributes
             ScriptableObject scriptableObject = (ScriptableObject)get?.Invoke();
             bool hasScriptableObject = scriptableObject != null;
 
+            if (oldScriptableObject != scriptableObject)
+            {
+                oldScriptableObject = scriptableObject;
+
+                if (hasScriptableObject)
+                {
+                    index = GetIndex(scriptableObject.GetType());
+                    scriptableObjectHideFlags = scriptableObject.hideFlags;
+                    scriptableObjectName = scriptableObject.name;
+                }
+            }
+
             // Instance Type
             EditorGUI.BeginDisabledGroup(hasScriptableObject);
-            if (hasScriptableObject)
-                index = GetIndex(scriptableObject.GetType());
             index = EditorGUILayout.Popup(INSTANTIATE_TYPE_CONTENT, index, allowedTypesNames);
             EditorGUI.EndDisabledGroup();
-
-            UnityObject targetObject = property.serializedObject.targetObject;
 
             // Get Name
             if (scriptableObjectNameAuto && !hasScriptableObject)
                 scriptableObjectName = path.Split('/').Last().Split(EXTENSIONS, StringSplitOptions.None).First();
+
+            UnityObject targetObject = property.serializedObject.targetObject;
 
             if (hasScriptableObject)
             {
@@ -186,6 +199,7 @@ namespace Enderlook.Unity.Attributes
                 EditorGUILayout.TextField("Name of Scriptable Object", scriptableObject.name);
                 EditorGUI.EndDisabledGroup();
                 scriptableObjectName = EditorGUILayout.TextField("New name", scriptableObjectName);
+                scriptableObjectHideFlags = (HideFlags)EditorGUILayout.EnumFlagsField("New Hide Flags", scriptableObjectHideFlags);
 
                 if (GUILayout.Button("Rename Scriptable Object"))
                 {
@@ -207,16 +221,12 @@ namespace Enderlook.Unity.Attributes
                 if (GUILayout.Button(ADD_TO_ASSET_CONTENT))
                 {
                     scriptableObject = InstantiateAndApply(targetObject, scriptableObjectName);
-                    AssetDatabaseHelper.AddObjectToAsset(scriptableObject, propertyPath);
+                    AssetDatabase.AddObjectToAsset(scriptableObject, propertyPath);
+                    AssetDatabase.Refresh();
                 }
                 if (GUILayout.Button(ADD_TO_SCENE_CONTENT))
                 {
                     scriptableObject = InstantiateAndApply(targetObject, scriptableObjectName);
-                }
-                if (GUILayout.Button(ADD_TO_PREFAB_CONTENT))
-                {
-                    scriptableObject = InstantiateAndApply(targetObject, scriptableObjectName);
-                    AssetDatabase.AddObjectToAsset(scriptableObject, PrefabUtility.GetPrefabInstanceHandle(property.objectReferenceValue));
                 }
                 EditorGUI.EndDisabledGroup();
             }

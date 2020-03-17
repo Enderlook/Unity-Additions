@@ -139,6 +139,8 @@ namespace Enderlook.Unity.Utils.UnityEditor
         /// <returns>Asset path of object, if any.</returns>
         public static string GetAssetPath(UnityObject @object)
         {
+            // TODO: PrefabUtility.GetPrefabInstanceHandle may be useful here
+
             // Check for 99% of objects
             string path = AssetDatabase.GetAssetPath(@object);
 
