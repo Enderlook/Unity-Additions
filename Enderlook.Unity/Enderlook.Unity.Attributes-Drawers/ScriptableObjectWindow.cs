@@ -29,9 +29,6 @@ namespace Enderlook.Unity.Attributes
 
         private static ILookup<Type, Type> derivedTypes;
 
-        private SerializedProperty property;
-        private Func<object> get;
-        private Action<object> set;
         private Type[] allowedTypes;
         private string[] allowedTypesNames;
         private int index;
@@ -44,6 +41,8 @@ namespace Enderlook.Unity.Attributes
         private HideFlags scriptableObjectHideFlags;
 
         private ScriptableObject oldScriptableObject;
+
+        private PropertyWrapper propertyWrapper;
 
         private static void InitializeDerivedTypes()
         {
@@ -94,61 +93,8 @@ namespace Enderlook.Unity.Attributes
             ScriptableObjectWindow window = GetWindow<ScriptableObjectWindow>();
 
             window.propertyPath = AssetDatabaseHelper.GetAssetPath(property);
-            Type type;
-            /* If the property came from an array and the element is null this will be null which is a problem for us.
-             * This is also null if the property isn't array but the field is empty (null). That is also a problem. */
-            if (property.objectReferenceValue)
-            {
-                (window.get, window.set) = property.GetTargetObjectAccessors();
-                type = property.GetFieldType();
-            }
-            else
-            {
-                UnityObject targetObject = property.serializedObject.targetObject;
-                Type fieldType = fieldInfo.FieldType;
-                // Just confirming that it's an array
-                if (fieldType.IsArray)
-                {
-                    type = fieldType.GetElementType();
-                    int index = property.GetIndexFromArray();
-
-                    if (fieldInfo.GetValue(targetObject) is Array array)
-                    {
-                        /* Until an element is in-Inspector dragged to the array element field, it seems that Unity doesn't rebound the array
-                         * So if the array is empty and it doesn't have space for us, we make a new array and inject it. */
-                        if (array.Length == 0)
-                        {
-                            array = Array.CreateInstance(fieldType.GetElementType(), 1);
-                            fieldInfo.SetValue(targetObject, array);
-                        }
-
-                        window.get = () => array.GetValue(index);
-                        window.set = (value) => array.SetValue(value, index);
-                    }
-                    else
-                        throw new InvalidCastException();
-                }
-                else
-                {
-                    type = fieldType;
-                    window.get = () => property.objectReferenceValue;
-                    Action<object, object> set;
-                    if (fieldInfo.FieldType == targetObject.GetType())
-                        set = fieldInfo.SetValue;
-                    else
-                    {
-                        FieldInfo fieldInfo2 = targetObject
-                                .GetType()
-                                .GetField(property.name, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
-                        if (fieldInfo2 != null)
-                            set = fieldInfo2.SetValue;
-                        else
-                            set = (_, value) => property.objectReferenceValue = (UnityObject)value;
-                    }
-                    window.set = (value) => set(targetObject, value);
-                }
-            }
-            IEnumerable<Type> allowedTypes = GetDerivedTypes(type).Where(e => !e.IsAbstract);
+            window.propertyWrapper = new PropertyWrapper(property, fieldInfo);
+            IEnumerable<Type> allowedTypes = GetDerivedTypes(window.propertyWrapper.Type).Where(e => !e.IsAbstract);
 
             // RestrictTypeAttribute compatibility
             RestrictTypeAttribute restrictTypeAttribute = fieldInfo.GetCustomAttribute<RestrictTypeAttribute>();
@@ -158,8 +104,7 @@ namespace Enderlook.Unity.Attributes
             window.allowedTypes = allowedTypes.ToArray();
 
             window.allowedTypesNames = window.allowedTypes.Select(e => e.Name).ToArray();
-            window.index = window.GetIndex(type);
-            window.property = property;
+            window.index = window.GetIndex(window.propertyWrapper.Type);
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Code Quality", "IDE0051:Remove unused private members", Justification = "Used by Unity.")]
@@ -167,7 +112,7 @@ namespace Enderlook.Unity.Attributes
         {
             titleContent = TILE_CONTENT;
 
-            ScriptableObject scriptableObject = (ScriptableObject)get?.Invoke();
+            ScriptableObject scriptableObject = (ScriptableObject)propertyWrapper.Get?.Invoke();
             bool hasScriptableObject = scriptableObject != null;
 
             if (oldScriptableObject != scriptableObject)
@@ -191,7 +136,7 @@ namespace Enderlook.Unity.Attributes
             if (scriptableObjectNameAuto && !hasScriptableObject)
                 scriptableObjectName = path.Split('/').Last().Split(EXTENSIONS, StringSplitOptions.None).First();
 
-            UnityObject targetObject = property.serializedObject.targetObject;
+            UnityObject targetObject = propertyWrapper.Property.serializedObject.targetObject;
 
             if (hasScriptableObject)
             {
@@ -204,7 +149,7 @@ namespace Enderlook.Unity.Attributes
                 if (GUILayout.Button("Rename Scriptable Object"))
                 {
                     scriptableObject.name = scriptableObjectName;
-                    property.serializedObject.ApplyModifiedProperties();
+                    propertyWrapper.Property.serializedObject.ApplyModifiedProperties();
                 }
             }
             else
@@ -262,9 +207,9 @@ namespace Enderlook.Unity.Attributes
                 if (GUILayout.Button(CLEAN_FIELD))
                 {
                     Undo.RecordObject(targetObject, "Clean field");
-                    set(null);
+                    propertyWrapper.Set(null);
                     path = DEFAULT_PATH;
-                    property.serializedObject.ApplyModifiedProperties();
+                    propertyWrapper.Property.serializedObject.ApplyModifiedProperties();
                 }
             }
         }
@@ -275,8 +220,8 @@ namespace Enderlook.Unity.Attributes
             Undo.RecordObject(targetObject, "Instantiate field");
             scriptableObject = CreateInstance(allowedTypes[index]);
             scriptableObject.name = name;
-            set(scriptableObject);
-            property.serializedObject.ApplyModifiedProperties();
+            propertyWrapper.Set(scriptableObject);
+            propertyWrapper.Property.serializedObject.ApplyModifiedProperties();
             return scriptableObject;
         }
 
