@@ -78,7 +78,7 @@ namespace Enderlook.Unity.Attributes
                     linkedList.AddLast(t);
                 }
             }
-            return linkedList;
+            return linkedList.OrderBy(e => e.Name);
         }
 
         public static void CreateWindow(SerializedProperty property, FieldInfo fieldInfo)
