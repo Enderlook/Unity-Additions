@@ -15,6 +15,15 @@ namespace Enderlook.Unity.Attributes.AttributeUsage.PostCompiling
 {
     public static class PostCompilingAssembliesHelper
     {
+        public static bool onlyCheckAssembliesFromPlayerAndEditor = true;
+        public static bool OnlyCheckAssembliesFromPlayerAndEditor {
+            get => onlyCheckAssembliesFromPlayerAndEditor;
+            set {
+                onlyCheckAssembliesFromPlayerAndEditor = value;
+                ExecuteAnalysis();
+            }
+        }
+
 #pragma warning disable CS0649
         // Type Less Enum
         private static readonly Dictionary<int, Action<Type>> executeOnEachTypeLessEnums = new Dictionary<int, Action<Type>>();
@@ -156,7 +165,7 @@ namespace Enderlook.Unity.Attributes.AttributeUsage.PostCompiling
         private static void ExecuteAnalysis()
         {
             // Can't do unsafe work in non-main thread. And this is unsafe
-            IEnumerable<Type> types = GetAllTypesOfPlayerAndEditorAssembliesThatShouldBeInspected();
+            IEnumerable<Type> types = GetAllTypesThatShouldBeInspected();
             task = new Task(() =>
             {
                 ScanAssemblies(types);
@@ -165,12 +174,20 @@ namespace Enderlook.Unity.Attributes.AttributeUsage.PostCompiling
             task.Start();
         }
 
+        private static IEnumerable<Assembly> GetAssemblies()
+        {
+            if (onlyCheckAssembliesFromPlayerAndEditor)
+                return AssembliesHelper.GetAllAssembliesOfPlayerAndEditorAssemblies();
+            else
+                return AppDomain.CurrentDomain.GetAssemblies();
+        }
+
         /// <summary>
-        /// Get all types of all Player and Editor assemblies which doesn't have <see cref="DoNotInspectAttribute"/> either the type or the assembly.
+        /// Get all types from assemblies which doesn't have <see cref="DoNotInspectAttribute"/> either the type or the assembly.
         /// </summary>
         /// <returns>All types of Player and Editor assemblies, which matches criteria..</returns>
-        private static IEnumerable<Type> GetAllTypesOfPlayerAndEditorAssembliesThatShouldBeInspected() =>
-            AssembliesHelper.GetAllAssembliesOfPlayerAndEditorAssemblies()
+        private static IEnumerable<Type> GetAllTypesThatShouldBeInspected() =>
+            GetAssemblies()
                 .Where(e => !e.IsDefined(typeof(DoNotInspectAttribute)))
                 .SelectMany(e => e.GetTypes()).Where(e => !e.IsDefined(typeof(DoNotInspectAttribute)));
 
