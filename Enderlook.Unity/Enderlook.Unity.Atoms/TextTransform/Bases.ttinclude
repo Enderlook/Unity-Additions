@@ -15,7 +15,7 @@
 #>
         public interface <#= interfaceGet #> : IGet<<#= dataType #>> { }
 
-        public interface <#= interfaceGetSet #> : IGet<<#= dataType #>>, <#= interfaceGet #> { }
+        public interface <#= interfaceGetSet #> : IGetSet<<#= dataType #>>, <#= interfaceGet #> { }
 
         [Serializable]
         public abstract class <#= atomGet #> : BaseScriptableObjectAtom, <#= interfaceGet #>

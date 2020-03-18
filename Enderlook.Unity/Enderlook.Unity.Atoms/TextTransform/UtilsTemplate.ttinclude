@@ -66,7 +66,7 @@ namespace Enderlook.Unity.Atoms
 
     string InterfaceGetSetName(string name)
     {
-        return "I" + name + "Set";
+        return "I" + name + "GetSet";
     }
 
     string ReferenceGetName(string name)
