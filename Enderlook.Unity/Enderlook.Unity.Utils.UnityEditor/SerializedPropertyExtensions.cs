@@ -219,19 +219,30 @@ namespace Enderlook.Unity.Utils.UnityEditor
         public static SerializedPropertyHelper GetHelper(this SerializedProperty source) => new SerializedPropertyHelper(source);
 
         /// <summary>
-        /// Get the field <see cref="Type"/> of the <see cref="SerializedProperty"/>.
+        /// Get the field <see cref="Type"/> of <paramref name="source"/>.
         /// </summary>
         /// <param name="source"><see cref="SerializedProperty"/> whose <see cref="Type"/> will be get.</param>
         /// <returns><see cref="Type"/> of the <paramref name="source"/>.</returns>
-        public static Type GetFieldType(this SerializedProperty source) => source.GetTargetObjectOfProperty().GetType();
+        public static Type GetFieldType(this SerializedProperty source) => source.GetFieldInfo().FieldType;
 
         /// <summary>
-        /// Get the <see cref="FieldInfo"/> of <see cref="SerializedProperty"/>.<br/>
-        /// Doesn't work on enumerable <see cref="SerializedProperty"/>.
+        /// Get the <see cref="Type"/> of the current value of <paramref name="source"/>.
+        /// </summary>
+        /// <param name="source"><see cref="SerializedProperty"/> whose current <see cref="Type"/> will be get.</param>
+        /// <returns><see cref="Type"/> of the current value of <paramref name="source"/>. Or <see langword="null"/> if it is empty.</returns>
+        public static Type GetCurrentPropertyValueType(this SerializedProperty source)
+        {
+            object targetObject = source.GetTargetObjectOfProperty();
+            return targetObject != null ? targetObject.GetType() : null;
+        }
+
+        /// <summary>
+        /// Get the <see cref="FieldInfo"/> of <see cref="SerializedProperty"/>.
         /// </summary>
         /// <param name="source"><see cref="SerializedProperty"/> whose <see cref="FieldInfo"/> will be get.</param>
         /// <returns><see cref="FieldInfo"/> of <paramref name="source"/>.</returns>
-        public static FieldInfo GetFieldInfo(this SerializedProperty source) => source.serializedObject.targetObject.GetType().GetField(source.name);
+        public static FieldInfo GetFieldInfo(this SerializedProperty source)
+            => source.GetParentTargetObjectOfProperty().GetType().GetField(source.name, bindingFlags);
 
         /// <summary>
         /// Get the index of the <paramref name="source"/> if it's an element of an array.
