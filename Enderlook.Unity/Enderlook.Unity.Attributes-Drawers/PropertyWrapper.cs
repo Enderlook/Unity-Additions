@@ -80,5 +80,19 @@ namespace Enderlook.Unity.Attributes
                 }
             }
         }
+
+        public static Type GetType(SerializedProperty property, FieldInfo fieldInfo)
+        {
+            if (property.objectReferenceValue)
+                return property.GetFieldType();
+            else
+            {
+                Type fieldType = fieldInfo.FieldType;
+                if (fieldType.IsArray)
+                    return fieldType.GetElementType();
+                else
+                    return fieldType;
+            }
+        }
     }
 }

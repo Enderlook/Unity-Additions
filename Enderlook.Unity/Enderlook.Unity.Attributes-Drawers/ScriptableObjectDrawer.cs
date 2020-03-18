@@ -1,46 +1,35 @@
-﻿using System;
-using System.Reflection;
-
-using UnityEditor;
+﻿using UnityEditor;
+using UnityEditor.Callbacks;
 
 using UnityEngine;
 
 namespace Enderlook.Unity.Attributes
 {
+    // We require this dummy drawer in order to active the additional property drawer required by the context menu
+
     [CustomPropertyDrawer(typeof(ScriptableObject), true)]
     internal class ScriptableObjectDrawer : AdditionalPropertyDrawer
     {
-        private static readonly GUIContent ADD_BUTTON_CONTENT = new GUIContent("+", "Open Scriptable Object Menu.");
-
-        protected override void OnGUIAdditional(Rect position, SerializedProperty property, GUIContent label) => DrawPropiertyField(position, property, label, fieldInfo);
-
-        public static void DrawPropiertyField(Rect position, SerializedProperty property, GUIContent label, FieldInfo fieldInfo)
+        [DidReloadScripts]
+        private static void SuscribeContextMenu()
         {
-            float buttonWidth = GUI.skin.button.CalcSize(ADD_BUTTON_CONTENT).x;
-            EditorGUI.PropertyField(new Rect(position.x, position.y, position.width - buttonWidth, position.height), property, label);
-            if (GUI.Button(new Rect(position.x + position.width - buttonWidth, position.y, buttonWidth, position.height), ADD_BUTTON_CONTENT))
-                ScriptableObjectWindow.CreateWindow(property, fieldInfo);
-        }
-
-        /// <summary>
-        /// Draw property field if <paramref name="fieldInfo"/> type or element type is <see cref="ScriptableObject"/>.
-        /// </summary>
-        /// <param name="position">Position to draw property field.</param>
-        /// <param name="property">Property field to draw.</param>
-        /// <param name="label">Label of property.</param>
-        /// <param name="fieldInfo">Field info property.</param>
-        /// <returns>Whenever it drew the property field or not.</returns>
-        public static bool DrawPropertyFieldIfIsScriptableObject(Rect position, SerializedProperty property, GUIContent label, FieldInfo fieldInfo)
-        {
-            Type type = fieldInfo.FieldType;
-            if (type.IsArray)
-                type = type.GetElementType();
-            if (type.IsSubclassOf(typeof(ScriptableObject)))
+            AddContextMenuItemGenerator((PropertyDrawerInfo propertyDrawerInfo, out bool valid, out GUIContent guiContent, out GenericMenu.MenuFunction menuFunction) =>
             {
-                DrawPropiertyField(position, property, label, fieldInfo);
-                return true;
-            }
-            return false;
+                if (typeof(ScriptableObject).IsAssignableFrom(propertyDrawerInfo.Type))
+                {
+                    valid = true;
+                    guiContent = new GUIContent("Scriptable Object Menu", "Open the Scriptable Object Menu.");
+                    menuFunction = () => ScriptableObjectWindow.CreateWindow(propertyDrawerInfo.Property, propertyDrawerInfo.FieldInfo);
+                    return true;
+                }
+                valid = false;
+                guiContent = null;
+                menuFunction = null;
+                return false;
+            });
         }
+
+        protected override void OnGUIAdditional(Rect position, SerializedProperty property, GUIContent label)
+            => EditorGUI.PropertyField(position, property, label, true);
     }
 }

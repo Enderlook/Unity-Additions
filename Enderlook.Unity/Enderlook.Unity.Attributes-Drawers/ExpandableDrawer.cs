@@ -34,14 +34,7 @@ namespace Enderlook.Unity.Attributes
         {
             object reference = property.objectReferenceValue;
 
-            // Compatibility with ScriptableObjectDrawer
-            if (!ScriptableObjectDrawer.DrawPropertyFieldIfIsScriptableObject(position, property, label, fieldInfo))
-            {
-                if (reference?.GetType().IsSubclassOf(typeof(ScriptableObject)) == true)
-                    ScriptableObjectDrawer.DrawPropiertyField(position, property, label, fieldInfo);
-                else
-                    EditorGUI.PropertyField(position, property, label, true);
-            }
+            EditorGUI.PropertyField(position, property, label, true);
 
             Type type = property.serializedObject.targetObject.GetType();
             if (!type.IsSubclassOf(typeof(UnityEngine.Object)))

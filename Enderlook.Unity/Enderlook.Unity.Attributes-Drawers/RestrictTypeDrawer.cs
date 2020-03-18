@@ -35,9 +35,7 @@ namespace Enderlook.Unity.Attributes
             }
 
             UnityObject old = property.objectReferenceValue;
-            // Compatibility with ScriptableObjectDrawer
-            if (!ScriptableObjectDrawer.DrawPropertyFieldIfIsScriptableObject(position, property, label, fieldInfo))
-                EditorGUI.PropertyField(position, property, label);
+            EditorGUI.PropertyField(position, property, label);
             UnityObject result = property.objectReferenceValue;
 
             if ((old != result || firstTime) && result != null // We check for differences to avoid wasting perfomance
