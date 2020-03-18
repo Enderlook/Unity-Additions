@@ -1,35 +1,29 @@
-﻿using UnityEditor;
-using UnityEditor.Callbacks;
+﻿using Enderlook.Unity.Utils.UnityEditor;
+
+using System.Reflection;
+
+using UnityEditor;
 
 using UnityEngine;
 
 namespace Enderlook.Unity.Attributes
 {
-    // We require this dummy drawer in order to active the additional property drawer required by the context menu
-
-    [CustomPropertyDrawer(typeof(ScriptableObject), true)]
-    internal class ScriptableObjectDrawer : AdditionalPropertyDrawer
+    [InitializeOnLoad]
+    internal static class ScriptableObjectDrawer
     {
-        [DidReloadScripts]
-        private static void SuscribeContextMenu()
+        private static GUIContent GUI_CONTENT = new GUIContent("Scriptable Object Menu", "Open the Scriptable Object Menu.");
+        static ScriptableObjectDrawer()
         {
-            AddContextMenuItemGenerator((PropertyDrawerInfo propertyDrawerInfo, out bool valid, out GUIContent guiContent, out GenericMenu.MenuFunction menuFunction) =>
+            EditorApplication.contextualPropertyMenu += (GenericMenu menu, SerializedProperty property) =>
             {
-                if (typeof(ScriptableObject).IsAssignableFrom(propertyDrawerInfo.Type))
-                {
-                    valid = true;
-                    guiContent = new GUIContent("Scriptable Object Menu", "Open the Scriptable Object Menu.");
-                    menuFunction = () => ScriptableObjectWindow.CreateWindow(propertyDrawerInfo.Property, propertyDrawerInfo.FieldInfo);
-                    return true;
-                }
-                valid = false;
-                guiContent = null;
-                menuFunction = null;
-                return false;
-            });
+                FieldInfo fieldInfo = property.GetFieldInfo();
+                if (typeof(ScriptableObject).IsAssignableFrom(fieldInfo.FieldType))
+                    menu.AddItem(
+                        GUI_CONTENT,
+                        false,
+                        () => ScriptableObjectWindow.CreateWindow(property, fieldInfo)
+                    );
+            };
         }
-
-        protected override void OnGUIAdditional(Rect position, SerializedProperty property, GUIContent label)
-            => EditorGUI.PropertyField(position, property, label, true);
     }
 }
