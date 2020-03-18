@@ -29,7 +29,7 @@
         /// </summary>
         <#= "///" #> <param name="value">Value of new <see cref="<#= atomVariable #>"/>.</param>
         <#= "///" #> <returns>New <see cref="<#= atomVariable #>"/>.</returns>
-        public static <#= atomVariable #> CreateConstant(<#= dataType #> value)
+        public static <#= atomVariable #> CreateVariable(<#= dataType #> value)
         {
             <#= atomVariable #> atom = CreateInstance<<#= atomVariable #>>();
             atom.value = value;

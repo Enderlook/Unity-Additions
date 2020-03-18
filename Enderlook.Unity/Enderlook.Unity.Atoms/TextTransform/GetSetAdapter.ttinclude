@@ -35,7 +35,7 @@
         /// </summary>
         <#= "///" #> <param name="wrapped">Value of new <see cref="<#= atomGetSetAdapter #>"/>.</param>
         <#= "///" #> <returns>New <see cref="<#= atomGetSetAdapter #>"/>.</returns>
-        public static <#= atomGetSetAdapter #> CreateConstant<T>(T wrapped) where T : UnityObject, IGet<<#= dataType #>>
+        public static <#= atomGetSetAdapter #> CreateGetSetAdapter<T>(T wrapped) where T : UnityObject, IGet<<#= dataType #>>
         {
             <#= atomGetSetAdapter #> atom = CreateInstance<<#= atomGetSetAdapter #>>();
             atom.getter = wrapped;

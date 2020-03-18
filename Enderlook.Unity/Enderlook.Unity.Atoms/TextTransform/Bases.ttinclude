@@ -13,21 +13,21 @@
 
         WriteHeader();
 #>
-        public interface <#= interfaceGet #> : IGet<<#= dataType #>> { }
+    public interface <#= interfaceGet #> : IGet<<#= dataType #>> { }
 
-        public interface <#= interfaceGetSet #> : IGetSet<<#= dataType #>>, <#= interfaceGet #> { }
+    public interface <#= interfaceGetSet #> : IGetSet<<#= dataType #>>, <#= interfaceGet #> { }
 
-        [Serializable]
-        public abstract class <#= atomGet #> : BaseScriptableObjectAtom, <#= interfaceGet #>
-        {
-            public abstract <#= dataType #> GetValue();
-        }
+    [Serializable]
+    public abstract class <#= atomGet #> : BaseScriptableObjectAtom, <#= interfaceGet #>
+    {
+        public abstract <#= dataType #> GetValue();
+    }
 
-        [Serializable]
-        public abstract class <#= atomGetSet #> : <#= atomGet #>, <#= interfaceGetSet #>
-        {
-            public abstract void SetValue(<#= dataType #> value);
-        }
+    [Serializable]
+    public abstract class <#= atomGetSet #> : <#= atomGet #>, <#= interfaceGetSet #>
+    {
+        public abstract void SetValue(<#= dataType #> value);
+    }
 <#+
         SaveOutput(name + "Others", name);
     }
