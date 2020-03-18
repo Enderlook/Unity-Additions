@@ -94,5 +94,7 @@ namespace Enderlook.Unity.Attributes
                     return fieldType;
             }
         }
+
+        public void ApplyModifiedProperties() => Property.serializedObject.ApplyModifiedProperties();
     }
 }

@@ -84,5 +84,19 @@ namespace Enderlook.Unity.Attributes
             errorMessage = null;
             return true;
         }
+
+        /// <summary>
+        /// Check if the given type is allowed by <paramref name="attribute"/> restrictions.
+        /// </summary>
+        /// <param name="attribute">Attribute which produces the restriction.</param>
+        /// <param name="resultType"><see cref="Type"/> to be checked</param>
+        /// <returns>Whenever its allowed or there is an error.</returns>
+        public static bool CheckIfTypeIsAllowed(this RestrictTypeAttribute attribute, Type resultType)
+        {
+            foreach (Type type in attribute.restriction)
+                if (!resultType.IsCastableTo(type))
+                    return false;
+            return true;
+        }
     }
 }
