@@ -11,7 +11,7 @@ namespace Enderlook.Unity.Attributes
     //[CustomPropertyDrawer(typeof(UnityEngine.Object), true)] // Will affect all objects
     //[CustomPropertyDrawer(typeof(ScriptableObject), true)] // Will only affect scriptable objects
     [CustomPropertyDrawer(typeof(ExpandableAttribute), true)]
-    internal class ExpandableDrawer : AdditionalPropertyDrawer
+    internal class ExpandableDrawer : SmartPropertyDrawer
     {
         // https://forum.unity.com/threads/editor-tool-better-scriptableobject-inspector-editing.484393/
 
@@ -30,7 +30,7 @@ namespace Enderlook.Unity.Attributes
                 throw new ArgumentOutOfRangeException(nameof(COLOR_MULTIPLIER), COLOR_MULTIPLIER, "Must be greater than 0 and lower or equal 1.");
         }
 
-        protected override void OnGUIAdditional(Rect position, SerializedProperty property, GUIContent label)
+        protected override void OnGUISmart(Rect position, SerializedProperty property, GUIContent label)
         {
             object reference = property.objectReferenceValue;
 

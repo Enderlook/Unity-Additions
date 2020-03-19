@@ -6,7 +6,7 @@ using UnityEngine;
 namespace Enderlook.Unity.Attributes
 {
     [CustomPropertyDrawer(typeof(ShowIfAttribute))]
-    internal class ShowIfDrawer : AdditionalPropertyDrawer
+    internal class ShowIfDrawer : SmartPropertyDrawer
     {
         /// <summary>
         /// If <see langword="true"/>, the property field is either disabled or hidden.
@@ -15,7 +15,7 @@ namespace Enderlook.Unity.Attributes
 
         private ShowIfAttribute.ActionMode mode;
 
-        protected override void OnGUIAdditional(Rect position, SerializedProperty property, GUIContent label)
+        protected override void OnGUISmart(Rect position, SerializedProperty property, GUIContent label)
         {
             ShowIfAttribute showIfAttribute = (ShowIfAttribute)attribute;
             mode = showIfAttribute.mode;
@@ -29,7 +29,7 @@ namespace Enderlook.Unity.Attributes
                     bool idented = showIfAttribute.indented;
                     if (idented)
                         EditorGUI.indentLevel++;
-                    GUIDrawer.GetGUIContent(helper, ref label);
+                    SerializedPropertyGUIHelper.GetGUIContent(helper, ref label);
                     EditorGUI.PropertyField(position, property, label, true);
                     if (idented)
                         EditorGUI.indentLevel--;

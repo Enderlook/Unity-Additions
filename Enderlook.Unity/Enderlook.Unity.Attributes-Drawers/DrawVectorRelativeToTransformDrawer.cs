@@ -12,9 +12,9 @@ using UnityEngine;
 namespace Enderlook.Unity.Attributes
 {
     [CustomPropertyDrawer(typeof(DrawVectorRelativeToTransformAttribute)), InitializeOnLoad]
-    internal class DrawVectorRelativeToTransformEditor : AdditionalPropertyDrawer
+    internal class DrawVectorRelativeToTransformEditor : SmartPropertyDrawer
     {
-        protected override void OnGUIAdditional(Rect position, SerializedProperty property, GUIContent label)
+        protected override void OnGUISmart(Rect position, SerializedProperty property, GUIContent label)
         {
             EditorGUI.BeginProperty(position, label, property);
             EditorGUI.PropertyField(position, property, label, true);

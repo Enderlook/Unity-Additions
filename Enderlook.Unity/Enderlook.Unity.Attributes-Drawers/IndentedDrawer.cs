@@ -5,9 +5,9 @@ using UnityEngine;
 namespace Enderlook.Unity.Attributes
 {
     [CustomPropertyDrawer(typeof(IndentedAttribute))]
-    internal class IndentedDrawer : AdditionalPropertyDrawer
+    internal class IndentedDrawer : SmartPropertyDrawer
     {
-        protected override void OnGUIAdditional(Rect position, SerializedProperty property, GUIContent label)
+        protected override void OnGUISmart(Rect position, SerializedProperty property, GUIContent label)
         {
             IndentedAttribute indentedAttribute = (IndentedAttribute)attribute;
             int indentation = indentedAttribute.indentationOffset;

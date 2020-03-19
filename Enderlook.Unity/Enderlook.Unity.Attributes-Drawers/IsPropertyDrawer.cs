@@ -5,9 +5,9 @@ using UnityEngine;
 namespace Enderlook.Unity.Attributes
 {
     [CustomPropertyDrawer(typeof(IsPropertyAttribute))]
-    internal class IsPropertyDrawer : AdditionalPropertyDrawer
+    internal class IsPropertyDrawer : SmartPropertyDrawer
     {
-        protected override void OnGUIAdditional(Rect position, SerializedProperty property, GUIContent label)
+        protected override void OnGUISmart(Rect position, SerializedProperty property, GUIContent label)
         {
             label.text = label.text.Replace("<", "").Replace(">k__Backing Field", "");
 

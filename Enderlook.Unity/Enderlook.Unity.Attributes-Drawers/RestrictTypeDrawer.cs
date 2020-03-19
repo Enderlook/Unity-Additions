@@ -7,7 +7,7 @@ using UnityObject = UnityEngine.Object;
 namespace Enderlook.Unity.Attributes
 {
     [CustomPropertyDrawer(typeof(RestrictTypeAttribute))]
-    public class RestrictTypeDrawer : AdditionalPropertyDrawer
+    public class RestrictTypeDrawer : SmartPropertyDrawer
     {
         private float? height;
         private bool firstTime = true;
@@ -18,7 +18,7 @@ namespace Enderlook.Unity.Attributes
             return new Rect(position.x, position.y, position.width, height.Value);
         }
 
-        protected override void OnGUIAdditional(Rect position, SerializedProperty property, GUIContent label)
+        protected override void OnGUISmart(Rect position, SerializedProperty property, GUIContent label)
         {
             void DrawErrorBox(string message)
             {

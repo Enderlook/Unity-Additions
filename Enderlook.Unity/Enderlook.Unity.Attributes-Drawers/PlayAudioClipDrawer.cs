@@ -10,9 +10,9 @@ using UnityEngine;
 namespace Enderlook.Unity.Attributes
 {
     [CustomPropertyDrawer(typeof(PlayAudioClipAttribute))]
-    public class PlayAudioClipDrawer : AdditionalPropertyDrawer
+    public class PlayAudioClipDrawer : SmartPropertyDrawer
     {
-        protected override void OnGUIAdditional(Rect position, SerializedProperty property, GUIContent label)
+        protected override void OnGUISmart(Rect position, SerializedProperty property, GUIContent label)
         {
             PlayAudioClipAttribute playAudioClipAttribute = (PlayAudioClipAttribute)attribute;
 

@@ -10,11 +10,11 @@ using UnityEngine;
 namespace Enderlook.Unity.Attributes
 {
     [CustomPropertyDrawer(typeof(HasConfirmationFieldAttribute))]
-    internal class HasConfirmationDrawer : AdditionalPropertyDrawer
+    internal class HasConfirmationDrawer : SmartPropertyDrawer
     {
         private bool confirm;
 
-        protected override void OnGUIAdditional(Rect position, SerializedProperty property, GUIContent label)
+        protected override void OnGUISmart(Rect position, SerializedProperty property, GUIContent label)
         {
             EditorGUI.BeginProperty(position, label, property);
 

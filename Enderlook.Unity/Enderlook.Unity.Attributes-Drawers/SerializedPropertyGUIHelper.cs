@@ -7,14 +7,14 @@ using UnityEngine;
 
 namespace Enderlook.Unity.Attributes
 {
-    [CustomPropertyDrawer(typeof(GUIAttribute))]
-    internal class GUIDrawer : AdditionalPropertyDrawer
+    /// <summary>
+    /// A helper class to manage <see cref="GUIAttribute"/> and <see cref="NameAttribute"/>.
+    /// </summary>
+    internal static class SerializedPropertyGUIHelper
     {
-        protected override void OnGUIAdditional(Rect position, SerializedProperty property, GUIContent label) =>
-            // GetGUIContent is already called by AdditionalPropertyDrawer
-            EditorGUI.PropertyField(position, property, label, true);
+        private static void UseNameAttribute(NameAttribute attribute, GUIContent label) => label.text = attribute.name;
 
-        private static GUIContent GetGUIContent(GUIAttribute attribute, SerializedPropertyHelper helper, GUIContent label)
+        private static void GetGUIContent(GUIAttribute attribute, SerializedPropertyHelper helper, ref GUIContent label)
         {
             string text = null, tooltip = null;
 
@@ -36,23 +36,25 @@ namespace Enderlook.Unity.Attributes
                     if (attribute.nameMode == GUIAttribute.Mode.Reference)
                         text = parent.GetValueFromFirstMember<string>(attribute.name);
                     if (attribute.tooltipMode == GUIAttribute.Mode.Reference)
-                        tooltip = parent.GetValueFromFirstMember<string>(attribute.name);
+                        tooltip = parent.GetValueFromFirstMember<string>(attribute.tooltip);
                 }
 
-                return new GUIContent(text ?? label.text, label.image, tooltip ?? label.tooltip);
+                if (!(text is null))
+                    label.text = text;
+
+                if (!(tooltip is null))
+                    label.tooltip = tooltip;
             }
             else if (helper.TryGetParentTargetObjectOfProperty(out object parent))
                 try
                 {
-                    return parent.GetValueFromFirstMember<GUIContent>(attribute.guiContentOrReferenceName);
+                    label = parent.GetValueFromFirstMember<GUIContent>(attribute.guiContentOrReferenceName);
                 }
                 catch (MatchingMemberNotFoundException)
                 {
                     text = parent.GetValueFromFirstMember<string>(attribute.guiContentOrReferenceName);
-                    return new GUIContent(text ?? label.text, label.image, label.tooltip);
+                    label.text = text;
                 }
-
-            return label;
         }
 
         /// <summary>
@@ -63,12 +65,21 @@ namespace Enderlook.Unity.Attributes
         /// <returns>Whenever there was or not an special <see cref="GUIContent"/>.</returns>
         public static bool GetGUIContent(SerializedPropertyHelper helper, ref GUIContent label)
         {
+            bool isSpecial = false;
+
+            if (helper.TryGetAttributeFromField(out NameAttribute nameAttribute))
+            {
+                UseNameAttribute(nameAttribute, label);
+                isSpecial = true;
+            }
+
             if (helper.TryGetAttributeFromField(out GUIAttribute guiAttribute))
             {
-                label = GetGUIContent(guiAttribute, helper, label);
-                return true;
+                GetGUIContent(guiAttribute, helper, ref label);
+                isSpecial = true;
             }
-            return false;
+
+            return isSpecial;
         }
 
         /// <summary>
@@ -80,12 +91,7 @@ namespace Enderlook.Unity.Attributes
         public static bool GetGUIContent(SerializedProperty serializedProperty, ref GUIContent label)
         {
             SerializedPropertyHelper helper = serializedProperty.GetHelper();
-            if (helper.TryGetAttributeFromField(out GUIAttribute guiAttribute))
-            {
-                label = GetGUIContent(guiAttribute, helper, label);
-                return true;
-            }
-            return false;
+            return GetGUIContent(helper, ref label);
         }
     }
 }

@@ -11,13 +11,13 @@ using Random = UnityEngine.Random;
 namespace Enderlook.Unity.Attributes
 {
     [CustomPropertyDrawer(typeof(RangeAttribute))]
-    internal class RangeDrawer : AdditionalPropertyDrawer
+    internal class RangeDrawer : SmartPropertyDrawer
     {
         private readonly string error = $"{nameof(RangeAttribute)} only supports serialized properties of {nameof(SerializedPropertyType.Integer)} ({typeof(int)}) and {nameof(SerializedPropertyType.Float)} ({typeof(float)})).";
 
         private bool foldout;
 
-        protected override void OnGUIAdditional(Rect position, SerializedProperty property, GUIContent label)
+        protected override void OnGUISmart(Rect position, SerializedProperty property, GUIContent label)
         {
             if (foldout)
                 position.height -= EditorGUIUtility.singleLineHeight;

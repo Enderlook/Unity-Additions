@@ -5,9 +5,9 @@ using UnityEngine;
 namespace Enderlook.Unity.Attributes
 {
     [CustomPropertyDrawer(typeof(ReadOnlyAttribute))]
-    internal class ReadOnlyDrawer : AdditionalPropertyDrawer
+    internal class ReadOnlyDrawer : SmartPropertyDrawer
     {
-        protected override void OnGUIAdditional(Rect position, SerializedProperty property, GUIContent label)
+        protected override void OnGUISmart(Rect position, SerializedProperty property, GUIContent label)
         {
             EditorGUI.BeginProperty(position, label, property);
             EditorGUI.BeginDisabledGroup(true);
