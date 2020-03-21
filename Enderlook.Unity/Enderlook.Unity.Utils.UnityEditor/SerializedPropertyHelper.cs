@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Enderlook.Extensions;
+
+using System;
 using System.Reflection;
 
 using UnityEditor;
@@ -165,6 +167,35 @@ namespace Enderlook.Unity.Utils.UnityEditor
         public GUIContent GetGUIContent() => serializedProperty.GetGUIContent();
 
         /// <summary>
+        /// Get the <see cref="Attribute"/> of type <typeparamref name="T"/> of the field.<br/>
+        /// It does include <see langword="private"/> fields of super-classes.
+        /// </summary>
+        /// <typeparam name="T">Type of the <see cref="Attribute"/></typeparam>
+        /// <returns>The <see cref="Attribute"/> of type <typeparamref name="T"/>.</returns>
+        public T GetAttributeFromInheritedField<T>() where T : Attribute
+        {
+            if (TryGetParentTargetObjectOfProperty(out object parent))
+                return parent
+                    .GetType()
+                    .GetInheritedField(serializedProperty.name, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.FlattenHierarchy)
+                    .GetCustomAttribute<T>(true);
+            return null;
+        }
+
+        /// <summary>
+        /// Try get the <see cref="Attribute"/> of type <typeparamref name="T"/> of the field.<br/>
+        /// It does include <see langword="private"/> fields of super-classes.
+        /// </summary>
+        /// <typeparam name="T">Type of the <see cref="Attribute"/></typeparam>
+        /// <param name="attribute">The <see cref="Attribute"/> of type <typeparamref name="T"/>.</param>
+        /// <returns>Whenever it could be found or not.</returns>
+        public bool TryGetAttributeFromInheritedField<T>(out T attribute) where T : Attribute
+        {
+            attribute = GetAttributeFromInheritedField<T>();
+            return attribute != null;
+        }
+
+        /// <summary>
         /// Get the <see cref="Attribute"/> of type <typeparamref name="T"/> of the field.
         /// </summary>
         /// <typeparam name="T">Type of the <see cref="Attribute"/></typeparam>
@@ -172,7 +203,10 @@ namespace Enderlook.Unity.Utils.UnityEditor
         public T GetAttributeFromField<T>() where T : Attribute
         {
             if (TryGetParentTargetObjectOfProperty(out object parent))
-                return parent.GetType().GetField(serializedProperty.name, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.FlattenHierarchy).GetCustomAttribute<T>(true);
+                return parent
+                    .GetType()
+                    .GetField(serializedProperty.name, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.FlattenHierarchy)
+                    .GetCustomAttribute<T>(true);
             return null;
         }
 
