@@ -1,0 +1,49 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ include file="$(TextTransformDir)\UtilsTemplate.ttinclude" #>
+<#@ include file="$(TextTransformDir)\Actions\Actions.ttinclude" #>
+<#@ include file="$(TextTransformDir)\Events\Atoms\Event.ttinclude" #>
+<#@ include file="$(TextTransformDir)\Events\Atoms\Event2.ttinclude" #>
+<#@ include file="$(TextTransformDir)\Events\Listeners\EventListener.ttinclude" #>
+<#@ include file="$(TextTransformDir)\Events\Listeners\EventListener2.ttinclude" #>
+<#@ include file="$(TextTransformDir)\Events\References\EventReference.ttinclude" #>
+<#@ include file="$(TextTransformDir)\Events\References\EventReference2.ttinclude" #>
+<#@ include file="$(TextTransformDir)\Transformers\Transformer.ttinclude" #>
+<#@ include file="$(TextTransformDir)\Transformers\TransformerFunction.ttinclude" #>
+<#@ include file="$(TextTransformDir)\Transformers\TransformerGroup.ttinclude" #>
+<#@ include file="$(TextTransformDir)\Values\Atoms\Constant.ttinclude" #>
+<#@ include file="$(TextTransformDir)\Values\Atoms\Variable.ttinclude" #>
+<#@ include file="$(TextTransformDir)\Values\Bases\Components.ttinclude" #>
+<#@ include file="$(TextTransformDir)\Values\Bases\Interfaces.ttinclude" #>
+<#@ include file="$(TextTransformDir)\Values\Bases\ScriptableObjects.ttinclude" #>
+<#@ include file="$(TextTransformDir)\Values\Instancers\GetSetInstancer.ttinclude" #>
+<#@ include file="$(TextTransformDir)\Values\Instancers\ManagedInstancer.ttinclude" #>
+<#@ include file="$(TextTransformDir)\Values\References\GetReference.ttinclude" #>
+<#@ include file="$(TextTransformDir)\Values\References\GetSetReference.ttinclude" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#+
+    void Generate(string name, string dataType)
+    {
+        WriteActions(name, dataType);
+        WriteEvent(name, dataType);
+        WriteEvent2(name, dataType);
+        WriteEventListener(name, dataType);
+        WriteEventListener2(name, dataType);
+        WriteEventReference(name, dataType);
+        WriteEventReference2(name, dataType);
+        WriteTransformer(name, dataType);
+        WriteTransformerFunction(name, dataType);
+        WriteTransformerGroup(name, dataType);
+        WriteConstant(name, dataType);
+        WriteVariable(name, dataType);
+        WriteComponents(name, dataType);
+        WriteInterfaces(name, dataType);
+        WriteScriptableObjects(name, dataType);
+        WriteGetSetInstancer(name, dataType);
+        WriteManagedInstancer(name, dataType);
+        WriteGetReference(name, dataType);
+        WriteGetSetReference(name, dataType);
+    }
+#>

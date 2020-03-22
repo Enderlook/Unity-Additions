@@ -79,9 +79,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Enderlook.Unity.Atoms", "En
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Enderlook.Unity.ScriptableObjects.PolySwitchers-Editor", "Enderlook.Unity.ScriptableObjects.PolySwitchers-Editor\Enderlook.Unity.ScriptableObjects.PolySwitchers-Editor.csproj", "{070164B8-215A-4847-A306-CB4891CCFADA}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Enderlook.Unity.Atoms.PolySwitch", "Enderlook.Unity.Atoms.PolySwitch\Enderlook.Unity.Atoms.PolySwitch.csproj", "{1F41D5EA-0FE3-431D-8694-FDE0D4BE58CD}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Enderlook.Unity.Atoms-Drawers", "Enderlook.Unity.Atoms-Drawers\Enderlook.Unity.Atoms-Drawers.csproj", "{44C7194A-74E1-451C-8351-FF11D9EB5E2D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Enderlook.Unity.Atoms-Drawers", "Enderlook.Unity.Atoms-Drawers\Enderlook.Unity.Atoms-Drawers.csproj", "{44C7194A-74E1-451C-8351-FF11D9EB5E2D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -373,14 +371,6 @@ Global
 		{070164B8-215A-4847-A306-CB4891CCFADA}.Release Editor|Any CPU.Build.0 = Release Editor|Any CPU
 		{070164B8-215A-4847-A306-CB4891CCFADA}.Release Game|Any CPU.ActiveCfg = Release Editor|Any CPU
 		{070164B8-215A-4847-A306-CB4891CCFADA}.Release Game|Any CPU.Build.0 = Release Editor|Any CPU
-		{1F41D5EA-0FE3-431D-8694-FDE0D4BE58CD}.Debug Editor|Any CPU.ActiveCfg = Debug Editor|Any CPU
-		{1F41D5EA-0FE3-431D-8694-FDE0D4BE58CD}.Debug Editor|Any CPU.Build.0 = Debug Editor|Any CPU
-		{1F41D5EA-0FE3-431D-8694-FDE0D4BE58CD}.Debug Game|Any CPU.ActiveCfg = Debug Game|Any CPU
-		{1F41D5EA-0FE3-431D-8694-FDE0D4BE58CD}.Debug Game|Any CPU.Build.0 = Debug Game|Any CPU
-		{1F41D5EA-0FE3-431D-8694-FDE0D4BE58CD}.Release Editor|Any CPU.ActiveCfg = Release Editor|Any CPU
-		{1F41D5EA-0FE3-431D-8694-FDE0D4BE58CD}.Release Editor|Any CPU.Build.0 = Release Editor|Any CPU
-		{1F41D5EA-0FE3-431D-8694-FDE0D4BE58CD}.Release Game|Any CPU.ActiveCfg = Release Game|Any CPU
-		{1F41D5EA-0FE3-431D-8694-FDE0D4BE58CD}.Release Game|Any CPU.Build.0 = Release Game|Any CPU
 		{44C7194A-74E1-451C-8351-FF11D9EB5E2D}.Debug Editor|Any CPU.ActiveCfg = Debug Editor|Any CPU
 		{44C7194A-74E1-451C-8351-FF11D9EB5E2D}.Debug Editor|Any CPU.Build.0 = Debug Editor|Any CPU
 		{44C7194A-74E1-451C-8351-FF11D9EB5E2D}.Debug Game|Any CPU.ActiveCfg = Debug Editor|Any CPU

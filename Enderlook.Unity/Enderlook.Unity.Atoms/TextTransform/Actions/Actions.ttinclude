@@ -1,0 +1,16 @@
+﻿<#+
+    void WriteActions(string name, string dataType)
+    {
+        WriteHeader();
+#>
+using UnityEngine; // Used for atoms with Unity data types
+<#+
+        WriteNamespace();
+#>
+    public abstract class <#= name #>Action : AtomAction<<#= dataType #>> { }
+
+    public abstract class <#= name #>Action2 : AtomAction2<<#= dataType #>> { }
+<#+
+        SaveOutput(name + "Actions", "Actions");
+    }
+#>

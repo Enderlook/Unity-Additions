@@ -1,0 +1,82 @@
+﻿<#+
+    void WriteGetSetReference(string name, string dataType)
+    {
+    WriteHeader();
+#>
+using Enderlook.Utils.Exceptions;
+
+using System;
+
+using UnityEngine;
+<#+
+        WriteNamespace();
+#>
+    [Serializable]
+    public class <#= name #>GetSetReference : BaseValueReference, I<#= name #>GetSet
+    {
+        [SerializeField]
+        private <#= dataType #> inline;
+
+        [SerializeField]
+        private <#= name #>GetSetSO scriptableObject;
+
+        [SerializeField]
+        private <#= name #>GetSetComponent component;
+
+        public <#= dataType #> InitialValue {
+            get {
+                switch (Mode)
+                {
+                    case ReferenceMode.Inline:
+                        return inline;
+                    case ReferenceMode.ScriptableObject:
+                        return scriptableObject.GetValue();
+                    case ReferenceMode.Component:
+                        return component.GetValue();
+                    default:
+                        throw new ImpossibleStateException();
+                }
+            }
+        }
+
+        /// <inheritdoc cref="Interfaces.IGet{T}.GetValue"/>
+        public <#= dataType #> GetValue()
+        {
+            switch (Mode)
+            {
+                case ReferenceMode.Inline:
+                    return inline;
+                case ReferenceMode.ScriptableObject:
+                    return scriptableObject.GetValue();
+                case ReferenceMode.Component:
+                    return component.GetValue();
+                default:
+                    throw new ImpossibleStateException();
+            }
+        }
+
+        /// <inheritdoc cref="IGetSet{T}.SetValue"/>
+        public void SetValue(<#= dataType #> newValue)
+        {
+            switch (Mode)
+            {
+                case ReferenceMode.Inline:
+                    inline = newValue;
+                    break;
+                case ReferenceMode.ScriptableObject:
+                    scriptableObject.SetValue(newValue);
+                    break;
+                case ReferenceMode.Component:
+                    component.SetValue(newValue);
+                    break;
+                default:
+                    throw new ImpossibleStateException();
+            }
+        }
+
+        public static implicit operator <#= dataType #>(<#= name #>GetSetReference instance) => instance.GetValue();
+    }
+<#+
+        SaveOutput(name + "GetSetReference", "Values/References");
+    }
+#>

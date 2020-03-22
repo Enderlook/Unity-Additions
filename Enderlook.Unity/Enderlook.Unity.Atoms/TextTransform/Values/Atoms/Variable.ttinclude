@@ -1,0 +1,106 @@
+﻿<#+
+    void WriteVariable(string name, string dataType)
+    {
+        WriteHeader();
+#>
+using Enderlook.Unity.Attributes;
+using Enderlook.Unity.Utils;
+
+using System.Runtime.CompilerServices;
+
+using UnityEngine;
+<#+
+        WriteNamespace();
+#>
+    [CreateAssetMenu(fileName = "<#= name #>Variable", menuName = "<#= menuPath #>Values/Variables/<#= name #>")]
+    public class <#= name #>Variable : <#= name #>ManagedSO
+    {
+        [SerializeField, Tooltip("Initial value of this atom.")]
+        private <#= dataType #> initialValue;
+
+        [SerializeField, ReadOnly, Tooltip("Current value of this atom.")]
+        private <#= dataType #> value;
+
+        [SerializeField, ReadOnly, Tooltip("Previous value of this atom.")]
+        private <#= dataType #> oldValue;
+
+        [SerializeField, Tooltip("Input values will be processed by this method.")]
+        private <#= name #>Transformer transformer;
+
+        [SerializeField, Tooltip("Event raised when a value is changed. The parameter is the new value.")]
+        private <#= name #>Event changed;
+        protected override IEventRegister<<#= dataType #>> Changed {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => changed;
+        }
+
+        [SerializeField, Tooltip("Event raised when a value is changed. The parameters is the new value and the old value.")]
+        private <#= name #>Event2 changedWithHistory;
+        protected override IEventRegister2<<#= dataType #>> ChangedWithHistory {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => changedWithHistory;
+        }
+
+        public override <#= dataType #> InitialValue {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => initialValue;
+        }
+
+        /// <inheritdoc />
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public override <#= dataType #> GetValue() => value;
+
+        /// <inheritdoc />
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public override void SetValue(<#= dataType #> newValue)
+        {
+            SetValueInternal(newValue);
+
+            if (changed != null)
+                changed.RaiseEvent(value);
+
+            if (changedWithHistory != null)
+                changedWithHistory.RaiseEvent(value, oldValue);
+        }
+
+        /// <inheritdoc />
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        protected override void SetValueInternal(<#= dataType #> newValue)
+        {
+            oldValue = value;
+            if (transformer != null)
+                newValue = transformer.Transform(newValue);
+            value = newValue;
+        }
+
+        /// <summary>
+        <#= "///" #> Create a new <see cref="<#= name #>Variable"/> with given value <paramref name="value"/>.
+        /// </summary>
+        <#= "///" #> <param name="value">Value of the new <see cref="<#= name #>Variable"/>.</param>
+        <#= "///" #> <returns>New instance of <see cref="<#= name #>Variable"/>.</returns>
+        public static <#= name #>Variable CreateVariable(<#= dataType #> value)
+        {
+            <#= name #>Variable instance = CreateInstance<<#= name #>Variable>();
+            instance.value = value;
+            return instance;
+        }
+
+        /// <summary>
+        /// Create a prototype of this instance.
+        /// </summary>
+        /// <returns>Prototype of this instance</returns>
+        public override <#= name #>ManagedSO CreateManagedPrototype()
+        {
+            <#= name #>Variable instance = Instantiate(this);
+            instance.name = PrototypeHelper.GetPrototypeNameOf(this);
+            if (changed != null)
+                instance.changed = Instantiate(changed);
+            if (changedWithHistory)
+                instance.changedWithHistory = Instantiate(changedWithHistory);
+            return instance;
+        }
+    }
+<#+
+        SaveOutput(name + "Variable", "Values/Atoms");
+    }
+#>

@@ -1,0 +1,95 @@
+﻿<#+
+    void WriteScriptableObjects(string name, string dataType)
+    {
+        WriteHeader();
+#>
+using System;
+using System.Runtime.CompilerServices;
+
+using UnityEngine; // Used for atoms with Unity data types
+<#+
+        WriteNamespace();
+#>
+    public abstract class <#= name #>GetSO : GetSO<<#= dataType #>>, I<#= name #>Get { }
+
+    public abstract class <#= name #>GetSetSO : <#= name #>GetSO, I<#= name #>GetSet
+    {
+        public abstract void SetValue(<#= dataType #> newValue);
+
+        /// <summary>
+        /// Create a deep prototype of this current instance.
+        /// </summary>
+        /// <returns>A deep prototype of this current instance.</returns>
+        public abstract <#= name #>GetSetSO CreateGetSetPrototype();
+    }
+
+    public abstract class <#= name #>ManagedSO : <#= name #>GetSetSO, I<#= name #>Managed
+    {
+        /// <summary>
+        /// Event raised when value is changed. The parameter is the new value.
+        /// </summary>
+        protected abstract IEventRegister<<#= dataType #>> Changed { get; }
+
+        /// <summary>
+        /// Event raised when value is changed. The first parameter is the new value, the second parameter is the old value.
+        /// </summary>
+        protected abstract IEventRegister2<<#= dataType #>> ChangedWithHistory { get; }
+
+        /// <inheritdoc cref="IManaged{T}.InitialValue" />
+        public abstract <#= dataType #> InitialValue { get; }
+
+        public void OnEnable() => SetValueInternal(InitialValue);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void Reset(bool shouldTriggerEvents = false)
+        {
+            if (shouldTriggerEvents)
+                SetValueInternal(InitialValue);
+            else
+                SetValue(InitialValue);
+        }
+
+        /// <inheritdoc cref="IManaged{T}" />
+        protected abstract void SetValueInternal(<#= dataType #> newValue);
+
+        /// <inheritdoc cref="IManaged{T}" />
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public override void SetValue(<#= dataType #> newValue) => SetValueInternal(newValue);
+
+        /// <summary>
+        /// Create a deep prototype of this current instance.
+        /// </summary>
+        /// <returns>A deep prototype of this current instance.</returns>
+        public abstract <#= name #>ManagedSO CreateManagedPrototype();
+
+        /// <inheritdoc />
+        public override sealed <#= name #>GetSetSO CreateGetSetPrototype() => CreateManagedPrototype();
+
+        /// <inheritdoc cref="IEventRegister.Register(Action)"/>
+        void IEventRegister<<#= dataType #>>.Register(Action<<#= dataType #>> action) => Changed.Register(action);
+
+        /// <inheritdoc cref="IEventRegister.Unregister(Action)"/>
+        void IEventRegister<<#= dataType #>>.Unregister(Action<<#= dataType #>> action) => Changed.Unregister(action);
+
+        /// <inheritdoc cref="IEventRegister.RegisterListener(IEventListener)"/>
+        void IEventRegister<<#= dataType #>>.RegisterListener(IEventListener<<#= dataType #>> listener) => Changed.RegisterListener(listener);
+
+        /// <inheritdoc cref="IEventRegister.RegisterListener(IEventListener)"/>
+        void IEventRegister<<#= dataType #>>.UnregisterListener(IEventListener<<#= dataType #>> listener) => Changed.UnregisterListener(listener);
+
+        /// <inheritdoc cref="IEventRegister2.Register(Action{T, T})"/>
+        void IEventRegister2<<#= dataType #>>.Register(Action<<#= dataType #>, <#= dataType #>> action) => ChangedWithHistory.Register(action);
+
+        /// <inheritdoc cref="IEventRegister2.Unregister(Action{T, T})"/>
+        void IEventRegister2<<#= dataType #>>.Unregister(Action<<#= dataType #>, <#= dataType #>> action) => ChangedWithHistory.Unregister(action);
+
+        /// <inheritdoc cref="IEventRegister2.RegisterListener(IEventListener2{T}))"/>
+        void IEventRegister2<<#= dataType #>>.RegisterListener(IEventListener2<<#= dataType #>> listener) => ChangedWithHistory.RegisterListener(listener);
+
+        /// <inheritdoc cref="IEventRegister2.UnregisterListener(IEventListener2{T})"/>
+        void IEventRegister2<<#= dataType #>>.UnregisterListener(IEventListener2<<#= dataType #>> listener) => ChangedWithHistory.UnregisterListener(listener);
+    }
+<#+
+        SaveOutput(name + "ScriptableObjects", "Values/Bases");
+    }
+#>

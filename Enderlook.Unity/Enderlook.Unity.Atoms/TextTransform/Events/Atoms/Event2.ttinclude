@@ -1,0 +1,15 @@
+﻿<#+
+    void WriteEvent2(string name, string dataType)
+    {
+        WriteHeader();
+#>
+using UnityEngine;
+<#+
+        WriteNamespace();
+#>
+    [CreateAssetMenu(fileName = "<#= name #>Event x 2", menuName = "<#= menuPath #>Events/<#= name #> x 2")]
+    public class <#= name #>Event2 : Event2<<#= dataType #>> { }
+<#+
+        SaveOutput(name + "Event2", "Events/Atoms");
+    }
+#>

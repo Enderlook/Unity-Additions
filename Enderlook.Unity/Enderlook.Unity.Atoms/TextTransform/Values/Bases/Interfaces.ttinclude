@@ -1,0 +1,22 @@
+﻿<#+
+    void WriteInterfaces(string name, string dataType)
+    {
+        WriteHeader();
+#>
+using Enderlook.Unity.Interfaces;
+
+using System;
+
+using UnityEngine; // Used for atoms with Unity data types
+<#+
+        WriteNamespace();
+#>
+    public interface I<#= name #>Get : IGet<<#= dataType #>> { }
+
+    public interface I<#= name #>GetSet : I<#= name #>Get, IGetSet<<#= dataType #>> { }
+
+    public interface I<#= name #>Managed : I<#= name #>GetSet, IManaged<<#= dataType #>> { }
+<#+
+        SaveOutput(name + "Interfaces", "Values/Bases");
+    }
+#>

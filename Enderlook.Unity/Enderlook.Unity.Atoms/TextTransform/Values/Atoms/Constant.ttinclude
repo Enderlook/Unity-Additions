@@ -1,0 +1,37 @@
+﻿<#+
+    void WriteConstant(string name, string dataType)
+    {
+        WriteHeader();
+#>
+using System.Runtime.CompilerServices;
+
+using UnityEngine;
+<#+
+        WriteNamespace();
+#>
+    [CreateAssetMenu(fileName = "<#= name #>Constant", menuName = "<#= menuPath #>Values/Constants/<#= name #>")]
+    public sealed class <#= name #>Constant : <#= name #>GetSO
+    {
+        [SerializeField, Tooltip("Value stored in this atom.")]
+        private <#= dataType #> value;
+
+        /// <inheritdoc />
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public override <#= dataType #> GetValue() => value;
+
+        /// <summary>
+        <#= "///" #> Create a new <see cref="<#= name #>Constant"/> with the given value <paramref name="value"/>.
+        /// </summary>
+        <#= "///" #> <param name="value">Value of the new <see cref="<#= name #>Constant"/>.</param>
+        <#= "///" #> <returns>New instance of <see cref="<#= name #>Constant"/>.</returns>
+        public static <#= name #>Constant CreateConstant(<#= dataType #> value)
+        {
+            <#= name #>Constant instance = CreateInstance<<#= name #>Constant>();
+            instance.value = value;
+            return instance;
+        }
+    }
+<#+
+        SaveOutput(name + "Constant", "Values/Atoms");
+    }
+#>

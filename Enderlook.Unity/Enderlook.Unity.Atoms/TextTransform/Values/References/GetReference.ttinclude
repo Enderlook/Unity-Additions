@@ -1,0 +1,47 @@
+﻿<#+
+    void WriteGetReference(string name, string dataType)
+    {
+    WriteHeader();
+#>
+using Enderlook.Utils.Exceptions;
+
+using System;
+
+using UnityEngine;
+<#+
+        WriteNamespace();
+#>
+    [Serializable]
+    public class <#= name #>GetReference : BaseValueReference, I<#= name #>Get
+    {
+        [SerializeField]
+        private <#= dataType #> inline;
+
+        [SerializeField]
+        private <#= name #>GetSO scriptableObject;
+
+        [SerializeField]
+        private <#= name #>GetComponent component;
+
+        /// <inheritdoc cref="Interfaces.IGet{T}.GetValue"/>
+        public <#= dataType #> GetValue()
+        {
+            switch (Mode)
+            {
+                case ReferenceMode.Inline:
+                    return inline;
+                case ReferenceMode.ScriptableObject:
+                    return scriptableObject.GetValue();
+                case ReferenceMode.Component:
+                    return component.GetValue();
+                default:
+                    throw new ImpossibleStateException();
+            }
+        }
+
+        public static implicit operator <#= dataType #>(<#= name #>GetReference instance) => instance.GetValue();
+    }
+<#+
+        SaveOutput(name + "GetReference", "Values/References");
+    }
+#>

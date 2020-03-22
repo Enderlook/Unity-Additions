@@ -48,6 +48,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Enderlook.Unity\Enderlook.Unity.Serializables.Ranges-Drawers\Enderlook.Unity.Serializables.Ranges-Drawers.csproj" />
     <ProjectReference Include="..\Enderlook.Unity.Atoms\Enderlook.Unity.Atoms.csproj" />
+    <ProjectReference Include="..\Enderlook.Unity.Attributes-Drawers\Enderlook.Unity.Attributes-Drawers.csproj" />
   </ItemGroup>
 
   <ItemGroup>

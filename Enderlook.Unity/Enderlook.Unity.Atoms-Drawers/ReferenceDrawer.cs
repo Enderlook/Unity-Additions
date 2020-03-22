@@ -1,5 +1,5 @@
 ﻿using Enderlook.Extensions;
-
+using Enderlook.Unity.Attributes;
 using System.Linq;
 
 using UnityEditor;
@@ -8,25 +8,26 @@ using UnityEngine;
 
 namespace Enderlook.Unity.Atoms
 {
-    [CustomPropertyDrawer(typeof(Reference), true)]
-    internal class ReferenceDrawer : PropertyDrawer
+    internal class ReferenceDrawer
     {
         private static string modeProperty = ReflectionExtesions.GetBackingFieldName("Mode");
 
-        private static (string displayName, string propertyName, int enumValue)[] modes = new[] {
-            ("Value", "inlineValue", (int)Reference.ReferenceMode.Value),
-            ("Atom", "scriptableObjectValue", (int)Reference.ReferenceMode.ScriptableObject),
-            ("Other", "unityObjectValue", (int)Reference.ReferenceMode.Other),
-        };
+        protected (string displayName, string propertyName, int enumValue)[] modes;
 
-        private static GUIStyle popupStyle =new GUIStyle(GUI.skin.GetStyle("PaneOptions"))
+        private static GUIStyle popupStyle = new GUIStyle(GUI.skin.GetStyle("PaneOptions"))
         {
             imagePosition = ImagePosition.ImageOnly
         };
 
-        private static string[] popupOptions = modes.Select(e => e.displayName).ToArray();
+        private string[] popupOptions;
 
-        public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
+        public ReferenceDrawer(params (string displayName, string propertyName, int enumValue)[] modes)
+        {
+            this.modes = modes;
+            popupOptions = modes.Select(e => e.displayName).ToArray();
+        }
+
+        public void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
             label = EditorGUI.BeginProperty(position, label, property);
             // Show field label
@@ -59,7 +60,7 @@ namespace Enderlook.Unity.Atoms
             EditorGUI.EndProperty();
         }
 
-        private static int GetPopupIndex(SerializedProperty mode)
+        private int GetPopupIndex(SerializedProperty mode)
         {
             int modeIndex = 0;
             int intValue = mode.intValue;
@@ -71,7 +72,7 @@ namespace Enderlook.Unity.Atoms
             return modeIndex;
         }
 
-        public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
+        public float GetPropertyHeight(SerializedProperty property, GUIContent label)
         {
             int popupIndex = GetPopupIndex(property.FindPropertyRelative(modeProperty));
             SerializedProperty choosenProperty = property.FindPropertyRelative(modes[popupIndex].propertyName);

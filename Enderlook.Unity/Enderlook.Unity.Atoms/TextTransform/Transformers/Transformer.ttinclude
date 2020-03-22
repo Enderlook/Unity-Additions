@@ -1,0 +1,14 @@
+﻿<#+
+    void WriteTransformer(string name, string dataType)
+    {
+        WriteHeader();
+#>
+using UnityEngine; // Used for atoms with Unity data types
+<#+
+        WriteNamespace();
+#>
+    public abstract class <#= name #>Transformer : Transformer<<#= dataType #>> { }
+<#+
+        SaveOutput(name + "Transformer", "Transformers");
+    }
+#>

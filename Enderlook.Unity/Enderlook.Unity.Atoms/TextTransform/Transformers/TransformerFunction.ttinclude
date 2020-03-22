@@ -1,0 +1,39 @@
+﻿<#+
+    void WriteTransformerFunction(string name, string dataType)
+    {
+        WriteHeader();
+#>
+using System;
+using System.Runtime.CompilerServices;
+
+using UnityEngine;
+<#+
+        WriteNamespace();
+#>
+    [CreateAssetMenu(fileName = "<#= name #>TransformerFunction", menuName = "<#= menuPath #>Functions/Function/<#= name #>")]
+    public class <#= name #>TransformerFunction : <#= name #>Transformer
+    {
+        private Func<<#= dataType #>, <#= dataType #>> function;
+
+        /// <inheritdoc />
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public override <#= dataType #> Transform(<#= dataType #> value) => function != null ? function(value) : value;
+
+        /// <summary>
+        <#= "///" #> Create a new <see cref="<#= name #>TransformerFunction"/> to store the function <paramref name="function"/>.
+        /// </summary>
+        <#= "///" #> <param name="function">Function to execute by the new <see cref="<#= name #>TransformerFunction"/>.</param>
+        <#= "///" #> <returns>New instance of <see cref="<#= name #>TransformerFunction"/>.</returns>
+        public static <#= name #>TransformerFunction CreateFunctionHolder(Func<<#= dataType #>, <#= dataType #>> function)
+        {
+            if (function is null) throw new ArgumentNullException(nameof(function));
+
+            <#= name #>TransformerFunction instance = CreateInstance<<#= name #>TransformerFunction>();
+            instance.function = function;
+            return instance;
+        }
+    }
+<#+
+        SaveOutput(name + "TransformerFunction", "Transformers");
+    }
+#>

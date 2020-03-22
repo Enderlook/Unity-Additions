@@ -1,0 +1,17 @@
+﻿<#+
+    void WriteEventReference(string name, string dataType)
+    {
+        WriteHeader();
+#>
+using System;
+
+using UnityEngine; // Used for atoms with Unity data types
+<#+
+        WriteNamespace();
+#>
+    [Serializable]
+    public class <#= name #>EventReference : EventReference<<#= dataType #>, <#= name #>Event, <#= name #>ManagedSO, <#= name #>ManagedComponent> { }
+<#+
+        SaveOutput(name + "EventReference", "Events/References");
+    }
+#>

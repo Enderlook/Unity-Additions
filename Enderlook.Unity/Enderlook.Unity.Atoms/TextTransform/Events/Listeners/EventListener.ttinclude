@@ -1,0 +1,21 @@
+﻿<#+
+    void WriteEventListener(string name, string dataType)
+    {
+        WriteHeader();
+#>
+using System;
+
+using UnityEngine;
+using UnityEngine.Events;
+<#+
+        WriteNamespace();
+#>
+    [AddComponentMenu("<#= menuPath#>Event Listeners/<#= name #>EventListener")]
+    public class <#= name #>EventListener : EventListener<<#= dataType #>, <#= name #>UnityEvent, <#= name #>EventReference, <#= name #>Action> { }
+
+    [Serializable]
+    public class <#= name #>UnityEvent : UnityEvent<<#= dataType #>> { }
+<#+
+        SaveOutput(name + "EventListener", "Events/Listeners");
+    }
+#>
