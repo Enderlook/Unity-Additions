@@ -16,7 +16,8 @@ namespace Enderlook.Unity.Atoms
         private TEventReference @event;
 
         [SerializeField]
-        private TUnityEvent onEvent;
+        // TODO: This should be private when the Unity Bug get fixed
+        public TUnityEvent onEvent;
 
         [SerializeField]
         private List<TAction> actions;
