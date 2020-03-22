@@ -28,11 +28,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 6980778074502496361, guid: d53e9038544373f468a4d49b83a0d569,
-        type: 3}
-      propertyPath: m_Name
-      value: Health Bar with Canvas
-      objectReference: {fileID: 0}
     - target: {fileID: 3835330508921528676, guid: d53e9038544373f468a4d49b83a0d569,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -101,12 +96,12 @@ PrefabInstance:
     - target: {fileID: 3835330508921528676, guid: d53e9038544373f468a4d49b83a0d569,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 120
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3835330508921528676, guid: d53e9038544373f468a4d49b83a0d569,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 20
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3835330508921528676, guid: d53e9038544373f468a4d49b83a0d569,
         type: 3}
@@ -126,7 +121,7 @@ PrefabInstance:
     - target: {fileID: 3835330508921528676, guid: d53e9038544373f468a4d49b83a0d569,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0.33
       objectReference: {fileID: 0}
     - target: {fileID: 3835330508921528676, guid: d53e9038544373f468a4d49b83a0d569,
         type: 3}
@@ -137,6 +132,31 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6980778074502496361, guid: d53e9038544373f468a4d49b83a0d569,
+        type: 3}
+      propertyPath: m_Name
+      value: Health Bar with Canvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 7051775634454849801, guid: d53e9038544373f468a4d49b83a0d569,
+        type: 3}
+      propertyPath: canvas
+      value: 
+      objectReference: {fileID: 1796805699}
+    - target: {fileID: 7236211299169920952, guid: d53e9038544373f468a4d49b83a0d569,
+        type: 3}
+      propertyPath: canvas
+      value: 
+      objectReference: {fileID: 1796805699}
+    - target: {fileID: 7558894700856959856, guid: d53e9038544373f468a4d49b83a0d569,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7599307599146815358, guid: d53e9038544373f468a4d49b83a0d569,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7668843870264375412, guid: d53e9038544373f468a4d49b83a0d569,
         type: 3}
@@ -153,21 +173,11 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 7051775634454849801, guid: d53e9038544373f468a4d49b83a0d569,
+    - target: {fileID: 8330654967809700925, guid: d53e9038544373f468a4d49b83a0d569,
         type: 3}
       propertyPath: canvas
       value: 
       objectReference: {fileID: 1796805699}
-    - target: {fileID: 7599307599146815358, guid: d53e9038544373f468a4d49b83a0d569,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7558894700856959856, guid: d53e9038544373f468a4d49b83a0d569,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d53e9038544373f468a4d49b83a0d569, type: 3}
 --- !u!1 &7506624220066418789 stripped

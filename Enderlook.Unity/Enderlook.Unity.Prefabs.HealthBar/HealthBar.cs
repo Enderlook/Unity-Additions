@@ -6,6 +6,8 @@ namespace Enderlook.Unity.Prefabs.HealthBarGUI
     [AddComponentMenu("Enderlook/Health Bar")]
     public class HealthBar : MonoBehaviour, IHealthBar
     {
+        public enum RoundingMode { None, Round, Ceil, Floor };
+
 #pragma warning disable CS0649
         [Header("Configuration")]
         [SerializeField, Tooltip("How numbers are shown, {0} is health, {1} is maximum health and {2} is percent of health. Eg: {0} / {1} ({2}%)")]
@@ -19,6 +21,9 @@ namespace Enderlook.Unity.Prefabs.HealthBarGUI
 
         [SerializeField, Tooltip("Health bar color at minimum health. If black, health won't change of color at low health.")]
         private Color minHealthColor = Color.red;
+
+        [SerializeField, Tooltip("Filling bars speed."), Range(0.1f, 10)]
+        private float fillingSpeed = 1;
 
         [Header("Setup")]
         [SerializeField, Tooltip("Used to show numbers of health. Use null to deactivate it.")]
@@ -39,8 +44,8 @@ namespace Enderlook.Unity.Prefabs.HealthBarGUI
         private Image healingImage;
         private RectTransform healingTransform;
 
-        [SerializeField, Tooltip("Check to ceil health values (round up), useful if health is float, to avoid show 0 HP on bar while you still have 0.44 or below HP. On false, normal round will be performed.")]
-        private bool ceilValues = true;
+        [SerializeField, Tooltip("How decimal values are rounded.")]
+        private RoundingMode roundingMode;
 
         [Header("Hidding Setup")]
         [SerializeField, Tooltip("Used to show or hide the health bar. If null, it will show and hide each part by separate instead of just the canvas.")]
@@ -51,14 +56,12 @@ namespace Enderlook.Unity.Prefabs.HealthBarGUI
 
         [SerializeField, Tooltip("Only used to hide or show in case Canvas is null.")]
         private Image background;
-
-        [SerializeField, Tooltip("Only used to hide or show in case Canvas is null.")]
-        private Image icon;
 #pragma warning restore CS0649
 
         private float maxHealth;
         private float health;
 
+        /// <inheritdoc cref="IHealthBarViewer.IsVisible"/>
         public bool IsVisible {
             get => canvas != null ? canvas.enabled : isVisible;
             set {
@@ -78,17 +81,17 @@ namespace Enderlook.Unity.Prefabs.HealthBarGUI
                         frame.enabled = isVisible;
                     if (background != null)
                         background.enabled = isVisible;
-                    if (icon != null)
-                        icon.enabled = isVisible;
                 }
             }
         }
 
         private bool isVisible;
+        /// <inheritdoc cref="IHealthBarViewer.IsEnabled"/>
         public bool IsEnabled { get; set; } = true;
 
         private void Awake() => Setup();
 
+        /// <inheritdoc cref="IHealthBarWorker.ManualUpdate(float, float)">
         public void ManualUpdate(float health, float maxHealth)
         {
             this.health = health;
@@ -105,6 +108,7 @@ namespace Enderlook.Unity.Prefabs.HealthBarGUI
                 healingImage.fillAmount = 0;
         }
 
+        /// <inheritdoc cref="IHealthBarWorker.ManualUpdate(float)">
         public void ManualUpdate(float maxHealth) => ManualUpdate(maxHealth, maxHealth);
 
         /// <summary>
@@ -119,9 +123,9 @@ namespace Enderlook.Unity.Prefabs.HealthBarGUI
             {
                 // Unfill the damage and healing bar per frame
                 if (damageBar != null && damageBar.fillAmount > 0)
-                    damageBar.fillAmount -= Time.deltaTime;
+                    damageBar.fillAmount -= Time.deltaTime * fillingSpeed;
                 if (healingImage != null && healingImage.fillAmount > 0)
-                    healingImage.fillAmount -= Time.deltaTime;
+                    healingImage.fillAmount -= Time.deltaTime * fillingSpeed;
 
                 healthImage.color = minHealthColor != Color.black ? GetHealthColor() : maxHealthColor;
 
@@ -137,14 +141,29 @@ namespace Enderlook.Unity.Prefabs.HealthBarGUI
             }
         }
 
-        private float Rounding(float value) => ceilValues ? Mathf.Ceil(value) : Mathf.Round(value);
+        private float Rounding(float value)
+        {
+            switch (roundingMode)
+            {
+                case RoundingMode.Round:
+                    return Mathf.Round(value);
+                case RoundingMode.Ceil:
+                    return Mathf.Ceil(value);
+                case RoundingMode.Floor:
+                    return Mathf.Round(value);
+                default:
+                    return value;
+            }
+        }
 
+        /// <inheritdoc cref="IHealthBarWorker.UpdateValues(float, float)">
         public void UpdateValues(float health, float maxHealth)
         {
             this.maxHealth = maxHealth;
             Set(health);
         }
 
+        /// <inheritdoc cref="IHealthBarWorker.UpdateValues(float)">
         public void UpdateValues(float health) => Set(health);
 
         /// <summary>
@@ -249,10 +268,32 @@ namespace Enderlook.Unity.Prefabs.HealthBarGUI
                 maxHealthColor = healthImage.color;
         }
 
+        /// <inheritdoc cref="IHealthBarViewer.HealingBarPercentFill"/>
         public float HealthBarPercentFill => healthImage.fillAmount;
+
+        /// <inheritdoc cref="IHealthBarViewer.HealingBarPercentFill"/>
         public float? HealingBarPercentFill => healingImage != null ? healingImage.fillAmount : (float?)null;
+
+        /// <inheritdoc cref="IHealthBarViewer.DamageBarPercentFill"/>
         public float? DamageBarPercentFill => damageBar != null ? damageBar.fillAmount : (float?)null;
+
+        /// <inheritdoc cref="IHealthBarViewer.IsHealingBarPercentHide"/>
         public bool IsHealingBarPercentHide => healingImage == null ? true : healingImage.fillAmount == 0;
+
+        /// <inheritdoc cref="IHealthBarViewer.IsDamageBarPercentHide"/>
         public bool IsDamageBarPercentHide => damageBar == null ? true : damageBar.fillAmount == 0;
+
+        /// <inheritdoc cref="IHealthBarWorker.Health"/>
+        public int Health {
+            set {
+                if (health != value)
+                    Set(health);
+            }
+        }
+
+        /// <inheritdoc cref="IHealthBarWorker.MaxHealth"/>
+        public int MaxHealth {
+            set => maxHealth = value;
+        }
     }
 }
