@@ -25,15 +25,15 @@
         /// Modify the current health and maximum health.
         /// This method will automatically calculate, show and animate the health bar, damage bar, healing bar and health number.
         /// </summary>
-        /// <param name="health"></param>
-        /// <param name="maxhealth"></param>
+        /// <param name="health">Current health value.</param>
+        /// <param name="maxhealth">Maximum health value.</param>
         void UpdateValues(float health, float maxHealth);
 
         /// <summary>
         /// Modify the current health.
         /// This method will automatically calculate, show and animate the health bar, damage bar, healing bar and health number.
         /// </summary>
-        /// <param name="health"></param>
+        /// <param name="health">Current health value.</param>
         void UpdateValues(float health);
     }
 }
