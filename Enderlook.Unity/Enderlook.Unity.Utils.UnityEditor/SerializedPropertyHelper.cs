@@ -24,7 +24,7 @@ namespace Enderlook.Unity.Utils.UnityEditor
         public SerializedPropertyHelper(SerializedProperty serializedProperty) => this.serializedProperty = serializedProperty;
 
         /// <summary>
-        /// Reset cached values, this method should be execute once per Unity Editor update.
+        /// Reset cached values, this method should be executed once per Unity Editor update.
         /// </summary>
         public void ResetCycle()
         {
@@ -106,8 +106,8 @@ namespace Enderlook.Unity.Utils.UnityEditor
 
         /// <summary>
         /// Try to execute <see cref="GetTargetObjectOfProperty"/> ignoring error produced by property drawer rendering before update of the <see cref="SerializedProperty"/>.<br/>
-        /// It does not ignore other types of errors.
-        /// Executing this more than one time per Unity Editor frame may wrong result.<br/>
+        /// It does not ignore other types of errors.<br/>
+        /// Executing this more than one time per Unity Editor frame may produce wrong results.<br/>
         /// </summary>
         /// <param name="result">Parent target object of property.</param>
         /// <returns>Whenever it was successful or not.</returns>
@@ -131,7 +131,7 @@ namespace Enderlook.Unity.Utils.UnityEditor
 
         /// <summary>
         /// Try to execute <see cref="GetTargetObjectOfProperty"/> ignoring error produced by property drawer rendering before update of the <see cref="SerializedProperty"/>.<br/>
-        /// It does not ignore other types of errors.
+        /// It does not ignore other types of errors.<br/>
         /// This value is cached until <see cref="ResetCycle"/> is <see langword="true"/>;
         /// </summary>
         /// <param name="result">Parent target object of property.</param>
@@ -171,14 +171,23 @@ namespace Enderlook.Unity.Utils.UnityEditor
         /// It does include <see langword="private"/> fields of super-classes.
         /// </summary>
         /// <typeparam name="T">Type of the <see cref="Attribute"/></typeparam>
+        /// <param name="includeInheritedPrivate">Whenever it should also search private fields of supper-classes.</param>
         /// <returns>The <see cref="Attribute"/> of type <typeparamref name="T"/>.</returns>
-        public T GetAttributeFromInheritedField<T>() where T : Attribute
+        public T GetAttributeFromField<T>(bool includeInheritedPrivate = true) where T : Attribute
         {
             if (TryGetParentTargetObjectOfProperty(out object parent))
-                return parent
-                    .GetType()
-                    .GetInheritedField(serializedProperty.name, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.FlattenHierarchy)
-                    .GetCustomAttribute<T>(true);
+            {
+                Type type = parent.GetType();
+
+                FieldInfo fieldInfo;
+                if (includeInheritedPrivate)
+                    fieldInfo = type.GetInheritedField(serializedProperty.name, SerializedPropertyExtensions.bindingFlags);
+                else
+                    fieldInfo = type.GetField(serializedProperty.name, SerializedPropertyExtensions.bindingFlags);
+
+                return fieldInfo.GetCustomAttribute<T>(true);
+            }
+
             return null;
         }
 
@@ -188,37 +197,11 @@ namespace Enderlook.Unity.Utils.UnityEditor
         /// </summary>
         /// <typeparam name="T">Type of the <see cref="Attribute"/></typeparam>
         /// <param name="attribute">The <see cref="Attribute"/> of type <typeparamref name="T"/>.</param>
+        /// <param name="includeInheritedPrivate">Whenever it should also search private fields of supper-classes.</param>
         /// <returns>Whenever it could be found or not.</returns>
-        public bool TryGetAttributeFromInheritedField<T>(out T attribute) where T : Attribute
+        public bool TryGetAttributeFromField<T>(out T attribute, bool includeInheritedPrivate = true) where T : Attribute
         {
-            attribute = GetAttributeFromInheritedField<T>();
-            return attribute != null;
-        }
-
-        /// <summary>
-        /// Get the <see cref="Attribute"/> of type <typeparamref name="T"/> of the field.
-        /// </summary>
-        /// <typeparam name="T">Type of the <see cref="Attribute"/></typeparam>
-        /// <returns>The <see cref="Attribute"/> of type <typeparamref name="T"/>.</returns>
-        public T GetAttributeFromField<T>() where T : Attribute
-        {
-            if (TryGetParentTargetObjectOfProperty(out object parent))
-                return parent
-                    .GetType()
-                    .GetField(serializedProperty.name, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.FlattenHierarchy)
-                    .GetCustomAttribute<T>(true);
-            return null;
-        }
-
-        /// <summary>
-        /// Try get the <see cref="Attribute"/> of type <typeparamref name="T"/> of the field.
-        /// </summary>
-        /// <typeparam name="T">Type of the <see cref="Attribute"/></typeparam>
-        /// <param name="attribute">The <see cref="Attribute"/> of type <typeparamref name="T"/>.</param>
-        /// <returns>Whenever it could be found or not.</returns>
-        public bool TryGetAttributeFromField<T>(out T attribute) where T : Attribute
-        {
-            attribute = GetAttributeFromField<T>();
+            attribute = GetAttributeFromField<T>(includeInheritedPrivate);
             return attribute != null;
         }
     }

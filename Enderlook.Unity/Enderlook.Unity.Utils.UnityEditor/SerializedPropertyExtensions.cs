@@ -16,7 +16,7 @@ namespace Enderlook.Unity.Utils.UnityEditor
     {
         // https://github.com/lordofduct/spacepuppy-unity-framework/blob/master/SpacepuppyBaseEditor/EditorHelper.cs
 
-        private const BindingFlags bindingFlags = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance;
+        internal const BindingFlags bindingFlags = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance;
 
         private static (Func<object> get, Action<object> set) GetAccessors(this object source, string name)
         {
@@ -222,14 +222,17 @@ namespace Enderlook.Unity.Utils.UnityEditor
         /// Get the field <see cref="Type"/> of <paramref name="source"/>.
         /// </summary>
         /// <param name="source"><see cref="SerializedProperty"/> whose <see cref="Type"/> will be get.</param>
+        /// <param name="includeInheritedPrivate">Whenever it should also search private fields of supper-classes.</param>
         /// <returns><see cref="Type"/> of the <paramref name="source"/>.</returns>
-        public static Type GetFieldType(this SerializedProperty source) => source.GetFieldInfo().FieldType;
+        public static Type GetFieldType(this SerializedProperty source, bool includeInheritedPrivate = true) => source.GetFieldInfo(includeInheritedPrivate).FieldType;
+
 
         /// <summary>
         /// Get the <see cref="Type"/> of the current value of <paramref name="source"/>.
         /// </summary>
         /// <param name="source"><see cref="SerializedProperty"/> whose current <see cref="Type"/> will be get.</param>
         /// <returns><see cref="Type"/> of the current value of <paramref name="source"/>. Or <see langword="null"/> if it is empty.</returns>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0031:Use null propagation", Justification = "It could be a Unity object which doesn't support null copropagation.")]
         public static Type GetCurrentPropertyValueType(this SerializedProperty source)
         {
             object targetObject = source.GetTargetObjectOfProperty();
@@ -240,9 +243,16 @@ namespace Enderlook.Unity.Utils.UnityEditor
         /// Get the <see cref="FieldInfo"/> of <see cref="SerializedProperty"/>.
         /// </summary>
         /// <param name="source"><see cref="SerializedProperty"/> whose <see cref="FieldInfo"/> will be get.</param>
+        /// <param name="includeInheritedPrivate">Whenever it should also search private fields of supper-classes.</param>
         /// <returns><see cref="FieldInfo"/> of <paramref name="source"/>.</returns>
-        public static FieldInfo GetFieldInfo(this SerializedProperty source)
-            => source.GetParentTargetObjectOfProperty().GetType().GetField(source.name, bindingFlags);
+        public static FieldInfo GetFieldInfo(this SerializedProperty source, bool includeInheritedPrivate = true)
+        {
+            Type type = source.GetParentTargetObjectOfProperty().GetType();
+            if (includeInheritedPrivate)
+                return type.GetInheritedField(source.name, bindingFlags);
+            else
+                return type.GetField(source.name, bindingFlags);
+        }
 
         /// <summary>
         /// Get the index of the <paramref name="source"/> if it's an element of an array.

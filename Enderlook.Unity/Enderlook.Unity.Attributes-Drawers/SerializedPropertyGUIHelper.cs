@@ -67,13 +67,13 @@ namespace Enderlook.Unity.Attributes
         {
             bool isSpecial = false;
 
-            if (helper.TryGetAttributeFromInheritedField(out NameAttribute nameAttribute))
+            if (helper.TryGetAttributeFromField(out NameAttribute nameAttribute))
             {
                 UseNameAttribute(nameAttribute, label);
                 isSpecial = true;
             }
 
-            if (helper.TryGetAttributeFromInheritedField(out GUIAttribute guiAttribute))
+            if (helper.TryGetAttributeFromField(out GUIAttribute guiAttribute))
             {
                 GetGUIContent(guiAttribute, helper, ref label);
                 isSpecial = true;
