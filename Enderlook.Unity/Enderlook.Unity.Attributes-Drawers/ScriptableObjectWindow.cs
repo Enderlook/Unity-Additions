@@ -63,10 +63,24 @@ namespace Enderlook.Unity.Attributes
         private static void InitializeDerivedTypes()
         {
             // We don't use AssembliesHelper.GetAllAssembliesOfPlayerAndEditorAssemblies() because that doesn't include dll files from Assets folder
+            List<(Assembly assembly, Exception[] exceptions)> errors = new List<(Assembly assembly, Exception[] exceptions)>();
             Stack<Type> types = new Stack<Type>(
                 AppDomain.CurrentDomain.GetAssemblies()
-                .SelectMany(e => e.GetTypes())
+                .SelectMany(e =>
+                {
+                    if (!e.TryGetTypes(out IEnumerable<Type> loadedTypes, out Exception[] exceptions))
+                        errors.Add((e, exceptions));
+                    return loadedTypes;
+                })
                 .Where(e => typeof(ScriptableObject).IsAssignableFrom(e)));
+
+            if (errors.Count > 0)
+            {
+                Debug.LogError("While getting Types from loaded assemblies in Scriptable Object Window the following exceptions occurred:");
+                foreach ((Assembly assembly, Exception[] exceptions) in errors)
+                    foreach (Exception exception in exceptions)
+                        Debug.LogWarning($"{assembly.FullName}: {exception.Message}.");
+            }
 
             HashSet<KeyValuePair<Type, Type>> typesKV = new HashSet<KeyValuePair<Type, Type>>();
 
