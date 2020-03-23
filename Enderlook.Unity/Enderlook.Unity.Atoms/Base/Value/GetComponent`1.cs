@@ -1,4 +1,4 @@
-﻿using Enderlook.Unity.Interfaces;
+﻿using Enderlook.Unity.Utils.Interfaces;
 
 using UnityEngine;
 

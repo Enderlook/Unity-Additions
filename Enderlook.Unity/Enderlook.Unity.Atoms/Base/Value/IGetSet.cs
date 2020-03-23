@@ -1,4 +1,4 @@
-﻿using Enderlook.Unity.Interfaces;
+﻿using Enderlook.Unity.Utils.Interfaces;
 
 namespace Enderlook.Unity.Atoms
 {

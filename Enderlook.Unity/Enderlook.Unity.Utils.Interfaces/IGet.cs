@@ -1,4 +1,4 @@
-﻿namespace Enderlook.Unity.Interfaces
+﻿namespace Enderlook.Unity.Utils.Interfaces
 {
     public interface IGet<T>
     {

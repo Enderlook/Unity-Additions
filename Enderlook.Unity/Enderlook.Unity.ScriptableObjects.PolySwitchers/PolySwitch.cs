@@ -1,6 +1,5 @@
 ﻿using Enderlook.Unity.Attributes;
-using Enderlook.Unity.Interfaces;
-
+using Enderlook.Unity.Utils.Interfaces;
 using System;
 using System.Runtime.CompilerServices;
 
