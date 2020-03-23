@@ -74,6 +74,36 @@ using UnityEngine;
             }
         }
 
+        /// <summary>
+        <#= "///" #> Creates an <see cref="<#= name #>GetReference"/> of mode <see cref="ValueReference.ReferenceMode.Inline"/>.
+        /// </summary>
+        /// <param name="value">Value to store.</param>
+        public <#= name #>GetSetReference(<#= dataType #> value)
+        {
+            Mode = ReferenceMode.Inline;
+            inline = value;
+        }
+
+        /// <summary>
+        <#= "///" #> Creates an <see cref="<#= name #>GetSetReference"/> of mode <see cref="ValueReference.ReferenceMode.ScriptableObject"/>.
+        /// </summary>
+        <#= "///" #> <param name="value"><see cref="<#= name #>GetSetSO"/> to store.</param>
+        public <#= name #>GetSetReference(<#= name #>GetSetSO value)
+        {
+            Mode = ReferenceMode.ScriptableObject;
+            scriptableObject = value;
+        }
+
+        /// <summary>
+        <#= "///" #> Creates an <see cref="<#= name #>GetSetComponent"/> of mode <see cref="ValueReference.ReferenceMode.Component"/>.
+        /// </summary>
+        <#= "///" #> <param name="value"><see cref="<#= name #>GetSetComponent"/> to store.</param>
+        public <#= name #>GetSetReference(<#= name #>GetSetComponent value)
+        {
+            Mode = ReferenceMode.ScriptableObject;
+            component = value;
+        }
+
         public static implicit operator <#= dataType #>(<#= name #>GetSetReference instance) => instance.GetValue();
     }
 <#+

@@ -1,0 +1,58 @@
+﻿<#+
+    void WriteTransformerMax(string name, string dataType)
+    {
+        WriteHeader();
+#>
+using Enderlook.Unity.Utils;
+
+using System;
+using System.Runtime.CompilerServices;
+
+using UnityEngine;
+<#+
+        WriteNamespace();
+#>
+    [CreateAssetMenu(fileName = "<#= name #>TransformerMax", menuName = "<#= menuPath #>Transformers/Max/<#= name #>")]
+    public class <#= name #>TransformerMax : <#= name #>Transformer
+    {
+        [SerializeField, Tooltip("Maximum value.")]
+        private <#= name #>GetReference max;
+
+        /// <inheritdoc />
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public override <#= dataType #> Transform(<#= dataType #> value)
+        {
+            var maxValue = max.GetValue();
+            if (value > maxValue)
+                return maxValue;
+
+            return value;
+        }
+
+        /// <summary>
+        <#= "///" #> Create a new <see cref="<#= name #>TransformerMax"/>.
+        /// </summary>
+        <#= "///" #> <param name="max">Minimum value.</param>
+        <#= "///" #> <returns>New instance of <see cref="<#= name #>TransformerMax"/>.</returns>
+        public static <#= name #>TransformerMax CreateMin(<#= name #>GetReference max)
+        {
+            if (max is null) throw new ArgumentNullException(nameof(max));
+
+            var instance = CreateInstance<<#= name #>TransformerMax>();
+            instance.max = max;
+            return instance;
+        }
+
+        /// <inheritdoc />
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public override <#= name #>Transformer CreateTransformerPrototype()
+        {
+            var instance = Instantiate(this);
+            instance.name = PrototypeHelper.GetPrototypeNameOf(this);
+            return instance;
+        }
+    }
+<#+
+        SaveOutput(name + "TransformerMax", "Transformers/Max");
+    }
+#>

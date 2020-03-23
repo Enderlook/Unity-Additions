@@ -1,0 +1,68 @@
+﻿<#+
+    void WriteTransformerClamp(string name, string dataType)
+    {
+        WriteHeader();
+#>
+using Enderlook.Unity.Utils;
+
+using System;
+using System.Runtime.CompilerServices;
+
+using UnityEngine;
+<#+
+        WriteNamespace();
+#>
+    [CreateAssetMenu(fileName = "<#= name #>TransformerClamp", menuName = "<#= menuPath #>Transformers/Clamp/<#= name #>")]
+    public class <#= name #>TransformerClamp : <#= name #>Transformer
+    {
+        [SerializeField, Tooltip("Minimum value.")]
+        private <#= name #>GetReference min;
+
+        [SerializeField, Tooltip("Maximum value.")]
+        private <#= name #>GetReference max;
+
+        /// <inheritdoc />
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public override <#= dataType #> Transform(<#= dataType #> value)
+        {
+            var maxValue = max.GetValue();
+            if (value > maxValue)
+                return maxValue;
+
+            var minValue = min.GetValue();
+            if (value < minValue)
+                return minValue;
+
+            return value;
+        }
+
+        /// <summary>
+        <#= "///" #> Create a new <see cref="<#= name #>TransformerClamp"/>.
+        /// </summary>
+        <#= "///" #> <param name="min">Minimum value.</param>
+        <#= "///" #> <param name="max">Maximum value.</param>
+        <#= "///" #> <returns>New instance of <see cref="<#= name #>TransformerClamp"/>.</returns>
+        public static <#= name #>TransformerClamp CreateClamp(<#= name #>GetReference min, <#= name #>GetReference max)
+        {
+            if (min is null) throw new ArgumentNullException(nameof(min));
+            if (max is null) throw new ArgumentNullException(nameof(max));
+
+            var instance = CreateInstance<<#= name #>TransformerClamp>();
+            instance.min = min;
+            instance.max = max;
+            return instance;
+        }
+
+        /// <inheritdoc />
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public override <#= name #>Transformer CreateTransformerPrototype()
+        {
+            var instance = Instantiate(this);
+            instance.name = PrototypeHelper.GetPrototypeNameOf(this);
+            return instance;
+        }
+    }
+<#+
+        SaveOutput(name + "TransformerClamp", "Transformers/Clamp");
+    }
+#>

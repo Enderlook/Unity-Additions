@@ -10,7 +10,7 @@ using UnityEngine;
 <#+
         WriteNamespace();
 #>
-    [CreateAssetMenu(fileName = "<#= name #>TransformerFunction", menuName = "<#= menuPath #>Functions/Function/<#= name #>")]
+    [CreateAssetMenu(fileName = "<#= name #>TransformerFunction", menuName = "<#= menuPath #>Transformers/Functions/<#= name #>")]
     public class <#= name #>TransformerFunction : <#= name #>Transformer
     {
         private Func<<#= dataType #>, <#= dataType #>> function;
@@ -32,8 +32,12 @@ using UnityEngine;
             instance.function = function;
             return instance;
         }
+
+        /// <inheritdoc />
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public override <#= name #>Transformer CreateTransformerPrototype() => Instantiate(this);
     }
 <#+
-        SaveOutput(name + "TransformerFunction", "Transformers");
+        SaveOutput(name + "TransformerFunction", "Transformers/Functions");
     }
 #>

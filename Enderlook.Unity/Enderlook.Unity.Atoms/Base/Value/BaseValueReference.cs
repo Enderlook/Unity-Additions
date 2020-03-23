@@ -19,7 +19,7 @@ namespace Enderlook.Unity.Atoms
         public ReferenceMode Mode {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get;
-            private set;
+            protected set;
         }
     }
 }

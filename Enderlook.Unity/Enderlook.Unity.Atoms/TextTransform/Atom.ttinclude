@@ -10,6 +10,9 @@
 <#@ include file="$(TextTransformDir)\Transformers\Transformer.ttinclude" #>
 <#@ include file="$(TextTransformDir)\Transformers\TransformerFunction.ttinclude" #>
 <#@ include file="$(TextTransformDir)\Transformers\TransformerGroup.ttinclude" #>
+<#@ include file="$(TextTransformDir)\Transformers\Specific\ClampFunction.ttinclude" #>
+<#@ include file="$(TextTransformDir)\Transformers\Specific\MinFunction.ttinclude" #>
+<#@ include file="$(TextTransformDir)\Transformers\Specific\MaxFunction.ttinclude" #>
 <#@ include file="$(TextTransformDir)\Values\Atoms\Constant.ttinclude" #>
 <#@ include file="$(TextTransformDir)\Values\Atoms\Variable.ttinclude" #>
 <#@ include file="$(TextTransformDir)\Values\Bases\Components.ttinclude" #>
@@ -24,7 +27,7 @@
 <#@ import namespace="System.Text" #>
 <#@ import namespace="System.Collections.Generic" #>
 <#+
-    void Generate(string name, string dataType)
+    void Generate(string name, string dataType, bool isNumerical)
     {
         WriteActions(name, dataType);
         WriteEvent(name, dataType);
@@ -45,5 +48,11 @@
         WriteManagedInstancer(name, dataType);
         WriteGetReference(name, dataType);
         WriteGetSetReference(name, dataType);
+        if (isNumerical)
+        {
+            WriteTransformerClamp(name, dataType);
+            WriteTransformerMin(name, dataType);
+            WriteTransformerMax(name, dataType);
+        }
     }
 #>

@@ -4,6 +4,7 @@
         WriteHeader();
 #>
 using Enderlook.Extensions;
+using Enderlook.Unity.Utils;
 
 using System.Collections.Generic;
 
@@ -11,27 +12,27 @@ using UnityEngine;
 <#+
         WriteNamespace();
 #>
-    [CreateAssetMenu(fileName = "<#= name #>TransformerGroup", menuName = "<#= menuPath #>Functions/Groups/<#= name #>")]
+    [CreateAssetMenu(fileName = "<#= name #>TransformerGroup", menuName = "<#= menuPath #>Transformers/Groups/<#= name #>")]
     public class <#= name #>TransformerGroup : <#= name #>Transformer
     {
-        [SerializeField, Tooltip("In order sequence of functions to execute.")]
-        private List<<#= name #>TransformerFunction> functions;
+        [SerializeField, Tooltip("In order sequence of transformers to execute.")]
+        private List<<#= name #>Transformer> transformers;
 
         /// <summary>
-        <#= "///" #> Execute all the <see cref="<#= name #>Function"/> from <see cref="functions"/>.</br>
-        /// In addition, it removes any <see langword="null"/> element from <see cref="functions"/>.
+        <#= "///" #> Execute all the <see cref="<#= name #>Transformer"/> from <see cref="transformers"/>.</br>
+        /// In addition, it removes any <see langword="null"/> element from <see cref="transformers"/>.
         /// </summary>
-        /// <param name="value">Value passed to first function to execute.</param>
-        /// <returns>Result of last function.</returns>
+        /// <param name="value">Value passed to first transformer to execute.</param>
+        /// <returns>Result of last transformer.</returns>
         public override <#= dataType #> Transform(<#= dataType #> value)
         {
-            if (functions.Count == 0)
+            if (transformers.Count == 0)
                 return value;
 
             List<int> indexes = null;
-            for (int i = 0; i < functions.Count; i++)
+            for (int i = 0; i < transformers.Count; i++)
             {
-                var transformer = functions[i];
+                var transformer = transformers[i];
 
                 if (transformer == null)
                     (indexes ?? (indexes = new List<int>())).Add(i);
@@ -40,33 +41,47 @@ using UnityEngine;
             }
 
             if (!(indexes is null))
-                functions.RemoveAtOrdered(indexes);
+                transformers.RemoveAtOrdered(indexes);
 
             return value;
         }
 
         /// <summary>
-        /// Create a new <see cref="IntFunctionChain"/> with the given functions in <paramref name="functions"/>.
+        /// Create a new <see cref="IntFunctionChain"/> with the given transformers in <paramref name="transformers"/>.
         /// </summary>
-        /// <param name="functions">Functions executed in order by the new <see cref="IntFunctionChain"/>.</param>
+        /// <param name="transformers">Functions executed in order by the new <see cref="IntFunctionChain"/>.</param>
         /// <returns>New instance of <see cref="IntFunctionChain"/>.</returns>
-        public static <#= name #>TransformerGroup CreateFunctionChain(params <#= name #>TransformerFunction[] functions)
+        public static <#= name #>TransformerGroup CreateFunctionChain(params <#= name #>Transformer[] transformers)
         {
             var instance = CreateInstance<<#= name #>TransformerGroup>();
-            if (functions == null || functions.Length == 0)
+            if (transformers == null || transformers.Length == 0)
                 return instance;
-            var _functions = new List<<#= name #>TransformerFunction>();
-            for (int i = 0; i < functions.Length; i++)
+            var _functions = new List<<#= name #>Transformer>();
+            for (int i = 0; i < transformers.Length; i++)
             {
-                var function = functions[i];
-                if (!(function == null))
-                    _functions.Add(function);
+                var transformer = transformers[i];
+                if (!(transformer == null))
+                    _functions.Add(transformer);
             }
-            instance.functions = _functions;
+            instance.transformers = _functions;
+            return instance;
+        }
+
+        /// <inheritdoc />
+        public override <#= name #>Transformer CreateTransformerPrototype()
+        {
+            var instance = CreateInstance<<#= name #>TransformerGroup>();
+            instance.name = PrototypeHelper.GetPrototypeNameOf(this);
+            for (int i = 0; i < transformers.Count; i++)
+            {
+                var transformer = transformers[i];
+                if (!(transformer == null))
+                    instance.transformers.Add(transformer);
+            }
             return instance;
         }
     }
 <#+
-        SaveOutput(name + "TransformerGroup", "Transformers");
+        SaveOutput(name + "TransformerGroup", "Transformers/Groups");
     }
 #>

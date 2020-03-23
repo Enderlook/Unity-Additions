@@ -1,0 +1,58 @@
+﻿<#+
+    void WriteTransformerMin(string name, string dataType)
+    {
+        WriteHeader();
+#>
+using Enderlook.Unity.Utils;
+
+using System;
+using System.Runtime.CompilerServices;
+
+using UnityEngine;
+<#+
+        WriteNamespace();
+#>
+    [CreateAssetMenu(fileName = "<#= name #>TransformerMin", menuName = "<#= menuPath #>Transformers/Min/<#= name #>")]
+    public class <#= name #>TransformerMin : <#= name #>Transformer
+    {
+        [SerializeField, Tooltip("Minimum value.")]
+        private <#= name #>GetReference min;
+
+        /// <inheritdoc />
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public override <#= dataType #> Transform(<#= dataType #> value)
+        {
+            var minValue = min.GetValue();
+            if (value < minValue)
+                return minValue;
+
+            return value;
+        }
+
+        /// <summary>
+        <#= "///" #> Create a new <see cref="<#= name #>TransformerMin"/>.
+        /// </summary>
+        <#= "///" #> <param name="min">Minimum value.</param>
+        <#= "///" #> <returns>New instance of <see cref="<#= name #>TransformerMin"/>.</returns>
+        public static <#= name #>TransformerMin CreateMin(<#= name #>GetReference min)
+        {
+            if (min is null) throw new ArgumentNullException(nameof(min));
+
+            var instance = CreateInstance<<#= name #>TransformerMin>();
+            instance.min = min;
+            return instance;
+        }
+
+        /// <inheritdoc />
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public override <#= name #>Transformer CreateTransformerPrototype()
+        {
+            var instance = Instantiate(this);
+            instance.name = PrototypeHelper.GetPrototypeNameOf(this);
+            return instance;
+        }
+    }
+<#+
+        SaveOutput(name + "TransformerMin", "Transformers/Min");
+    }
+#>

@@ -10,17 +10,17 @@
         "bool",
         "string",
         "char",
-        "byte",
-        "short",
-        "int",
-        "long",
-        "[sb]yte",
-        "[us]hort",
-        "[ui]nt",
-        "[ul]ong",
-        "float",
-        "double",
-        "decimal",
+        "ºbyte",
+        "ºshort",
+        "ºint",
+        "ºlong",
+        "º[sb]yte",
+        "º[us]hort",
+        "º[ui]nt",
+        "º[ul]ong",
+        "ºfloat",
+        "ºdouble",
+        "ºdecimal",
         "Color",
         "Quaternion",
         "Rect",
@@ -40,11 +40,17 @@
 
     foreach (string type in basicTypes)
     {
-        string last = type.Split('.').Last();
+        bool isNumeric = type[0] == 'º';
+        string _type;
+        if (isNumeric)
+            _type = type.Substring(1);
+        else
+            _type = type;
+        string last = _type.Split('.').Last();
         string name = last[0].ToString().ToUpper() + last.Substring(1);
         string[] parts = name.Split(']');
         if (parts.Length > 1)
             name = parts[0].Replace("[", "").ToUpper() + string.Concat(parts.Skip(1));
-        Generate(name, type.Replace("[", "").Replace("]", ""));
+        Generate(name, _type.Replace("[", "").Replace("]", ""), isNumeric);
     }
 #>

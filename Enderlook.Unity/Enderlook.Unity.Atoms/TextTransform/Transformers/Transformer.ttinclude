@@ -7,8 +7,15 @@ using UnityEngine; // Used for atoms with Unity data types
 <#+
         WriteNamespace();
 #>
-    public abstract class <#= name #>Transformer : Transformer<<#= dataType #>> { }
+    public abstract class <#= name #>Transformer : Transformer<<#= dataType #>>
+    {
+        /// <summary>
+        /// Create a prototype of this instance.
+        /// </summary>
+        /// <returns>Prototype of this instance.</returns>
+        public abstract <#= name #>Transformer CreateTransformerPrototype();
+    }
 <#+
-        SaveOutput(name + "Transformer", "Transformers");
+        SaveOutput(name + "Transformer", "Transformers/Base");
     }
 #>

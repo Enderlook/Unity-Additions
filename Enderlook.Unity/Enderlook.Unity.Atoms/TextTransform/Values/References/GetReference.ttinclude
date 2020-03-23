@@ -23,6 +23,36 @@ using UnityEngine;
         [SerializeField]
         private <#= name #>GetComponent component;
 
+        /// <summary>
+        <#= "///" #> Creates an <see cref="<#= name #>GetReference"/> of mode <see cref="ValueReference.ReferenceMode.Inline"/>.
+        /// </summary>
+        /// <param name="value">Value to store.</param>
+        public <#= name #>GetReference(<#= dataType #> value)
+        {
+            Mode = ReferenceMode.Inline;
+            inline = value;
+        }
+
+        /// <summary>
+        <#= "///" #> Creates an <see cref="<#= name #>GetReference"/> of mode <see cref="ValueReference.ReferenceMode.ScriptableObject"/>.
+        /// </summary>
+        <#= "///" #> <param name="value"><see cref="<#= name #>GetSO"/> to store.</param>
+        public <#= name #>GetReference(<#= name #>GetSO value)
+        {
+            Mode = ReferenceMode.ScriptableObject;
+            scriptableObject = value;
+        }
+
+        /// <summary>
+        <#= "///" #> Creates an <see cref="<#= name #>GetComponent"/> of mode <see cref="ValueReference.ReferenceMode.Component"/>.
+        /// </summary>
+        <#= "///" #> <param name="value"><see cref="<#= name #>GetComponent"/> to store.</param>
+        public <#= name #>GetReference(<#= name #>GetComponent value)
+        {
+            Mode = ReferenceMode.ScriptableObject;
+            component = value;
+        }
+
         /// <inheritdoc cref="Interfaces.IGet{T}.GetValue"/>
         public <#= dataType #> GetValue()
         {
