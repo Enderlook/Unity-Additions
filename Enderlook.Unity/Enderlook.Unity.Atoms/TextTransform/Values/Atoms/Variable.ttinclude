@@ -80,7 +80,7 @@ using UnityEngine;
         <#= "///" #> <returns>New instance of <see cref="<#= name #>Variable"/>.</returns>
         public static <#= name #>Variable CreateVariable(<#= dataType #> value)
         {
-            <#= name #>Variable instance = CreateInstance<<#= name #>Variable>();
+            var instance = CreateInstance<<#= name #>Variable>();
             instance.value = value;
             return instance;
         }
@@ -88,10 +88,10 @@ using UnityEngine;
         /// <summary>
         /// Create a prototype of this instance.
         /// </summary>
-        /// <returns>Prototype of this instance</returns>
+        /// <returns>Prototype of this instance.</returns>
         public override <#= name #>ManagedSO CreateManagedPrototype()
         {
-            <#= name #>Variable instance = Instantiate(this);
+            var instance = Instantiate(this);
             instance.name = PrototypeHelper.GetPrototypeNameOf(this);
             if (changed != null)
                 instance.changed = Instantiate(changed);

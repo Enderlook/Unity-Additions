@@ -26,7 +26,7 @@ using UnityEngine;
         <#= "///" #> <returns>New instance of <see cref="<#= name #>Constant"/>.</returns>
         public static <#= name #>Constant CreateConstant(<#= dataType #> value)
         {
-            <#= name #>Constant instance = CreateInstance<<#= name #>Constant>();
+            var instance = CreateInstance<<#= name #>Constant>();
             instance.value = value;
             return instance;
         }

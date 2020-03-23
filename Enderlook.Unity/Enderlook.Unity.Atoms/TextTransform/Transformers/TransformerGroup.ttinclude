@@ -31,7 +31,7 @@ using UnityEngine;
             List<int> indexes = null;
             for (int i = 0; i < functions.Count; i++)
             {
-                Transformer<<#= dataType #>> transformer = functions[i];
+                var transformer = functions[i];
 
                 if (transformer == null)
                     (indexes ?? (indexes = new List<int>())).Add(i);
@@ -52,14 +52,14 @@ using UnityEngine;
         /// <returns>New instance of <see cref="IntFunctionChain"/>.</returns>
         public static <#= name #>TransformerGroup CreateFunctionChain(params <#= name #>TransformerFunction[] functions)
         {
-            <#= name #>TransformerGroup instance = CreateInstance<<#= name #>TransformerGroup>();
+            var instance = CreateInstance<<#= name #>TransformerGroup>();
             if (functions == null || functions.Length == 0)
                 return instance;
-            List<<#= name #>TransformerFunction> _functions = new List<<#= name #>TransformerFunction>();
+            var _functions = new List<<#= name #>TransformerFunction>();
             for (int i = 0; i < functions.Length; i++)
             {
-                <#= name #>TransformerFunction function = functions[i];
-                if (!(function is null))
+                var function = functions[i];
+                if (!(function == null))
                     _functions.Add(function);
             }
             instance.functions = _functions;
