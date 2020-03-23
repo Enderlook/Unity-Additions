@@ -50,6 +50,9 @@ namespace Enderlook.Unity.Attributes
         {
             EditorApplication.contextualPropertyMenu += (GenericMenu menu, SerializedProperty property) =>
             {
+                if (property.propertyPath.EndsWith(".Array.Size"))
+                    return;
+
                 FieldInfo fieldInfo = property.GetFieldInfo();
                 if (typeof(UnityObject).IsAssignableFrom(fieldInfo.FieldType))
                     menu.AddItem(
