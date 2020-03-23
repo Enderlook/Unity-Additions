@@ -16,7 +16,12 @@ set source=%bin%\%in%\%framework%
 
 cd ..
 
+del /Q /F "%output%\%dlls%\%out%\%name%*.dll"
+del /Q /F "%output%\%dlls%\%out%\%name%*.xml"
+
 xcopy "%source%\%name%*.dll" %output%\%dlls%\%out%\ /y
+
+xcopy "%source%\%name%*.xml" %output%\%dlls%\%out%\ /y
 
 del %ouput%\%debuggers%\*
 
