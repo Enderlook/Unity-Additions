@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8150760654224925436}
   - component: {fileID: 8150760654224925439}
   - component: {fileID: 8150760654224925438}
-  - component: {fileID: 2109149649264826359}
+  - component: {fileID: 6094790854660879161}
   m_Layer: 5
   m_Name: FloatingTextCanvas
   m_TagString: Untagged
@@ -70,7 +70,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8150760654224925313}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 1980459831, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_UiScaleMode: 0
@@ -92,7 +92,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8150760654224925313}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 1301386320, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_IgnoreReversedGraphics: 1
@@ -100,7 +100,7 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &2109149649264826359
+--- !u!114 &6094790854660879161
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -109,13 +109,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 8150760654224925313}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 1349926358, guid: fb7c84d950072be4fb5374455527783a, type: 3}
+  m_Script: {fileID: 1349926358, guid: 4fb5f411dbeffa54cac90fb5e06e0199, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeBeforeDestroy: 0
+  timeBeforeDestroy: 1
   textColor: {r: 1, g: 0, b: 0, a: 1}
   randomOffset: {x: 0.5, y: 0.5}
-  scaleMultiplier: 0.025
+  scaleMultiplier: 1
   digitPrecision: 0
   typeOfRounding: 0
   text: {fileID: 8150760654684562821}
@@ -175,7 +175,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8150760654684562823}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
@@ -184,8 +184,6 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
     m_FontSize: 14

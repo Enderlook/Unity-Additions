@@ -17,43 +17,43 @@ namespace Enderlook.Unity.Prefabs.FloatingText
         private int maximumAmountFloatingText = 10;
 
 #pragma warning disable CS0649
-        [SerializeField, HideInInspector]
+        [Header("Floating Text Override Configuration")]
+        [SerializeField]
         private bool overrideTimeBeforeDestroy;
 
-        [Header("Floating Text Override Configuration")]
         [ShowIf(nameof(overrideTimeBeforeDestroy))]
         [SerializeField, Tooltip("Time before self destroy in seconds. If 0, duration of the animation will be used.")]
         private float timeBeforeDestroy;
 
-        [SerializeField, HideInInspector]
+        [SerializeField]
         private bool overrideTextColor;
 
         [ShowIf(nameof(overrideTextColor))]
         [SerializeField, Tooltip("Color used by text")]
         private Color textColor = Color.red;
 
-        [SerializeField, HideInInspector]
+        [SerializeField]
         private bool overrideRandomOffset;
 
         [ShowIf(nameof(overrideRandomOffset))]
         [SerializeField, Tooltip("Random spawn offset.")]
         private Vector2 randomOffset = Vector2.one;
 
-        [SerializeField, HideInInspector]
+        [SerializeField]
         private bool overrideScaleMultiplier;
 
         [ShowIf(nameof(overrideScaleMultiplier))]
         [SerializeField, Tooltip("Multiply the scale of the canvas by this value.")]
         private float scaleMultiplier = 1;
 
-        [SerializeField, HideInInspector]
+        [SerializeField]
         private bool overrideDigitPrecision;
 
         [ShowIf(nameof(overrideDigitPrecision))]
         [SerializeField, Tooltip("Digit precision (decimals) for numbers. Whenever a float is given to show, the number is rounded by a certain amount of digits.")]
         private int digitPrecision = 0;
 
-        [SerializeField, HideInInspector]
+        [SerializeField]
         private bool overrideTypeOfRounding;
 
         [ShowIf(nameof(overrideTypeOfRounding))]
