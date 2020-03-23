@@ -45,6 +45,7 @@ namespace Enderlook.Unity.Attributes
 
         private PropertyWrapper propertyWrapper;
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Code Quality", "IDE0051:Remove unused private members", Justification = "Used by Unity.")]
         [InitializeOnLoadMethod]
         private static void AddContextualPropertyMenu()
         {

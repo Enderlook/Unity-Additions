@@ -219,15 +219,6 @@ namespace Enderlook.Unity.Utils.UnityEditor
         public static SerializedPropertyHelper GetHelper(this SerializedProperty source) => new SerializedPropertyHelper(source);
 
         /// <summary>
-        /// Get the field <see cref="Type"/> of <paramref name="source"/>.
-        /// </summary>
-        /// <param name="source"><see cref="SerializedProperty"/> whose <see cref="Type"/> will be get.</param>
-        /// <param name="includeInheritedPrivate">Whenever it should also search private fields of supper-classes.</param>
-        /// <returns><see cref="Type"/> of the <paramref name="source"/>.</returns>
-        public static Type GetFieldType(this SerializedProperty source, bool includeInheritedPrivate = true) => source.GetFieldInfo(includeInheritedPrivate).FieldType;
-
-
-        /// <summary>
         /// Get the <see cref="Type"/> of the current value of <paramref name="source"/>.
         /// </summary>
         /// <param name="source"><see cref="SerializedProperty"/> whose current <see cref="Type"/> will be get.</param>
@@ -253,6 +244,15 @@ namespace Enderlook.Unity.Utils.UnityEditor
             else
                 return type.GetField(source.name, bindingFlags);
         }
+
+        /// <summary>
+        /// Get the field <see cref="Type"/> of <paramref name="source"/>.
+        /// </summary>
+        /// <param name="source"><see cref="SerializedProperty"/> whose <see cref="Type"/> will be get.</param>
+        /// <param name="includeInheritedPrivate">Whenever it should also search private fields of supper-classes.</param>
+        /// <returns><see cref="Type"/> of the <paramref name="source"/>.</returns>
+        public static Type GetFieldType(this SerializedProperty source, bool includeInheritedPrivate = true)
+            => source.GetFieldInfo(includeInheritedPrivate).FieldType;
 
         /// <summary>
         /// Get the index of the <paramref name="source"/> if it's an element of an array.

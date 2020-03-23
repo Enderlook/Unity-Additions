@@ -14,7 +14,7 @@ namespace Enderlook.Unity.Attributes
 {
     public class ObjectPickerWindow : EditorWindow
     {
-        private static GUIContent CONTEXT_PROPERTY_MENU = new GUIContent("Object Picker Menu", "Open the Object Picker Menu");
+        private static readonly GUIContent CONTEXT_PROPERTY_MENU = new GUIContent("Object Picker Menu", "Open the Object Picker Menu");
         private static readonly GUIContent TILE_CONTENT = new GUIContent("Object Picker Menu");
 
         private PropertyWrapper propertyWrapper;
@@ -29,6 +29,7 @@ namespace Enderlook.Unity.Attributes
 
         private int index = -1;
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Code Quality", "IDE0051:Remove unused private members", Justification = "Used by Unity.")]
         [InitializeOnLoadMethod]
         private static void AddContextualPropertyMenu()
         {
