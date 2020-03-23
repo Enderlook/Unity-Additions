@@ -5,6 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Text.RegularExpressions;
 
 using UnityEditor;
 
@@ -17,6 +18,22 @@ namespace Enderlook.Unity.Utils.UnityEditor
         // https://github.com/lordofduct/spacepuppy-unity-framework/blob/master/SpacepuppyBaseEditor/EditorHelper.cs
 
         internal const BindingFlags bindingFlags = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance;
+
+        private static Regex isArrayRegex = new Regex(@"Array.data\[\d+\]$");
+
+        /// <summary>
+        /// Check if <paramref name="source"/> is an element from an array or list.
+        /// </summary>
+        /// <param name="source"><see cref="SerializedProperty"/> to check.</param>
+        /// <returns>Whenever it's an element of an array or list, or not.</returns>
+        public static bool IsArrayOrListElement(this SerializedProperty source) => isArrayRegex.IsMatch(source.propertyPath);
+
+        /// <summary>
+        /// Check if <paramref name="source"/> is the array or list size.
+        /// </summary>
+        /// <param name="source"><see cref="SerializedProperty"/> to check.</param>
+        /// <returns>Whenever it's the array or list size, or not</returns>
+        public static bool IsArrayOrListSize(this SerializedProperty source) => source.propertyPath.EndsWith("Array.size");
 
         private static (Func<object> get, Action<object> set) GetAccessors(this object source, string name)
         {
