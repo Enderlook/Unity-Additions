@@ -6,7 +6,7 @@ set out=%2
 set in=%in:"=%
 set out=%out:"=%
 
-set output=Assets\Plugins\Enderlook\Unity
+set output=Assets\Enderlook\Plugins\Unity
 set bin=Enderlook.Unity\Bin
 set dlls=Dlls
 set debuggers=Debbugers
