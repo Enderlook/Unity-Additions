@@ -33,7 +33,7 @@ namespace Enderlook.Unity.Attributes
         [InitializeOnLoadMethod]
         private static void AddContextualPropertyMenu()
         {
-            EditorApplication.contextualPropertyMenu += (GenericMenu menu, SerializedProperty property) =>
+            ContextualPropertyMenu.contextualPropertyMenu += (GenericMenu menu, SerializedProperty property) =>
             {
                 if (property.propertyPath.EndsWith(".Array.Size"))
                     return;
