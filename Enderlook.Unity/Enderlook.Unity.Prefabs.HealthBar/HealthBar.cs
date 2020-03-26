@@ -287,7 +287,7 @@ namespace Enderlook.Unity.Prefabs.HealthBarGUI
         public int Health {
             set {
                 if (health != value)
-                    Set(health);
+                    Set(value);
             }
         }
 
