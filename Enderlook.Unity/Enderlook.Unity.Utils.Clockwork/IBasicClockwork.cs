@@ -7,19 +7,29 @@ namespace Enderlook.Unity.Utils.Clockworks
     public interface IBasicClockwork : IUpdate
     {
         /// <summary>
-        /// Current cooldown time.
+        /// Time in seconds to finish the countdown.
         /// </summary>
         float CooldownTime { get; }
 
         /// <summary>
-        /// Total cooldown time.
+        /// Time in seconds since the countdown started.
         /// </summary>
-        float TotalCooldown { get; }
+        float WarmupTime { get; }
 
         /// <summary>
-        /// Cooldown percent from 0 to 1. When 0, it's ready to execute.
+        /// Total cooldown time.
+        /// </summary>
+        float TimeLength { get; }
+
+        /// <summary>
+        /// Cooldown percent from 1 to 0. When 0, it's ready to execute.
         /// </summary>
         float CooldownPercent { get; }
+
+        /// <summary>
+        /// Warmup percent from 0 to 1. When 1, it's ready to execute.
+        /// </summary>
+        float WarmupPercent { get; }
 
         /// <summary>
         /// Whenever it's ready or is still in cooldown.
@@ -27,24 +37,24 @@ namespace Enderlook.Unity.Utils.Clockworks
         bool IsReady { get; }
 
         /// <summary>
-        /// Reset <see cref="CooldownTime"/> time to <see cref="TotalCooldown"/>.
+        /// Reset <see cref="CooldownTime"/> time to <see cref="TimeLength"/> and <see cref="WarmupTime"/> to 0.
         /// </summary>
-        void ResetCooldown();
+        void ResetTime();
 
         /// <summary>
-        /// Assign a new maximum value <paramref name="newCooldownTime"/> and calls <see cref="ResetCooldown"/>.
+        /// Assign a new maximum value <paramref name="newTimeLength"/> to <see cref="TimeLength"/> and calls <see cref="ResetTime()"/>.
         /// </summary>
-        void ResetCooldown(float newCooldownTime);
+        void ResetTime(float newTimeLength);
 
         /// <summary>
-        /// Reduce <see cref="CooldownTime"/> time and checks if the <see cref="CooldownTime"/> is over.
+        /// Reduce <see cref="CooldownTime"/> time as increases <see cref="WarmupTime"/> and checks if it's ready.
         /// </summary>
         /// <param name="deltaTime"><see cref="Time.deltaTime"/></param>
         /// <returns><see cref="IsReady"/>.</returns>
         bool Recharge(float deltaTime);
 
         /// <summary>
-        /// Set clockwork ready to be used by setting <see cref="CooldownTime"/> to 0.
+        /// Set clockwork ready to be used by setting <see cref="CooldownTime"/> to 0 and <see cref="WarmupTime"/> to <see cref="TimeLength"/>.
         /// </summary>
         void SetReady();
     }

@@ -10,6 +10,7 @@ namespace Enderlook.Unity.Utils.Clockworks
 
         private bool autoExecute;
 
+        /// <inheritdoc />
         public float CooldownTime {
             get => cooldownTime;
             private set {
@@ -19,25 +20,41 @@ namespace Enderlook.Unity.Utils.Clockworks
             }
         }
 
+        /// <summary>
+        /// Time in seconds to execute <see cref="Callback"/>.
+        /// </summary>
         protected float cooldownTime = 0f;
 
-        public float TotalCooldown { get; protected set; }
+        /// <inheritdoc />
+        public float TimeLength { get; protected set; }
 
-        public float CooldownPercent => Mathf.Clamp01(CooldownTime / TotalCooldown);
+        /// <inheritdoc />
+        public float CooldownPercent => Mathf.Clamp01(CooldownTime / TimeLength);
 
+        /// <inheritdoc />
+        public float WarmupTime => TimeLength - cooldownTime;
+
+        /// <inheritdoc />
+        public float WarmupPercent => Mathf.Clamp01(WarmupTime / TimeLength);
+
+        /// <inheritdoc />
         public bool IsReady => CooldownTime <= 0;
 
+        /// <inheritdoc />
         public int TotalCycles { get; private set; }
 
+        /// <inheritdoc />
         public int RemainingCycles { get; private set; }
 
+        /// <inheritdoc />
         public bool IsEndlessLoop => TotalCycles == -1;
 
+        /// <inheritdoc />
         public bool IsEnabled => RemainingCycles > 0 || IsEndlessLoop;
 
         /// <summary>
         /// Create a timer that executes <paramref name="Callback"/> each <paramref name="cooldown"/> seconds.<br/>
-        /// Time must be manually updated using <see cref="Recharge(float)"/>, <see cref="TryExecute(float)"/> or <see cref="TryExecute(ref T, float)"/> methods.
+        /// Time must be manually updated using <see cref="Recharge(float)"/>, <see cref="TryExecute(float)"/> or <see cref="TryExecute(out T, float)"/> methods.
         /// </summary>
         /// <param name="cooldown">Time in seconds to execute <paramref name="Callback"/>.</param>
         /// <param name="Callback">Action to execute.</param>
@@ -46,20 +63,22 @@ namespace Enderlook.Unity.Utils.Clockworks
         public Clockwork(float cooldown, Action Callback, bool autoExecute = true, int cycles = -1)
         {
             ResetCycles(cycles);
-            ResetCooldown(cooldown);
+            ResetTime(cooldown);
             this.Callback = Callback;
             this.autoExecute = autoExecute;
         }
 
+        /// <inheritdoc />
         public void Execute()
         {
             if (ReduceCyclesByOne())
             {
-                ResetCooldown();
+                ResetTime();
                 Callback();
             }
         }
 
+        /// <inheritdoc />
         private bool ReduceCyclesByOne()
         {
             if (IsEndlessLoop)
@@ -69,6 +88,7 @@ namespace Enderlook.Unity.Utils.Clockworks
             return enabled;
         }
 
+        /// <inheritdoc />
         public bool TryExecute(float deltaTime = 0)
         {
             if (IsEnabled && Recharge(deltaTime))
@@ -79,22 +99,27 @@ namespace Enderlook.Unity.Utils.Clockworks
             return false;
         }
 
-        public void ResetCooldown() => CooldownTime = TotalCooldown;
+        /// <inheritdoc />
+        public void ResetTime() => CooldownTime = TimeLength;
 
-        public void ResetCooldown(float newCooldownTime)
+        /// <inheritdoc />
+        public void ResetTime(float newCooldownTime)
         {
-            TotalCooldown = newCooldownTime;
-            ResetCooldown();
+            TimeLength = newCooldownTime;
+            ResetTime();
         }
 
+        /// <inheritdoc />
         public void ResetCycles() => RemainingCycles = TotalCycles;
 
+        /// <inheritdoc />
         public void ResetCycles(int newCycles)
         {
             TotalCycles = newCycles;
             ResetCycles();
         }
 
+        /// <inheritdoc />
         public bool Recharge(float deltaTime)
         {
             if (IsEnabled)
@@ -115,6 +140,7 @@ namespace Enderlook.Unity.Utils.Clockworks
                 Execute();
         }
 
+        /// <inheritdoc />
         public void SetReady() => CooldownTime = 0;
     }
 }

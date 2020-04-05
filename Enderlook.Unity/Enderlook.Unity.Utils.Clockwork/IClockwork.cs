@@ -5,14 +5,14 @@ namespace Enderlook.Unity.Utils.Clockworks
     public interface IClockwork : IBasicClockwork
     {
         /// <summary>
-        /// Execute <see cref="Callback"/> and call <see cref="ResetCooldown"/>.<br/>
-        /// It ignores the <see cref="IsReady"/>. Use <seealso cref="TryExecute(float)"/> to use it.
+        /// Execute the callback and call <see cref="IBasicClockwork.ResetTime()"/>.<br/>
+        /// It ignores the <see cref="IBasicClockwork.IsReady"/>. Use <seealso cref="TryExecute(float)"/> to use it.
         /// </summary>
         /// <seealso cref="TryExecute(float)"/>
         void Execute();
 
         /// <summary>
-        /// Try to execute <see cref="Callback"/>. It will check for the <see cref="CooldownTime"/>, and if possible, execute.
+        /// Try to execute the callback. It will check for the <see cref="IBasicClockwork.CooldownTime"/>, and if possible, execute.
         /// </summary>
         /// <param name="deltaTime">Time since the last frame. <see cref="Time.deltaTime"/></param>
         /// <returns><see langword="true"/> if it was executed, <see langword="false"/> if it's still on cooldown.</returns>
@@ -47,6 +47,7 @@ namespace Enderlook.Unity.Utils.Clockworks
         /// <summary>
         /// Assign a new maximum value <paramref name="TotalCycles"/> and <see cref="RemainingCycles"/>.
         /// </summary>
+        /// <param name="newCycles">New maximum amount of cycles.</param>
         void ResetCycles(int newCycles);
     }
 }

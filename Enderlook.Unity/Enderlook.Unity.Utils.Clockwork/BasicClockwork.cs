@@ -4,6 +4,7 @@ namespace Enderlook.Unity.Utils.Clockworks
 {
     public class BasicClockwork : IBasicClockwork
     {
+        /// <inheritdoc />
         public float CooldownTime {
             get => cooldownTime;
             private set {
@@ -13,39 +14,53 @@ namespace Enderlook.Unity.Utils.Clockworks
             }
         }
 
+        /// <inheritdoc />
         protected float cooldownTime;
 
-        public float TotalCooldown { get; protected set; }
+        /// <inheritdoc />
+        public float WarmupTime => TimeLength - cooldownTime;
 
-        public float CooldownPercent => Mathf.Clamp01(CooldownTime / TotalCooldown);
+        /// <inheritdoc />
+        public float WarmupPercent => Mathf.Clamp01(WarmupTime / TimeLength);
 
+        /// <inheritdoc />
+        public float TimeLength { get; protected set; }
+
+        /// <inheritdoc />
+        public float CooldownPercent => Mathf.Clamp01(CooldownTime / TimeLength);
+
+        /// <inheritdoc />
         public bool IsReady => CooldownTime <= 0;
 
         /// <summary>
         /// Create a timer.<br/>
         /// Time must be manually updated using <see cref="Recharge(float)"/>.
         /// </summary>
-        /// <param name="cooldown">Time in seconds to execute <paramref name="Callback"/>.</param>
+        /// <param name="cooldown">Time in seconds to finish.</param>
         public BasicClockwork(float cooldown)
         {
-            TotalCooldown = cooldown;
-            ResetCooldown();
+            TimeLength = cooldown;
+            ResetTime();
         }
 
-        public void ResetCooldown() => CooldownTime = TotalCooldown;
+        /// <inheritdoc />
+        public void ResetTime() => CooldownTime = TimeLength;
 
-        public void ResetCooldown(float newCooldownTime)
+        /// <inheritdoc />
+        public void ResetTime(float newCooldownTime)
         {
-            TotalCooldown = newCooldownTime;
-            ResetCooldown();
+            TimeLength = newCooldownTime;
+            ResetTime();
         }
 
+        /// <inheritdoc />
         public bool Recharge(float deltaTime)
         {
             CooldownTime -= deltaTime;
             return IsReady;
         }
 
+        /// <inheritdoc />
         public void SetReady() => CooldownTime = 0;
 
         /// <summary>
