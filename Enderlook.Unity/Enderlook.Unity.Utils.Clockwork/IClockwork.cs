@@ -2,6 +2,10 @@
 
 namespace Enderlook.Unity.Utils.Clockworks
 {
+    /// <summary>
+    /// This class represent a cooldown which executes a certain callback on end.<br/>
+    /// <see cref="Interfaces.IUpdate.UpdateBehaviour(float)"/> must be executed on every frame with <see cref="Time.deltaTime"/>.
+    /// </summary>
     public interface IClockwork : IBasicClockwork
     {
         /// <summary>
@@ -45,9 +49,14 @@ namespace Enderlook.Unity.Utils.Clockworks
         void ResetCycles();
 
         /// <summary>
-        /// Assign a new maximum value <paramref name="TotalCycles"/> and <see cref="RemainingCycles"/>.
+        /// Assign a new maximum value <paramref name="newCycles"/> to <see cref="TotalCycles"/> and <see cref="RemainingCycles"/>.
         /// </summary>
         /// <param name="newCycles">New maximum amount of cycles.</param>
         void ResetCycles(int newCycles);
+
+        /// <summary>
+        /// Set clockwork ready to be used by setting <see cref="IBasicClockwork.CooldownTime"/> to 0 and <see cref="IBasicClockwork.WarmupTime"/> to <see cref="IBasicClockwork.TimeLength"/>.
+        /// </summary>
+        void SetReady();
     }
 }

@@ -2,12 +2,13 @@
 
 namespace Enderlook.Unity.Utils.Clockworks
 {
+    /// <inheritdoc cref="IBasicClockwork"/>
     public class BasicClockwork : IBasicClockwork
     {
         /// <inheritdoc />
         public float CooldownTime {
             get => cooldownTime;
-            private set {
+            protected set {
                 cooldownTime = value;
                 if (cooldownTime < 0)
                     cooldownTime = 0;
@@ -60,12 +61,9 @@ namespace Enderlook.Unity.Utils.Clockworks
             return IsReady;
         }
 
-        /// <inheritdoc />
-        public void SetReady() => CooldownTime = 0;
-
         /// <summary>
         /// Calls <see cref="Recharge(float)"/>.</summary>
         /// <param name="deltaTime">Time since last increase.</param>
-        public void UpdateBehaviour(float deltaTime) => Recharge(deltaTime);
+        public virtual void UpdateBehaviour(float deltaTime) => Recharge(deltaTime);
     }
 }

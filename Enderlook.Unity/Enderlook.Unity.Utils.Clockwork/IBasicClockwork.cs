@@ -4,6 +4,10 @@ using UnityEngine;
 
 namespace Enderlook.Unity.Utils.Clockworks
 {
+    /// <summary>
+    /// This class represent a cooldown.<br/>
+    /// <see cref="IUpdate.UpdateBehaviour(float)"/> must be executed on every frame with <see cref="Time.deltaTime"/>.
+    /// </summary>
     public interface IBasicClockwork : IUpdate
     {
         /// <summary>
@@ -52,10 +56,5 @@ namespace Enderlook.Unity.Utils.Clockworks
         /// <param name="deltaTime"><see cref="Time.deltaTime"/></param>
         /// <returns><see cref="IsReady"/>.</returns>
         bool Recharge(float deltaTime);
-
-        /// <summary>
-        /// Set clockwork ready to be used by setting <see cref="CooldownTime"/> to 0 and <see cref="WarmupTime"/> to <see cref="TimeLength"/>.
-        /// </summary>
-        void SetReady();
     }
 }

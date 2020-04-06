@@ -2,6 +2,10 @@
 
 namespace Enderlook.Unity.Utils.Clockworks
 {
+    /// <summary>
+    /// This class represent a cooldown which executes a certain callback with return value on end.<br/>
+    /// <see cref="Interfaces.IUpdate.UpdateBehaviour(float)"/> must be executed on every frame with <see cref="Time.deltaTime"/>.
+    /// </summary>
     public interface IClockwork<T> : IClockwork
     {
         /// <summary>
@@ -10,15 +14,15 @@ namespace Enderlook.Unity.Utils.Clockworks
         /// </summary>
         /// <returns>The result ofthe callback>.</returns>
         /// <seealso cref="TryExecute(out T, float)"/>
-        new T Execute();
+        T ExecuteWithReturn();
 
         /// <summary>
         /// Try to execute the callback. It will check for the <see cref="IBasicClockwork.CooldownTime"/>, and if possible, execute.
         /// </summary>
-        /// <param name="deltaTime">Time since the last frame. <see cref="Time.deltaTime"/></param>
         /// <param name="result">The result of the callback.</param>
+        /// <param name="deltaTime">Time since the last frame. <see cref="Time.deltaTime"/></param>
         /// <returns><see langword="true"/> if it was executed, <see langword="false"/> if it's still on cooldown.</returns>
-        /// <seealso cref="Execute"/>
+        /// <seealso cref="ExecuteWithReturn"/>
         bool TryExecute(out T result, float deltaTime = 0);
     }
 }
