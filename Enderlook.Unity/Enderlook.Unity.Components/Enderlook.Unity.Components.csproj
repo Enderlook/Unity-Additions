@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
@@ -68,6 +68,10 @@
   <PropertyGroup Label="UserMacros">
     <UnityVersion>2019.2.17f1</UnityVersion>
   </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Enderlook.Unity.Attributes\Enderlook.Unity.Attributes.csproj" />
+  </ItemGroup>
 
   <ItemGroup>
     <Reference Include="UnityEngine">
