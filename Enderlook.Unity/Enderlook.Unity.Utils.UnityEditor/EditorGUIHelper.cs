@@ -6,7 +6,10 @@ using UnityEngine;
 
 namespace Enderlook.Unity.Utils.UnityEditor
 {
-    public static class GUIHelper
+    /// <summary>
+    /// A set of helper functions for <see cref="EditorGUI"/> and <see cref="EditorGUILayout"/>.
+    /// </summary>
+    public static class EditorGUIHelper
     {
         /// <summary>
         /// Add a header.
