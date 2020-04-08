@@ -1,3 +1,5 @@
+using Enderlook.Unity.Utils;
+
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -6,8 +8,6 @@ namespace Enderlook.Unity.Prefabs.FloatingText
     [AddComponentMenu("Enderlook/Floating Text/Floating Text Item")]
     public class FloatingTextItem : MonoBehaviour
     {
-        public enum TYPE_OF_ROUNDING { ROUND, CEIL, FLOOR, TRUNC }
-
 #pragma warning disable CS0649
         [Header("Configuration")]
         [Header("Overridable by Floating Text Controller", order = 2)]
@@ -27,7 +27,7 @@ namespace Enderlook.Unity.Prefabs.FloatingText
         private int digitPrecision = 0;
 
         [SerializeField, Tooltip("Determines how decimal digits are rounded.")]
-        private TYPE_OF_ROUNDING typeOfRounding = TYPE_OF_ROUNDING.ROUND;
+        private RoundingMode roundingMode = RoundingMode.Round;
 
         [Header("Setup")]
         [SerializeField, Tooltip("Text component to write.")]
@@ -62,7 +62,7 @@ namespace Enderlook.Unity.Prefabs.FloatingText
         /// <seealso cref="SetScaleMultiplier(float)"/>
         /// <seealso cref="SetTimeBeforeDestroy(float)"/>
         /// <seealso cref="SetRandomOffset(Vector2)"/>
-        /// <seealso cref="SetConfiguration(float, Color?, float?, float?, Vector2?, int?, TYPE_OF_ROUNDING?)"/>
+        /// <seealso cref="SetConfiguration(float, Color?, float?, float?, Vector2?, int?, RoundingMode?)"/>
         public void SetConfiguration(string text, Color? textColor = null, float? scaleMultiplier = null, float? timeBeforeDestroy = null, Vector2? randomOffset = null)
         {
             SetText(text);
@@ -85,35 +85,20 @@ namespace Enderlook.Unity.Prefabs.FloatingText
         /// <param name="scaleMultiplier">Scale multiplier to current scale.</param>
         /// <param name="timeBeforeDestroy">Time in seconds before destroy itself.</param>
         /// <param name="randomOffset">Random offset applied on spawn of the floating text.</param>
-        /// <param name="digitPrecision">Amount of decimals able to show (more decimals will be rounded by <paramref name="typeOfRounding"/>).</param>
-        /// <param name="typeOfRounding">Type of rounding used to round the number to the given <paramref name="digitPrecision"/></param>
+        /// <param name="digitPrecision">Amount of decimals able to show (more decimals will be rounded by <paramref name="roundingMode"/>).</param>
+        /// <param name="roundingMode">Type of rounding used to round the number to the given <paramref name="digitPrecision"/></param>
         /// <seealso cref="SetText(string)"/>
         /// <seealso cref="SetTextColor(Color)"/>
         /// <seealso cref="SetScaleMultiplier(float)"/>
         /// <seealso cref="SetTimeBeforeDestroy(float)"/>
         /// <seealso cref="SetRandomOffset(Vector2)"/>
         /// <seealso cref="SetConfiguration(string, Color?, float?, float?, Vector2?)"/>
-        public void SetConfiguration(float number, Color? numberColor = null, float? scaleMultiplier = null, float? timeBeforeDestroy = null, Vector2? randomOffset = null, int? digitPrecision = null, TYPE_OF_ROUNDING? typeOfRounding = null)
+        public void SetConfiguration(float number, Color? numberColor = null, float? scaleMultiplier = null, float? timeBeforeDestroy = null, Vector2? randomOffset = null, int? digitPrecision = null, RoundingMode? roundingMode = null)
         {
-            typeOfRounding = typeOfRounding ?? this.typeOfRounding;
+            roundingMode = roundingMode ?? this.roundingMode;
             digitPrecision = digitPrecision ?? this.digitPrecision;
             float toShow = number * Mathf.Pow(10, (float)digitPrecision);
-            switch (typeOfRounding)
-            {
-                case TYPE_OF_ROUNDING.CEIL:
-                    toShow = Mathf.Ceil(toShow);
-                    break;
-                case TYPE_OF_ROUNDING.FLOOR:
-                    toShow = Mathf.Floor(toShow);
-                    break;
-                case TYPE_OF_ROUNDING.ROUND:
-                    toShow = Mathf.Round(toShow);
-                    break;
-                case TYPE_OF_ROUNDING.TRUNC:
-                    // https://answers.unity.com/questions/626082/why-is-there-no-mathftruncate.html
-                    toShow = (int)toShow;
-                    break;
-            }
+            toShow = roundingMode.Value.Round(toShow);
             SetConfiguration((toShow / Mathf.Pow(10, (float)digitPrecision)).ToString(), numberColor, scaleMultiplier, timeBeforeDestroy, randomOffset);
         }
 

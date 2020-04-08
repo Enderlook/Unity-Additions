@@ -30,6 +30,11 @@
         void UpdateValues(float health, float maxHealth);
 
         /// <summary>
+        /// Finish instantaneously the animation of current health bar, damage bar, healing bar and health number. 
+        /// </summary>
+        void FinishCurrentAnimation();
+
+        /// <summary>
         /// Modify the current health.<br/>
         /// This method will automatically calculate, show and animate the health bar, damage bar, healing bar and health number.
         /// </summary>

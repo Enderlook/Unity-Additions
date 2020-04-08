@@ -71,6 +71,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Enderlook.Unity.Attributes\Enderlook.Unity.Attributes.csproj" />
+    <ProjectReference Include="..\Enderlook.Unity.Utils\Enderlook.Unity.Utils.csproj" />
   </ItemGroup>
 
   <ItemGroup>

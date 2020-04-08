@@ -1,3 +1,4 @@
+using Enderlook.Unity.Utils;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -6,8 +7,6 @@ namespace Enderlook.Unity.Prefabs.HealthBarGUI
     [AddComponentMenu("Enderlook/Health Bar")]
     public class HealthBar : MonoBehaviour, IHealthBar
     {
-        public enum RoundingMode { None, Round, Ceil, Floor };
-
 #pragma warning disable CS0649
         [Header("Configuration")]
         [SerializeField, Tooltip("How numbers are shown, {0} is health, {1} is maximum health and {2} is percent of health. Eg: {0} / {1} ({2}%)")]
@@ -91,25 +90,33 @@ namespace Enderlook.Unity.Prefabs.HealthBarGUI
 
         private void Awake() => Setup();
 
-        /// <inheritdoc cref="IHealthBarWorker.ManualUpdate(float, float)">
+        /// <inheritdoc cref="IHealthBarWorker.ManualUpdate(float, float)"/>
         public void ManualUpdate(float health, float maxHealth)
         {
             this.health = health;
             this.maxHealth = maxHealth;
 
+            FinishCurrentAnimation();
+        }
+
+        /// <inheritdoc cref="IHealthBarWorker.ManualUpdate(float)"/>
+        public void ManualUpdate(float maxHealth) => ManualUpdate(maxHealth, maxHealth);
+
+        /// <inheritdoc cref="IHealthBarWorker.FinishCurrentAnimation"/>
+        public void FinishCurrentAnimation()
+        {
             // Fix bug, this shouldn't be happening
             if (healthImage == null)
                 healthImage = healthBar.GetComponent<Image>();
 
-            healthImage.fillAmount = this.health / this.maxHealth;
+            healthImage.fillAmount = health / maxHealth;
             if (damageBar != null)
                 damageBar.fillAmount = 0;
             if (healingImage != null)
                 healingImage.fillAmount = 0;
-        }
 
-        /// <inheritdoc cref="IHealthBarWorker.ManualUpdate(float)">
-        public void ManualUpdate(float maxHealth) => ManualUpdate(maxHealth, maxHealth);
+            UpdateNonDynamicNumber();
+        }
 
         /// <summary>
         /// Get the <see cref="healthImage"/> color taking into account the percentage of remaining health.
@@ -134,36 +141,23 @@ namespace Enderlook.Unity.Prefabs.HealthBarGUI
                     {
                         float dynamicPercent = healthImage.fillAmount + damageBar.fillAmount - healingImage.fillAmount,
                               dynamicHealth = maxHealth * dynamicPercent;
-                        textNumber.text = string.Format(textShowed, Rounding(dynamicHealth), Rounding(maxHealth), Rounding(dynamicHealth / maxHealth * 100));
+                        textNumber.text = string.Format(textShowed, roundingMode.Round(dynamicHealth), roundingMode.Round(maxHealth), roundingMode.Round(dynamicHealth / maxHealth * 100));
                     }
                     else
-                        textNumber.text = string.Format(textShowed, Rounding(health), Rounding(maxHealth), Rounding(health / maxHealth * 100));
+                        UpdateNonDynamicNumber();
             }
         }
 
-        private float Rounding(float value)
-        {
-            switch (roundingMode)
-            {
-                case RoundingMode.Round:
-                    return Mathf.Round(value);
-                case RoundingMode.Ceil:
-                    return Mathf.Ceil(value);
-                case RoundingMode.Floor:
-                    return Mathf.Round(value);
-                default:
-                    return value;
-            }
-        }
+        private void UpdateNonDynamicNumber() => textNumber.text = string.Format(textShowed, roundingMode.Round(health), roundingMode.Round(maxHealth), roundingMode.Round(health / maxHealth * 100));
 
-        /// <inheritdoc cref="IHealthBarWorker.UpdateValues(float, float)">
+        /// <inheritdoc cref="IHealthBarWorker.UpdateValues(float, float)"/>
         public void UpdateValues(float health, float maxHealth)
         {
             this.maxHealth = maxHealth;
             Set(health);
         }
 
-        /// <inheritdoc cref="IHealthBarWorker.UpdateValues(float)">
+        /// <inheritdoc cref="IHealthBarWorker.UpdateValues(float)"/>
         public void UpdateValues(float health) => Set(health);
 
         /// <summary>

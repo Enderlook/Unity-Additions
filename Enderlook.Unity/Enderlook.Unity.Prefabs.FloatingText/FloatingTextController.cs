@@ -1,4 +1,5 @@
 ﻿using Enderlook.Unity.Attributes;
+using Enderlook.Unity.Utils;
 
 using System.Collections.Generic;
 
@@ -9,9 +10,15 @@ namespace Enderlook.Unity.Prefabs.FloatingText
     [AddComponentMenu("Enderlook/Floating Text/Floating Text Controller")]
     public class FloatingTextController : MonoBehaviour
     {
+        /// <summary>
+        /// On <see langword="false"/>, this instance ignores any method call to spawn a floaing text.
+        /// </summary>
         [Header("Configuration")]
-        [SerializeField, Tooltip("Spawning point of prefab. If there are several, a random point will be used.")]
-        private Transform[] spawningPoints = new Transform[1];
+        [SerializeField, Tooltip("On false, it ignores method calls to spawn floating text.")]
+        public bool isEnable;
+
+        [SerializeField, Tooltip("Spawning point of prefab. If there are several, a random point will be used."), DrawVectorRelativeToTransform]
+        private Vector3[] spawningPoints = new Vector3[1];
 
         [SerializeField, Tooltip("Maximum amount of floating texts at time. New texts will remove old ones. Use 0 for unlimited.")]
         private int maximumAmountFloatingText = 10;
@@ -58,7 +65,7 @@ namespace Enderlook.Unity.Prefabs.FloatingText
 
         [ShowIf(nameof(overrideTypeOfRounding))]
         [SerializeField, Tooltip("Determines how decimal digits are rounded.")]
-        private FloatingTextItem.TYPE_OF_ROUNDING typeOfRounding = FloatingTextItem.TYPE_OF_ROUNDING.ROUND;
+        private RoundingMode roundingType = RoundingMode.Round;
 
         [Header("Setup")]
         [SerializeField, Tooltip("Floating Text prefab.")]
@@ -98,11 +105,11 @@ namespace Enderlook.Unity.Prefabs.FloatingText
         /// <summary>
         /// Spawns a floating text and return its <see cref="FloatingTextItem"/> script.<br/>
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Instanced <see cref="FloatingTextItem"/> script.</returns>
         private FloatingTextItem SpawnFloatingTextBase()
         {
             GameObject floatingText = floatingTextParent != null ? Instantiate(floatingTextPrefab, FloatingTextParent) : Instantiate(floatingTextPrefab);
-            floatingText.transform.position = spawningPoints[Mathf.RoundToInt(Random.Range(0, spawningPoints.Length))].position;
+            floatingText.transform.position = spawningPoints[Mathf.RoundToInt(Random.Range(0, spawningPoints.Length))] + transform.position;
 
             AddToFloatingTextList(floatingText);
             return floatingText.GetComponent<FloatingTextItem>();
@@ -134,6 +141,9 @@ namespace Enderlook.Unity.Prefabs.FloatingText
         /// <param name="randomOffset">Random offset applied on spawn of the floating text.</param>
         public void SpawnFloatingText(string text, Color? textColor = null, float? scaleMultiplier = null, float? timeBeforeDestroy = null, Vector2? randomOffset = null)
         {
+            if (!isEnable)
+                return;
+
             FloatingTextItem floatingTextScript = SpawnFloatingTextBase();
 
             floatingTextScript.SetConfiguration(text,
@@ -150,13 +160,16 @@ namespace Enderlook.Unity.Prefabs.FloatingText
         /// </summary>
         /// <param name="number">Number to display.</param>
         /// <param name="numberColor">Color of the number.</param>
-        /// <param name="digitPrecision">Amount of decimals able to show (more decimals will be rounded by <paramref name="typeOfRounding"/>).</param>
+        /// <param name="digitPrecision">Amount of decimals able to show (more decimals will be rounded by <paramref name="roundingMode"/>).</param>
         /// <param name="scaleMultiplier">Scale multiplier to current scale.</param>
         /// <param name="timeBeforeDestroy">Time in seconds before destroy itself.</param>
         /// <param name="randomOffset">Random offset applied on spawn of the floating text.</param>
-        /// <param name="typeOfRounding">Type of rounding used to round the number to the given <paramref name="digitPrecision"/></param>
-        public void SpawnFloatingText(float number, Color? numberColor = null, int? digitPrecision = null, float? scaleMultiplier = null, float? timeBeforeDestroy = null, Vector2? randomOffset = null, FloatingTextItem.TYPE_OF_ROUNDING? typeOfRounding = null)
+        /// <param name="roundingMode">Type of rounding used to round the number to the given <paramref name="digitPrecision"/></param>
+        public void SpawnFloatingText(float number, Color? numberColor = null, int? digitPrecision = null, float? scaleMultiplier = null, float? timeBeforeDestroy = null, Vector2? randomOffset = null, RoundingMode? roundingMode = null)
         {
+            if (!isEnable)
+                return;
+
             FloatingTextItem floatingTextScript = SpawnFloatingTextBase();
 
             floatingTextScript.SetConfiguration(number,
@@ -165,7 +178,7 @@ namespace Enderlook.Unity.Prefabs.FloatingText
                 timeBeforeDestroy != null ? timeBeforeDestroy : this.timeBeforeDestroy,
                 randomOffset != null ? randomOffset : this.randomOffset,
                 digitPrecision != null ? digitPrecision : this.digitPrecision,
-                typeOfRounding != null ? typeOfRounding : this.typeOfRounding
+                roundingMode != null ? roundingMode : this.roundingType
             );
         }
     }
