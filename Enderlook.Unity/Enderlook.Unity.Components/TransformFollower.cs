@@ -2,6 +2,9 @@
 
 namespace Enderlook.Unity.Components
 {
+    /// <summary>
+    /// Make the <see cref="GameObject"/> where this <see cref="Component"/> is attached to, to follow another <see cref="GameObject"/> in position, rotation and or scale.
+    /// </summary>
     [AddComponentMenu("Enderlook/Transform Follower"), DefaultExecutionOrder(100)]
     public class TransformFollower : MonoBehaviour
     {
