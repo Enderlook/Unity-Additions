@@ -2,6 +2,7 @@
     void WriteTransformerMin(string name, string dataType)
     {
         WriteHeader();
+        bool isFloating = floatingTypes.Contains(dataType);
 #>
 using Enderlook.Unity.Utils;
 
@@ -18,13 +19,36 @@ using UnityEngine;
         [SerializeField, Tooltip("Minimum value.")]
         private <#= name #>GetReference min;
 
+<#+
+        if (isFloating)
+        {
+#>
+        [SerializeField, Tooltip("Whenever the minimum value is exclusive or inclusive.")]
+        private bool exclusive;
+<#+     }#>
+
         /// <inheritdoc />
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public override <#= dataType #> Transform(<#= dataType #> value)
         {
             var minValue = min.GetValue();
             if (value < minValue)
+<#+
+        if (isFloating)
+        {
+#>
+            {
+                if (exclusive)
+                    return minValue + (<#= dataType #>)Mathf.Epsilon;
+                else
+                    return minValue;
+            }
+<#+     }
+        else
+        {
+#>
                 return minValue;
+<#+     }#>
 
             return value;
         }
@@ -32,7 +56,7 @@ using UnityEngine;
         /// <summary>
         <#= "///" #> Create a new <see cref="<#= name #>TransformerMin"/>.
         /// </summary>
-        <#= "///" #> <param name="min">Minimum value.</param>
+        /// <param name="min">Minimum value.</param>
         <#= "///" #> <returns>New instance of <see cref="<#= name #>TransformerMin"/>.</returns>
         public static <#= name #>TransformerMin CreateMin(<#= name #>GetReference min)
         {
@@ -42,6 +66,27 @@ using UnityEngine;
             instance.min = min;
             return instance;
         }
+
+<#+
+        if (isFloating)
+        {
+#>
+        /// <summary>
+        <#= "///" #> Create a new <see cref="<#= name #>TransformerMin"/>.
+        /// </summary>
+        /// <param name="min">Minimum value.</param>
+        /// <param name="exclusive">Whenever <paramref name="min"/> value is exclusive or inclusive.</param>
+        <#= "///" #> <returns>New instance of <see cref="<#= name #>TransformerMin"/>.</returns>
+        public static <#= name #>TransformerMin CreateMin(<#= name #>GetReference min, bool exclusive)
+        {
+            if (min is null) throw new ArgumentNullException(nameof(min));
+
+            var instance = CreateInstance<<#= name #>TransformerMin>();
+            instance.min = min;
+            instance.exclusive = exclusive;
+            return instance;
+        }
+<#+     }#>
 
         /// <inheritdoc />
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

@@ -1,7 +1,8 @@
 ﻿<#+
     void WriteTransformerClamp(string name, string dataType)
     {
-        WriteHeader();
+        WriteHeader();        
+        bool isFloating = floatingTypes.Contains(dataType);
 #>
 using Enderlook.Unity.Utils;
 
@@ -18,8 +19,24 @@ using UnityEngine;
         [SerializeField, Tooltip("Minimum value.")]
         private <#= name #>GetReference min;
 
+<#+
+        if (isFloating)
+        {
+#>
+        [SerializeField, Tooltip("Whenever the minimum value is exclusive or inclusive.")]
+        private bool exclusiveMin;
+<#+     }#>
+
         [SerializeField, Tooltip("Maximum value.")]
         private <#= name #>GetReference max;
+
+<#+
+        if (isFloating)
+        {
+#>
+        [SerializeField, Tooltip("Whenever the maximum value is exclusive or inclusive.")]
+        private bool exclusiveMax;
+<#+     }#>
 
         /// <inheritdoc />
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -27,11 +44,41 @@ using UnityEngine;
         {
             var maxValue = max.GetValue();
             if (value > maxValue)
+<#+
+        if (isFloating)
+        {
+#>
+            {
+                if (exclusiveMax)
+                    return maxValue - (<#= dataType #>)Mathf.Epsilon;
+                else
+                    return maxValue;
+            }
+<#+     }
+        else
+        {
+#>
                 return maxValue;
+<#+     }#>
 
             var minValue = min.GetValue();
             if (value < minValue)
+<#+
+        if (isFloating)
+        {
+#>
+            {
+                if (exclusiveMin)
+                    return minValue + (<#= dataType #>)Mathf.Epsilon;
+                else
+                    return minValue;
+            }
+<#+     }
+        else
+        {
+#>
                 return minValue;
+<#+     }#>
 
             return value;
         }
@@ -52,6 +99,32 @@ using UnityEngine;
             instance.max = max;
             return instance;
         }
+
+<#+
+        if (isFloating)
+        {
+#>
+        /// <summary>
+        <#= "///" #> Create a new <see cref="<#= name #>TransformerClamp"/>.
+        /// </summary>
+        /// <param name="min">Minimum value.</param>
+        /// <param name="max">Maximum value.</param>
+        /// <param name="exclusiveMax">Whenever <paramref name="max"/> value is exclusive or inclusive.</param>
+        /// <param name="exclusiveMin">Whenever <paramref name="min"/> value is exclusive or inclusive.</param>
+        <#= "///" #> <returns>New instance of <see cref="<#= name #>TransformerClamp"/>.</returns>
+        public static <#= name #>TransformerClamp CreateClamp(<#= name #>GetReference min, bool exclusiveMin, <#= name #>GetReference max, bool exclusiveMax)
+        {
+            if (min is null) throw new ArgumentNullException(nameof(min));
+            if (max is null) throw new ArgumentNullException(nameof(max));
+
+            var instance = CreateInstance<<#= name #>TransformerClamp>();
+            instance.min = min;
+            instance.max = max;
+            instance.exclusiveMin = exclusiveMin;
+            instance.exclusiveMax = exclusiveMax;
+            return instance;
+        }
+<#+     }#>
 
         /// <inheritdoc />
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

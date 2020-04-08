@@ -2,6 +2,7 @@
     void WriteTransformerMax(string name, string dataType)
     {
         WriteHeader();
+        bool isFloating = floatingTypes.Contains(dataType);
 #>
 using Enderlook.Unity.Utils;
 
@@ -18,13 +19,36 @@ using UnityEngine;
         [SerializeField, Tooltip("Maximum value.")]
         private <#= name #>GetReference max;
 
+<#+
+        if (isFloating)
+        {
+#>
+        [SerializeField, Tooltip("Whenever the maximum value is exclusive or inclusive.")]
+        private bool exclusive;
+<#+     }#>
+
         /// <inheritdoc />
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public override <#= dataType #> Transform(<#= dataType #> value)
         {
             var maxValue = max.GetValue();
-            if (value > maxValue)
+            if (value < maxValue)
+<#+
+        if (isFloating)
+        {
+#>
+            {
+                if (exclusive)
+                    return maxValue - (<#= dataType #>)Mathf.Epsilon;
+                else
+                    return maxValue;
+            }
+<#+     }
+        else
+        {
+#>
                 return maxValue;
+<#+     }#>
 
             return value;
         }
@@ -32,9 +56,9 @@ using UnityEngine;
         /// <summary>
         <#= "///" #> Create a new <see cref="<#= name #>TransformerMax"/>.
         /// </summary>
-        <#= "///" #> <param name="max">Minimum value.</param>
+        /// <param name="max">Maximum value.</param>
         <#= "///" #> <returns>New instance of <see cref="<#= name #>TransformerMax"/>.</returns>
-        public static <#= name #>TransformerMax CreateMin(<#= name #>GetReference max)
+        public static <#= name #>TransformerMax CreateMax(<#= name #>GetReference max)
         {
             if (max is null) throw new ArgumentNullException(nameof(max));
 
@@ -42,6 +66,27 @@ using UnityEngine;
             instance.max = max;
             return instance;
         }
+
+<#+
+        if (isFloating)
+        {
+#>
+        /// <summary>
+        <#= "///" #> Create a new <see cref="<#= name #>TransformerMax"/>.
+        /// </summary>
+        /// <param name="max">Maximum value.</param>
+        /// <param name="exclusive">Whenever <paramref name="max"/> value is exclusive or inclusive.</param>
+        <#= "///" #> <returns>New instance of <see cref="<#= name #>TransformerMax"/>.</returns>
+        public static <#= name #>TransformerMax CreateMax(<#= name #>GetReference max, bool exclusive)
+        {
+            if (max is null) throw new ArgumentNullException(nameof(max));
+
+            var instance = CreateInstance<<#= name #>TransformerMax>();
+            instance.max = max;
+            instance.exclusive = exclusive;
+            return instance;
+        }
+<#+     }#>
 
         /// <inheritdoc />
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

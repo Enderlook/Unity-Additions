@@ -6,6 +6,8 @@
 <#@ import namespace="System.Text" #>
 <#@ import namespace="System.Collections.Generic" #>
 <#+
+    string[] floatingTypes = new string[] { "float", "double", "decimal" };
+
     void WriteHeader()
     {
 #>//====================================================================================================
