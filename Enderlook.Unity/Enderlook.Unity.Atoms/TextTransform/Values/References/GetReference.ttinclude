@@ -24,7 +24,7 @@ using UnityEngine;
         private <#= name #>GetComponent component;
 
         /// <summary>
-        <#= "///" #> Creates an <see cref="<#= name #>GetReference"/> of mode <see cref="ValueReference.ReferenceMode.Inline"/>.
+        <#= "///" #> Creates an <see cref="<#= name #>GetReference"/> of mode <see cref="BaseValueReference.ReferenceMode.Inline"/>.
         /// </summary>
         /// <param name="value">Value to store.</param>
         public <#= name #>GetReference(<#= dataType #> value)
@@ -34,7 +34,7 @@ using UnityEngine;
         }
 
         /// <summary>
-        <#= "///" #> Creates an <see cref="<#= name #>GetReference"/> of mode <see cref="ValueReference.ReferenceMode.ScriptableObject"/>.
+        <#= "///" #> Creates an <see cref="<#= name #>GetReference"/> of mode <see cref="BaseValueReference.ReferenceMode.ScriptableObject"/>.
         /// </summary>
         <#= "///" #> <param name="value"><see cref="<#= name #>GetSO"/> to store.</param>
         public <#= name #>GetReference(<#= name #>GetSO value)
@@ -44,7 +44,7 @@ using UnityEngine;
         }
 
         /// <summary>
-        <#= "///" #> Creates an <see cref="<#= name #>GetComponent"/> of mode <see cref="ValueReference.ReferenceMode.Component"/>.
+        <#= "///" #> Creates an <see cref="<#= name #>GetComponent"/> of mode <see cref="BaseValueReference.ReferenceMode.Component"/>.
         /// </summary>
         <#= "///" #> <param name="value"><see cref="<#= name #>GetComponent"/> to store.</param>
         public <#= name #>GetReference(<#= name #>GetComponent value)
@@ -53,7 +53,7 @@ using UnityEngine;
             component = value;
         }
 
-        /// <inheritdoc cref="Interfaces.IGet{T}.GetValue"/>
+        /// <inheritdoc cref="Utils.Interfaces.IGet{T}.GetValue"/>
         public <#= dataType #> GetValue()
         {
             switch (Mode)
@@ -69,6 +69,10 @@ using UnityEngine;
             }
         }
 
+        /// <summary>
+        /// Extract the stored value from <see cref="GetValue"/>.
+        /// </summary>
+        /// <param name="instance">Instance where value will be get.</param>
         public static implicit operator <#= dataType #>(<#= name #>GetReference instance) => instance.GetValue();
     }
 <#+

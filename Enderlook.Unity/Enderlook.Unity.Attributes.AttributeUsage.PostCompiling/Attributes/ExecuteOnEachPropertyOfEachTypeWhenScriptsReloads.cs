@@ -4,7 +4,7 @@ using System.Reflection;
 namespace Enderlook.Unity.Attributes.AttributeUsage.PostCompiling.Attributes
 {
     /// <summary>
-    /// Executes the method decorated by this attribute for each property on each <see cref="Type"/> compiled by Unity each time Unity compiles code.<br>
+    /// Executes the method decorated by this attribute for each property on each <see cref="Type"/> compiled by Unity each time Unity compiles code.<br/>
     /// The method to decorate must have the signature DoSomething(<see cref="PropertyInfo"/>).
     /// </summary>
     [AttributeUsageAccessibility(BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Public)]
@@ -13,7 +13,7 @@ namespace Enderlook.Unity.Attributes.AttributeUsage.PostCompiling.Attributes
     public sealed class ExecuteOnEachPropertyOfEachTypeWhenScriptsReloads : BaseExecuteWhenScriptsReloads
     {
         /// <summary>
-        /// Executes the method decorated by this attribute for each property on each <see cref="Type"/> compiled by Unity.<br>
+        /// Executes the method decorated by this attribute for each property on each <see cref="Type"/> compiled by Unity.<br/>
         /// The method to decorate must have the signature DoSomething(<see cref="PropertyInfo"/>).
         /// </summary>
         /// <param name="loop">In which loop of the execution will this script execute.</param>

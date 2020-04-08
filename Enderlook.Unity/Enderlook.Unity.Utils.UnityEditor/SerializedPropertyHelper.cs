@@ -33,18 +33,16 @@ namespace Enderlook.Unity.Utils.UnityEditor
         }
 
         /// <summary>
-        /// Gets the parent target object of <paramref name="source"/>. It does work for nested serialized properties.<br>
+        /// Gets the parent target object of <see cref="serializedProperty"/>. It does work for nested serialized properties.<br/>
         /// If it doesn't have parent it will return itself.
         /// </summary>
-        /// If it doesn't have parent it will return itself.</param>
         /// <returns>Value of the <see cref="SerializedProperty"/> as <see cref="object"/>.</returns>
         public object GetParentTargetObjectOfProperty() => serializedProperty.GetParentTargetObjectOfProperty();
 
         /// <summary>
-        /// Gets the target object of <paramref name="source"/>. It does work for nested serialized properties.
+        /// Gets the target object of <see cref="serializedProperty"/>. It does work for nested serialized properties.
         /// </summary>
         /// <param name="last">At which depth from last to first should return.</param>
-        /// If it doesn't have parent it will return itself.</param>
         /// <returns>Value of the <see cref="SerializedProperty"/> as <see cref="object"/>.</returns>
         public object GetTargetObjectOfProperty(int last = 0) => serializedProperty.GetTargetObjectOfProperty(last);
 
@@ -163,7 +161,7 @@ namespace Enderlook.Unity.Utils.UnityEditor
         /// <summary>
         /// Produce a <see cref="GUIContent"/> with the <see cref="SerializedProperty.displayName"/> as <see cref="GUIContent.text"/> and <see cref="SerializedProperty.tooltip"/> as <see cref="GUIContent.tooltip"/>.
         /// </summary>
-        /// <returns><see cref="GUIContent"/> of <paramref name="source"/>.</returns>
+        /// <returns><see cref="GUIContent"/> of <see cref="serializedProperty"/>.</returns>
         public GUIContent GetGUIContent() => serializedProperty.GetGUIContent();
 
         /// <summary>

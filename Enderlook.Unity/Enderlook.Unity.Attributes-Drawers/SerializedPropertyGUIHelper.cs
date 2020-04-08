@@ -58,7 +58,7 @@ namespace Enderlook.Unity.Attributes
         }
 
         /// <summary>
-        /// Check if the <see cref="SerializedProperty"/> does have a <see cref="GUIAttribute"/> <see cref="Attribute"/> and if has change <paramref name="label"/> by its <see cref="GUIContent"/>.
+        /// Check if the <see cref="SerializedProperty"/> does have a <see cref="GUIAttribute"/> <see cref="System.Attribute"/> and if has change <paramref name="label"/> by its <see cref="GUIContent"/>.
         /// </summary>
         /// <param name="helper"></param>
         /// <param name="label">Current <see cref="GUIContent"/>.</param>
@@ -83,7 +83,7 @@ namespace Enderlook.Unity.Attributes
         }
 
         /// <summary>
-        /// Check if the <see cref="SerializedProperty"/> does have a <see cref="GUIAttribute"/> <see cref="Attribute"/> and if has change <paramref name="label"/> by its <see cref="GUIContent"/>.
+        /// Check if the <see cref="SerializedProperty"/> does have a <see cref="GUIAttribute"/> <see cref="System.Attribute"/> and if has change <paramref name="label"/> by its <see cref="GUIContent"/>.
         /// </summary>
         /// <param name="serializedProperty"></param>
         /// <param name="label">Current <see cref="GUIContent"/>.</param>

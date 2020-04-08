@@ -12,6 +12,9 @@ using UnityObject = UnityEngine.Object;
 
 namespace Enderlook.Unity.Utils.UnityEditor
 {
+    /// <summary>
+    /// A set of helper functions for easy usage of <see cref="AssetDatabase"/>.
+    /// </summary>
     public static class AssetDatabaseHelper
     {
         private static string GetPathFromAssets(string path)
@@ -27,7 +30,7 @@ namespace Enderlook.Unity.Utils.UnityEditor
         }
 
         /// <summary>
-        /// Save asset to path, creating the necessaries directories.</br>
+        /// Save asset to path, creating the necessaries directories.<br/>
         /// It automatically add "Assets/" to the <paramref name="path"/> if it doesn't have.
         /// </summary>
         /// <param name="asset">Asset to save.</param>
@@ -51,7 +54,7 @@ namespace Enderlook.Unity.Utils.UnityEditor
         }
 
         /// <summary>
-        /// Save asset to path, creating the necessaries directories.</br>
+        /// Save asset to path, creating the necessaries directories.<br/>
         /// All assets are stored in the same file.<br/>
         /// It automatically add "Assets/" to the <paramref name="path"/> if it doesn't have.
         /// </summary>
@@ -75,7 +78,7 @@ namespace Enderlook.Unity.Utils.UnityEditor
         }
 
         /// <summary>
-        /// Add object to asset in path, creating the necessaries directories.</br>
+        /// Add object to asset in path, creating the necessaries directories.<br/>
         /// It automatically add "Assets/" to the <paramref name="path"/> if it doesn't have.
         /// </summary>
         /// <param name="objectToAdd">Asset to add.</param>
@@ -106,7 +109,7 @@ namespace Enderlook.Unity.Utils.UnityEditor
         }
 
         /// <summary>
-        /// Add objects to asset in path, creating the necessaries directories.</br>
+        /// Add objects to asset in path, creating the necessaries directories.<br/>
         /// It automatically add "Assets/" to the <paramref name="path"/> if it doesn't have.
         /// </summary>
         /// <param name="objectsToAdd">Objects to add to asset to add.</param>

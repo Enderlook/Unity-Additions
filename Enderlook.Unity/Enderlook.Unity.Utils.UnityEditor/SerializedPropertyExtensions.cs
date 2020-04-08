@@ -13,6 +13,9 @@ using UnityEngine;
 
 namespace Enderlook.Unity.Utils.UnityEditor
 {
+    /// <summary>
+    /// A set of helper functions for <see cref="SerializedProperty"/>.
+    /// </summary>
     public static class SerializedPropertyExtensions
     {
         // https://github.com/lordofduct/spacepuppy-unity-framework/blob/master/SpacepuppyBaseEditor/EditorHelper.cs
@@ -169,25 +172,24 @@ namespace Enderlook.Unity.Utils.UnityEditor
         }
 
         /// <summary>
-        /// Gets the target object of <paramref name="source"/>. It does work for nested serialized properties.
+        /// Gets the target object of <paramref name="source"/>. It does work for nested serialized properties.<br/>
+        /// If it doesn't have parent and you look for one, it will return itself.
         /// </summary>
         /// <param name="source"><see cref="SerializedProperty"/> whose value will be get.</param>
         /// <param name="last">At which depth from last to first should return.</param>
-        /// If it doesn't have parent it will return itself.</param>
         /// <returns>Value of the <paramref name="source"/> as <see cref="object"/>.</returns>
         public static object GetTargetObjectOfProperty(this SerializedProperty source, int last = 0) => source.GetEnumerableTargetObjectOfProperty().Reverse().Skip(last).First();
 
         /// <summary>
-        /// Gets the parent target object of <paramref name="source"/>. It does work for nested serialized properties.<br>
+        /// Gets the parent target object of <paramref name="source"/>. It does work for nested serialized properties.<br/>
         /// If it doesn't have parent it will return itself.
         /// </summary>
         /// <param name="source"><see cref="SerializedProperty"/> whose value will be get.</param>
-        /// If it doesn't have parent it will return itself.</param>
         /// <returns>Value of the <paramref name="source"/> as <see cref="object"/>.</returns>
         public static object GetParentTargetObjectOfProperty(this SerializedProperty source) => source.GetTargetObjectOfProperty(1);
 
         /// <summary>
-        /// Get the getter and setter of <paramref name="source"/>. It does work for nested serialized properties.<br>
+        /// Get the getter and setter of <paramref name="source"/>. It does work for nested serialized properties.<br/>
         /// </summary>
         /// <param name="source"><see cref="SerializedProperty"/> whose getter and setter will be get.</param>
         /// <returns>Getter and setter of the <paramref name="source"/>.</returns>
@@ -233,6 +235,11 @@ namespace Enderlook.Unity.Utils.UnityEditor
             return guiContent;
         }
 
+        /// <summary>
+        /// Produces a <see cref="SerializedPropertyHelper"/> from <paramref name="source"/>.
+        /// </summary>
+        /// <param name="source"><see cref="SerializedProperty"/> used to produce the <see cref="SerializedPropertyHelper"/>.</param>
+        /// <returns><see cref="SerializedPropertyHelper"/> if <paramref name="source"/>.</returns>
         public static SerializedPropertyHelper GetHelper(this SerializedProperty source) => new SerializedPropertyHelper(source);
 
         /// <summary>

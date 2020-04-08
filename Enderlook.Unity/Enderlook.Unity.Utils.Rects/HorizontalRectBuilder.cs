@@ -17,10 +17,10 @@ namespace Enderlook.Unity.Utils.Rects
         public HorizontalRectBuilder(float x, float y, float width, float height) : base(x, y, width, height) { }
 
         /// <summary>
-        /// Produce a <see cref="Rect"/> next to the last <see cref="Rect"/> made with this object.<br>
+        /// Produce a <see cref="Rect"/> next to the last <see cref="Rect"/> made with this object.<br/>
         /// </summary>
         /// <param name="width">Width of the <see cref="Rect"/> to make.</param>
-        /// <returns>New <see cref="Rect"/>./returns>
+        /// <returns>New <see cref="Rect"/>.</returns>
         public override Rect GetRect(float width)
         {
             Rect rect = new Rect(CurrentX, CurrentY, width, BaseSize.y);
@@ -29,7 +29,7 @@ namespace Enderlook.Unity.Utils.Rects
         }
 
         /// <summary>
-        /// Produce a <see cref="Rect"/> next to the last <see cref="Rect"/> made with this object.<br>
+        /// Produce a <see cref="Rect"/> next to the last <see cref="Rect"/> made with this object.<br/>
         /// </summary>
         /// <returns>New <see cref="Rect"/>.</returns>
         public override Rect GetRect()
@@ -45,10 +45,10 @@ namespace Enderlook.Unity.Utils.Rects
         public override void AddSpace(float value) => CurrentX += value;
 
         /// <summary>
-        /// Produce a <see cref="Rect"/> next to the last <see cref="Rect"/> made with this object, using all the <see cref="RemainingWidth"/> as width.
+        /// Produce a <see cref="Rect"/> next to the last <see cref="Rect"/> made with this object, using <paramref name="amount"/> as width.
         /// </summary>
         /// <param name="amount">Amount of <see cref="Rect"/> to make. The width will be equally splitted among them.</param>
-        /// <returns>New <see cref="Rect"/>./returns>
+        /// <returns>New <see cref="Rect"/>.</returns>
         public Rect[] GetRemainingRect(int amount)
         {
             float width = RemainingWidth / amount;
@@ -58,6 +58,10 @@ namespace Enderlook.Unity.Utils.Rects
             return rects;
         }
 
+        /// <summary>
+        /// Produce a <see cref="Rect"/> next to the last <see cref="Rect"/> made with this object, using all the <see cref="RemainingWidth"/> as width.
+        /// </summary>
+        /// <returns>New <see cref="Rect"/>.</returns>
         public Rect GetRemainingRect() => GetRect(RemainingWidth);
     }
 }

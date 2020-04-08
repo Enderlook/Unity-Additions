@@ -11,7 +11,7 @@ using UnityEngine;
 namespace Enderlook.Unity.Serializables
 {
     /// <summary>
-    /// Used to calculate formulas.<br>
+    /// Used to calculate formulas.<br/>
     /// It can be either serialized in Unity inspector or construct using new.
     /// </summary>
     [Serializable]

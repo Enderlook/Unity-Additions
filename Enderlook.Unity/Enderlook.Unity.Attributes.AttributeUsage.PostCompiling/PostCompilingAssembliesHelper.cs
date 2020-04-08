@@ -29,7 +29,7 @@ namespace Enderlook.Unity.Attributes.AttributeUsage.PostCompiling
         private static readonly Dictionary<int, Action<Type>> executeOnEachTypeLessEnums = new Dictionary<int, Action<Type>>();
 
         /// <summary>
-        /// Subscribes <paramref name="action"/> to be executed on each <see cref="Type"/> in the assemblies compiled by Unity which <see cref="Type.IsEnum"/> is <see langword="false"/>.<br>
+        /// Subscribes <paramref name="action"/> to be executed on each <see cref="Type"/> in the assemblies compiled by Unity which <see cref="Type.IsEnum"/> is <see langword="false"/>.<br/>
         /// If possible, it's strongly advisable to use <see cref="ExecuteOnEachTypeWhenScriptsReloads"/> attribute instead of this method.
         /// </summary>
         /// <param name="action">Action to subscribe.</param>
@@ -40,7 +40,7 @@ namespace Enderlook.Unity.Attributes.AttributeUsage.PostCompiling
         private static readonly Dictionary<int, Action<Type>> executeOnEachTypeEnum = new Dictionary<int, Action<Type>>();
 
         /// <summary>
-        /// Subscribes <paramref name="action"/> to be executed on each <see cref="Type"/> in the assemblies compiled by Unity which <see cref="Type.IsEnum"/> is <see langword="true"/>.<br>
+        /// Subscribes <paramref name="action"/> to be executed on each <see cref="Type"/> in the assemblies compiled by Unity which <see cref="Type.IsEnum"/> is <see langword="true"/>.<br/>
         /// If possible, it's strongly advisable to use <see cref="ExecuteOnEachTypeWhenScriptsReloads"/> attribute instead of this method.
         /// </summary>
         /// <param name="action">Action to subscribe.</param>
@@ -51,7 +51,7 @@ namespace Enderlook.Unity.Attributes.AttributeUsage.PostCompiling
         private static readonly Dictionary<int, Action<MemberInfo>> executeOnEachMemberOfTypes = new Dictionary<int, Action<MemberInfo>>();
 
         /// <summary>
-        /// Subscribes <paramref name="action"/> to be executed on each member of each <see cref="Type"/> in the assemblies compiled by Unity.<br>
+        /// Subscribes <paramref name="action"/> to be executed on each member of each <see cref="Type"/> in the assemblies compiled by Unity.<br/>
         /// If possible, it's strongly advisable to use <see cref="ExecuteOnEachTypeWhenScriptsReloads"/> attribute instead of this method.
         /// </summary>
         /// <param name="action">Action to subscribe.</param>
@@ -62,7 +62,7 @@ namespace Enderlook.Unity.Attributes.AttributeUsage.PostCompiling
         private static readonly Dictionary<int, Action<FieldInfo>> executeOnEachSerializableByUnityFieldOfTypes = new Dictionary<int, Action<FieldInfo>>();
 
         /// <summary>
-        /// Subscribes <paramref name="action"/> to be executed on each field of each <see cref="Type"/> in the assemblies compiled by Unity which can be serialized by Unity (<seealso cref="ReflectionHelper.CanBeSerializedByUnity(FieldInfo)"/>).<br>
+        /// Subscribes <paramref name="action"/> to be executed on each field of each <see cref="Type"/> in the assemblies compiled by Unity which can be serialized by Unity (<seealso cref="ReflectionHelper.CanBeSerializedByUnity(FieldInfo)"/>).<br/>
         /// If possible, it's strongly advisable to use <see cref="ExecuteOnEachTypeWhenScriptsReloads"/> attribute instead of this method.
         /// </summary>
         /// <param name="action">Action to subscribe.</param>
@@ -73,7 +73,7 @@ namespace Enderlook.Unity.Attributes.AttributeUsage.PostCompiling
         private static readonly Dictionary<int, Action<FieldInfo>> executeOnEachNonSerializableByUnityFieldOfTypes = new Dictionary<int, Action<FieldInfo>>();
 
         /// <summary>
-        /// Subscribes <paramref name="action"/> to be executed on each member of each <see cref="Type"/> in the assemblies compiled by Unity which can be serialized by Unity (<seealso cref="ReflectionHelper.CanBeSerializedByUnity(FieldInfo)"/>).<br>
+        /// Subscribes <paramref name="action"/> to be executed on each member of each <see cref="Type"/> in the assemblies compiled by Unity which can be serialized by Unity (<seealso cref="ReflectionHelper.CanBeSerializedByUnity(FieldInfo)"/>).<br/>
         /// If possible, it's strongly advisable to use <see cref="ExecuteOnEachTypeWhenScriptsReloads"/> attribute instead of this method.
         /// </summary>
         /// <param name="action">Action to subscribe.</param>
@@ -84,7 +84,7 @@ namespace Enderlook.Unity.Attributes.AttributeUsage.PostCompiling
         private static readonly Dictionary<int, Action<PropertyInfo>> executeOnEachPropertyOfTypes = new Dictionary<int, Action<PropertyInfo>>();
 
         /// <summary>
-        /// Subscribes <paramref name="action"/> to be executed on each property of each <see cref="Type"/> in the assemblies compiled by Unity.<br>
+        /// Subscribes <paramref name="action"/> to be executed on each property of each <see cref="Type"/> in the assemblies compiled by Unity.<br/>
         /// If possible, it's strongly advisable to use <see cref="ExecuteOnEachTypeWhenScriptsReloads"/> attribute instead of this method.
         /// </summary>
         /// <param name="action">Action to subscribe.</param>
@@ -95,7 +95,7 @@ namespace Enderlook.Unity.Attributes.AttributeUsage.PostCompiling
         private static readonly Dictionary<int, Action<MethodInfo>> executeOnEachMethodOfTypes = new Dictionary<int, Action<MethodInfo>>();
 
         /// <summary>
-        /// Subscribes <paramref name="action"/> to be executed on each method of each <see cref="Type"/> in the assemblies compiled by Unity.<br>
+        /// Subscribes <paramref name="action"/> to be executed on each method of each <see cref="Type"/> in the assemblies compiled by Unity.<br/>
         /// If possible, it's strongly advisable to use <see cref="ExecuteOnEachTypeWhenScriptsReloads"/> attribute instead of this method.
         /// </summary>
         /// <param name="action">Action to subscribe.</param>
@@ -106,7 +106,7 @@ namespace Enderlook.Unity.Attributes.AttributeUsage.PostCompiling
         private static readonly Dictionary<int, Action> executeOnce = new Dictionary<int, Action>();
 
         /// <summary>
-        /// Subscribes <paramref name="action"/> to be executed once wen Unity ompiles assemblies.<br>
+        /// Subscribes <paramref name="action"/> to be executed once wen Unity ompiles assemblies.<br/>
         /// If possible, it's strongly advisable to use <see cref="ExecuteWhenScriptsReloads"/> attribute instead of this method.
         /// </summary>
         /// <param name="action">Action to subscribe.</param>

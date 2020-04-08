@@ -4,7 +4,7 @@ using System.Reflection;
 namespace Enderlook.Unity.Attributes.AttributeUsage.PostCompiling.Attributes
 {
     /// <summary>
-    /// Executes the method decorated by this attribute for each field on each <see cref="Type"/> compiled by Unity each time Unity compiles code.<br>
+    /// Executes the method decorated by this attribute for each field on each <see cref="Type"/> compiled by Unity each time Unity compiles code.<br/>
     /// The method to decorate must have the signature DoSomething(<see cref="FieldInfo"/>).
     /// </summary>
     [AttributeUsageAccessibility(BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Public)]
@@ -18,7 +18,7 @@ namespace Enderlook.Unity.Attributes.AttributeUsage.PostCompiling.Attributes
         public readonly FieldSerialization fieldFilter;
 
         /// <summary>
-        /// Executes the method decorated by this attribute for each field on each <see cref="Type"/> compiled by Unity.<br>
+        /// Executes the method decorated by this attribute for each field on each <see cref="Type"/> compiled by Unity.<br/>
         /// The method to decorate must have the signature DoSomething(<see cref="FieldInfo"/>).
         /// </summary>
         /// <param name="fieldFlags">Whenever it must be Unity able to serialize it or if it does not matter.</param>

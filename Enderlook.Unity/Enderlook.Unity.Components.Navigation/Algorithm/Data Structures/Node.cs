@@ -83,7 +83,7 @@ namespace Enderlook.Unity.Components.Navigation
         }
 
         /// <summary>
-        /// Add a <see cref="Connection"/> to this <see cref="Node"/>.<br>
+        /// Add a <see cref="Connection"/> to this <see cref="Node"/>.<br/>
         /// <paramref name="connection"/> <see cref="Connection.start"/> must be this <see cref="Node"/>, but <see cref="Connection.end"/> must not be this <see cref="Node"/>.
         /// </summary>
         /// <param name="connection"><see cref="Connection"/> to add.</param>
@@ -107,7 +107,7 @@ namespace Enderlook.Unity.Components.Navigation
         /// </summary>
         /// <param name="end">Target <see cref="Node"/>. <see cref="Connection.end"/> == <paramref name="end"/>.</param>
         /// <param name="connection"><see cref="Connection"/> from this <see cref="Node"/> to <paramref name="end"/> <see cref="Node"/>.</param>
-        /// <param name="safe">On <see langword="true"/>, this method won't throw exception if <paramref name="end"/> and this <see cref="Node"/> are the same.<br>
+        /// <param name="safe">On <see langword="true"/>, this method won't throw exception if <paramref name="end"/> and this <see cref="Node"/> are the same.<br/>
         /// Though it throw raise exception for <see cref="ArgumentNullException"/> in <paramref name="end"/>.</param>
         /// <returns>Whenever if the <see cref="Connection"/> was found or not.</returns>
         public bool TryGetConnectionTo(Node end, out Connection connection, bool safe = false)
@@ -149,7 +149,7 @@ namespace Enderlook.Unity.Components.Navigation
         /// Try to remove a <see cref="Connection"/> from this <see cref="Node"/> to <paramref name="end"/>.
         /// </summary>
         /// <param name="end"><see cref="Connection.end"/> = <paramref name="end"/>.</param>
-        /// <param name="safe">On <see langword="true"/>, this method won't throw exception if <paramref name="end"/> and this <see cref="Node"/> are the same.<br>
+        /// <param name="safe">On <see langword="true"/>, this method won't throw exception if <paramref name="end"/> and this <see cref="Node"/> are the same.<br/>
         /// Though it throw raise exception for <see cref="ArgumentNullException"/> in <paramref name="end"/>.</param>
         /// <returns>Whenever there was a <see cref="Connection"/> which was removed or nothing could be found.</returns>
         public bool TryRemoveConnectionTo(Node end, bool safe = false)
@@ -185,7 +185,7 @@ namespace Enderlook.Unity.Components.Navigation
         /// Try to remove a <see cref="Connection"/> from <paramref name="start"/> to this <see cref="Node"/> .
         /// </summary>
         /// <param name="start"><see cref="Connection.start"/> = <paramref name="start"/>.</param>
-        /// <param name="safe">On <see langword="true"/>, this method won't throw exception if <paramref name="start"/> and this <see cref="Node"/> are the same.<br>
+        /// <param name="safe">On <see langword="true"/>, this method won't throw exception if <paramref name="start"/> and this <see cref="Node"/> are the same.<br/>
         /// Though it throw raise exception for <see cref="ArgumentNullException"/> in <paramref name="start"/>.</param>
         /// <returns>Whenever there was a <see cref="Connection"/> which was removed or nothing could be found.</returns>
         public bool TryRemoveConnectionFrom(Node start, bool safe = false)
@@ -243,8 +243,8 @@ namespace Enderlook.Unity.Components.Navigation
         }
 
         /// <summary>
-        /// Remove <see cref="Connection"/> <paramref name="other"/> from this, and this from <paramref name="other"/>.<br>
-        /// Equivalent to:<br>
+        /// Remove <see cref="Connection"/> <paramref name="other"/> from this, and this from <paramref name="other"/>.<br/>
+        /// Equivalent to:<br/>
         /// <code><paramref name="other"/>.<see cref="TryRemoveConnectionTo(Node)"/>(this)
         /// this.<see cref="TryRemoveConnectionTo(Node)"/>(<paramref name="other"/>)</code>
         /// </summary>
@@ -274,7 +274,7 @@ namespace Enderlook.Unity.Components.Navigation
         /// <param name="position">Its position.</param>
         /// <param name="connectionsTo">The new <see cref="Node"/> will connect to all this <see cref="Node"/>s.</param>
         /// <param name="isActive">Whenever it's active or not.</param>
-        /// <param name="areConnectionsActive">Whenever this <see cref="Connection"/>s are enabled or not.<br>
+        /// <param name="areConnectionsActive">Whenever this <see cref="Connection"/>s are enabled or not.<br/>
         /// Use <see langword="null"/> to use <paramref name="isActive"/> instead.</param>
         /// <returns>New <see cref="Node"/>.</returns>
         public static Node CreateNode(Vector2 position, IEnumerable<Node> connectionsTo, bool isActive = true, bool? areConnectionsActive = true)

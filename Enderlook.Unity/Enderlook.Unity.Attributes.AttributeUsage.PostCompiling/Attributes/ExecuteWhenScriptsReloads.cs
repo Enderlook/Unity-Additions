@@ -3,7 +3,7 @@
 namespace Enderlook.Unity.Attributes.AttributeUsage.PostCompiling.Attributes
 {
     /// <summary>
-    /// Executes the method decorated by this attribute each time Unity compiles code.<br>
+    /// Executes the method decorated by this attribute each time Unity compiles code.<br/>
     /// The method to decorate must have the signature DoSomething().
     /// </summary>
     [AttributeUsageAccessibility(BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Public)]
@@ -11,7 +11,7 @@ namespace Enderlook.Unity.Attributes.AttributeUsage.PostCompiling.Attributes
     public sealed class ExecuteWhenScriptsReloads : BaseExecuteWhenScriptsReloads
     {
         /// <summary>
-        /// Executes the method decorated by this attribute.<br>
+        /// Executes the method decorated by this attribute.<br/>
         /// The method to decorate must have the signature DoSomething().
         /// </summary>
         /// <param name="loop">In which loop of the execution will this script execute.</param>

@@ -9,7 +9,7 @@ namespace Enderlook.Unity.Attributes.AttributeUsage
     public enum FieldSerialization
     {
         /// <summary>
-        /// Non serializable fields by Unity are allowed.<br>
+        /// Non serializable fields by Unity are allowed.<br/>
         /// <seealso cref="ReflectionHelper.CanBeSerializedByUnity(FieldInfo)"/>.
         /// </summary>
         NotSerializableByUnity = 1,
@@ -21,7 +21,7 @@ namespace Enderlook.Unity.Attributes.AttributeUsage
         SerializableByUnity = 1 << 1,
 
         /// <summary>
-        /// Either serializable or not serializable fields by Unity are allowed.<br>
+        /// Either serializable or not serializable fields by Unity are allowed.<br/>
         /// <seealso cref="NotSerializableByUnity"/> and <seealso cref="SerializableByUnity"/>.
         /// </summary>
         EitherSerializableOrNotByUnity = NotSerializableByUnity | SerializableByUnity

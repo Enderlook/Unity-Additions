@@ -20,7 +20,7 @@ namespace Enderlook.Unity.Utils.Rects
         /// Produce a <see cref="Rect"/> next to the last <see cref="Rect"/> made with this object.
         /// </summary>
         /// <param name="height">height of the <see cref="Rect"/> to make.</param>
-        /// <returns>New <see cref="Rect"/>./returns>
+        /// <returns>New <see cref="Rect"/>.</returns>
         public override Rect GetRect(float height)
         {
             Rect rect = new Rect(CurrentX, CurrentY, BaseSize.x, height);
@@ -31,7 +31,7 @@ namespace Enderlook.Unity.Utils.Rects
         /// <summary>
         /// Produce a <see cref="Rect"/> next to the last <see cref="Rect"/> made with this object.
         /// </summary>
-        /// <returns>New <see cref="Rect"/>./returns>
+        /// <returns>New <see cref="Rect"/>.</returns>
         public override Rect GetRect()
         {
             LastValue = BaseSize.y;

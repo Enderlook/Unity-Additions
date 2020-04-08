@@ -16,7 +16,7 @@ namespace Enderlook.Unity.Attributes.AttributeUsage.PostCompiling
         private static SystemAssembly[] assemblies;
 
         /// <summary>
-        /// Get all assemblies from <see cref="AppDomain.CurrentDomain"/> which are in the <see cref="CompilationPipeline.GetAssemblies"/> either <see cref="AssembliesType.Editor"/> and <see cref="AssembliesType.Player"/>.
+        /// Get all assemblies from <see cref="AppDomain.CurrentDomain"/> which are in the <see cref="CompilationPipeline.GetAssemblies(AssembliesType)"/> either <see cref="AssembliesType.Editor"/> and <see cref="AssembliesType.Player"/>.
         /// </summary>
         /// <param name="ingoreCache">Whenever it should recalculate the value regardless the cache.</param>
         /// <returns>Assemblies which matches criteria.</returns>

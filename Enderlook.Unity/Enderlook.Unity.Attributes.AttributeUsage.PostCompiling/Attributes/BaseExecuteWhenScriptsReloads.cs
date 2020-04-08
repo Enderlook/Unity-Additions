@@ -8,7 +8,7 @@ namespace Enderlook.Unity.Attributes.AttributeUsage.PostCompiling.Attributes
     public abstract class BaseExecuteWhenScriptsReloads : Attribute
     {
         /// <summary>
-        /// In which loop of the execution will this script executed.<br>
+        /// In which loop of the execution will this script executed.<br/>
         /// Accept any kind of number.
         /// </summary>
         public readonly int loop;

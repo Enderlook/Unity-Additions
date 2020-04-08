@@ -4,7 +4,7 @@ using System.Reflection;
 namespace Enderlook.Unity.Attributes.AttributeUsage.PostCompiling.Attributes
 {
     /// <summary>
-    /// Executes the method decorated by this attribute for each <see cref="Type"/> compiled by Unity each time Unity compiles code.<br>
+    /// Executes the method decorated by this attribute for each <see cref="Type"/> compiled by Unity each time Unity compiles code.<br/>
     /// The method to decorate must have the signature DoSomething(<see cref="Type"/>).
     /// </summary>
     [AttributeUsageAccessibility(BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Public)]
@@ -40,7 +40,7 @@ namespace Enderlook.Unity.Attributes.AttributeUsage.PostCompiling.Attributes
         public readonly TypeFlags typeFilter;
 
         /// <summary>
-        /// Executes the method decorated by this attribute for each <see cref="Type"/> compiled by Unity, that matches the <paramref name="typeFlags"/> criteria.<br>
+        /// Executes the method decorated by this attribute for each <see cref="Type"/> compiled by Unity, that matches the <paramref name="typeFlags"/> criteria.<br/>
         /// The method to decorate must have the signature DoSomething(<see cref="Type"/>).
         /// </summary>
         /// <param name="typeFlags">Determines rules about in which types does match.</param>

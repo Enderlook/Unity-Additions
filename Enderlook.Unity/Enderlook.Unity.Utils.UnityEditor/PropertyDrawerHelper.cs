@@ -8,9 +8,17 @@ using UnityEditor;
 
 namespace Enderlook.Unity.Utils.UnityEditor
 {
+    /// <summary>
+    /// A set of helper functions to developt <see cref="PropertyDrawer"/>s.
+    /// </summary>
     public static class PropertyDrawerHelper
     {
         private const BindingFlags bindingFlags = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance;
+
+        /// <summary>
+        /// Get all <see cref="SerializedProperty"/> of the <see cref="UnityEngine.MonoBehaviour"/>s of the current(s) active(s) editor(s).
+        /// </summary>
+        /// <returns>An enumerable with all the properties, fields, attributes and the editor where they were taken.</returns>
         public static IEnumerable<(SerializedProperty serializedProperty, T field, Editor editor)> FindAllSerializePropertiesInActiveEditorOf<T>()
         {
             foreach (Editor editor in ActiveEditorTracker.sharedTracker.activeEditors)
@@ -32,7 +40,7 @@ namespace Enderlook.Unity.Utils.UnityEditor
         }
 
         /// <summary>
-        /// Get all <see cref="SerializedProperty"/> that have the <typeparamref name="T"/> attribute and are in one of the <see cref="MonoBehaviour"/> of the current(s) active(s) editor(s).
+        /// Get all <see cref="SerializedProperty"/> that have the <typeparamref name="T"/> attribute and are in one of the <see cref="UnityEngine.MonoBehaviour"/> of the current(s) active(s) editor(s).
         /// </summary>
         /// <typeparam name="T">Attribute type to look for.</typeparam>
         /// <param name="inherit">Whenever it should look for inherited attributes.</param>

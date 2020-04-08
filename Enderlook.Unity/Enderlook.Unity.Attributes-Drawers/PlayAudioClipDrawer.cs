@@ -1,5 +1,4 @@
-﻿using Enderlook.Unity.Utils;
-using Enderlook.Unity.Utils.UnityEditor;
+﻿using Enderlook.Unity.Utils.UnityEditor;
 
 using System;
 

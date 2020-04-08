@@ -6,26 +6,26 @@
     public enum ParameterMode
     {
         /// <summary>
-        /// Specifies an common parameter.<br>
-        /// If <see cref="parameterNumber"/> is 0, this will be ignored.
+        /// Specifies an common parameter.<br/>
+        /// If <see cref="AttributeUsageMethodAttribute.parameterNumber"/> is 0, this will be ignored.
         /// </summary>
         Common,
 
         /// <summary>
-        /// Specifies an in parameter.<br>
-        /// If <see cref="parameterNumber"/> is 0, this will be ignored.
+        /// Specifies an in parameter.<br/>
+        /// If <see cref="AttributeUsageMethodAttribute.parameterNumber"/> is 0, this will be ignored.
         /// </summary>
         In,
 
         /// <summary>
         /// Specifies an out parameter.
-        /// If <see cref="parameterNumber"/> is 0, this will be ignored.
+        /// If <see cref="AttributeUsageMethodAttribute.parameterNumber"/> is 0, this will be ignored.
         /// </summary>
         Out,
 
         /// <summary>
         /// Specifies a reference parameter.
-        /// If <see cref="parameterNumber"/> is 0, this will be ignored.
+        /// If <see cref="AttributeUsageMethodAttribute.parameterNumber"/> is 0, this will be ignored.
         /// </summary>
         Ref,
 

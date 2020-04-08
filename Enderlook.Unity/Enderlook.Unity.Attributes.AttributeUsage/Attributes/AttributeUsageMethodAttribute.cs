@@ -13,11 +13,11 @@ namespace Enderlook.Unity.Attributes.AttributeUsage
     public sealed class AttributeUsageMethodAttribute : Attribute
     {
         /// <summary>
-        /// Number of the parameter to check.<br>
-        /// Example:<br>
-        ///     • 0 -> Return type.<br>
-        ///     • 1 -> First method parameter.<br>
-        ///     • 2 -> Second method parameter<br>
+        /// Number of the parameter to check.<br/>
+        /// Example:<br/>
+        ///     • 0 -> Return type.<br/>
+        ///     • 1 -> First method parameter.<br/>
+        ///     • 2 -> Second method parameter<br/>
         ///     • 3 -> Third method parameter...
         /// </summary>
         private readonly int parameterNumber;
@@ -37,14 +37,14 @@ namespace Enderlook.Unity.Attributes.AttributeUsage
         /// <summary>
         /// Each time Unity compile script, they will be analyzed to check if the attribute is being used in proper methods.
         /// </summary>
-        /// <param name="parameterNumber">Number of the parameter to check.<br>
-        /// Example:<br>
-        ///     • 0 -> Return type.<br>
-        ///     • 1 -> First method parameter.<br>
-        ///     • 2 -> Second method parameter<br>
+        /// <param name="parameterNumber">Number of the parameter to check.<br/>
+        /// Example:<br/>
+        ///     • 0 -> Return type.<br/>
+        ///     • 1 -> First method parameter.<br/>
+        ///     • 2 -> Second method parameter<br/>
         ///     • 3 -> Third method parameter...</param>
-        /// <param name="types">Data types allowed. Use <see cref="CheckingFlags.IsBlackList"/> in <see cref="checkingFlags"/> to become it forbidden data types.<br>
-        /// If empty, any data type is allowed.</param>
+        /// <param name="types">Data types allowed.<br/>
+        /// If empty, any data type is allowed.<br/>
         /// To specify that a parameter should not exist, use <see cref="ParameterMode.VoidOrNone"/> in <see cref="parameterType"/>.</param>
         public AttributeUsageMethodAttribute(int parameterNumber, params Type[] types)
         {

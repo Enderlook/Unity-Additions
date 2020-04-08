@@ -5,8 +5,8 @@ using UnityEngine;
 namespace Enderlook.Unity.Serializables.Physics
 {
     /// <summary>
-    /// Used to perform raycast with predefined parameters.<br>
-    /// It allows adding offset to the <see cref="Raycaster.Source"/> on runtime without using <see cref="Raycaster.SetReference(Transform, SpriteRenderer)"/> or <see cref="Raycaster.SetReference(Vector2, SpriteRenderer)"/>.<br>
+    /// Used to perform raycast with predefined parameters.<br/>
+    /// It allows adding offset to the <see cref="Raycaster.Source"/> on runtime without using <see cref="Raycaster.SetReference(Transform, SpriteRenderer)"/> or <see cref="Raycaster.SetReference(Vector2, SpriteRenderer)"/>.<br/>
     /// It can be either serialized in Unity inspector or construct using new.
     /// </summary>
     [Serializable]

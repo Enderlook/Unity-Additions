@@ -237,7 +237,7 @@ namespace Enderlook.Unity.Attributes
             }
             else
             {
-                /// Clean
+                // Clean
                 if (GUILayout.Button(CLEAN_FIELD))
                 {
                     Undo.RecordObject(targetObject, "Clean field");

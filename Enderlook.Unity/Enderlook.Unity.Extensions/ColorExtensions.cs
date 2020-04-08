@@ -5,7 +5,7 @@ namespace Enderlook.Unity.Extensions
     public static class ColorExtensions
     {
         /// <summary>
-        /// Warps <paramref name="text"/> in HTML color tag with <paramref name="color"/>.<br>
+        /// Warps <paramref name="text"/> in HTML color tag with <paramref name="color"/>.<br/>
         /// Do the same as <see cref="ColorizeWith(string, Color)"/>.
         /// </summary>
         /// <param name="color">Color to tint <paramref name="text"/>.</param>
@@ -14,7 +14,7 @@ namespace Enderlook.Unity.Extensions
         public static string GetColorTag(this Color color, string text) => $"<color=#{ColorUtility.ToHtmlStringRGBA(color)}>{text}</color>";
 
         /// <summary>
-        /// Warps <paramref name="text"/> in HTML color tag with <paramref name="color"/>..<br>
+        /// Warps <paramref name="text"/> in HTML color tag with <paramref name="color"/>..<br/>
         /// Do the same as <see cref="GetColorTag(Color, string)"/>.
         /// </summary>
         /// <param name="color">Color to tint <paramref name="text"/>.</param>

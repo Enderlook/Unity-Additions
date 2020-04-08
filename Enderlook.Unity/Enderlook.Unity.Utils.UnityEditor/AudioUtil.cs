@@ -5,10 +5,15 @@ using UnityEditor;
 
 using UnityEngine;
 
-namespace Enderlook.Unity.Utils
+namespace Enderlook.Unity.Utils.UnityEditor
 {
+    /// <summary>
+    /// A wrapper to a non-exposed AudioUtil api from Unity Editor.
+    /// </summary>
     public static class AudioUtil
     {
+        // TODO: Add documentation to public members
+#pragma warning disable CS1591
         // https://forum.unity.com/threads/way-to-play-audio-in-editor-using-an-editor-script.132042/
         // https://github.com/MattRix/UnityDecompiled/blob/cc432a3de42b53920d5d5dae85968ff993f4ec0e/UnityEditor/UnityEditor/AudioUtil.cs
         // https://github.com/Unity-Technologies/UnityCsReference/blob/master/Editor/Mono/Audio/Bindings/AudioUtil.bindings.cs
@@ -65,6 +70,7 @@ namespace Enderlook.Unity.Utils
         public static readonly Func<MonoBehaviour, int> GetCustomFilterProcessTime;
         public static readonly Func<MonoBehaviour, int, float> GetCustomFilterMaxIn;
         public static readonly Func<MonoBehaviour, int, float> GetCustomFilterMaxOut;
+#pragma warning disable CS1591
 
         static AudioUtil()
         {

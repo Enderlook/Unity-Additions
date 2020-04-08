@@ -13,6 +13,7 @@ using UnityEngine; // Used for atoms with Unity data types
 
     public abstract class <#= name #>GetSetComponent : <#= name #>GetComponent, I<#= name #>GetSet
     {
+        /// <inheritdoc cref="IGetSet{TValue}.SetValue(TValue)"/>
         public abstract void SetValue(<#= dataType #> newValue);
     }
 
@@ -31,34 +32,36 @@ using UnityEngine; // Used for atoms with Unity data types
         /// <inheritdoc cref="IManaged{T}.InitialValue" />
         public abstract <#= dataType #> InitialValue { get; }
 
+#pragma warning disable CS1591
         protected virtual void OnEnable() => Reset();
+#pragma warning restore CS1591
 
         /// <inheritdoc cref="IManaged{T}" />
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Type Safety", "UNT0006:Incorrect message signature", Justification = "It isn't a Unity method.")]
         public abstract void Reset(bool shouldTriggerEvents = false);
 
-        /// <inheritdoc cref="IEventRegister.Register(Action)"/>
+        /// <inheritdoc cref="IEventRegister{TValue}.Register(Action{TValue})"/>
         void IEventRegister<<#= dataType #>>.Register(Action<<#= dataType #>> action) => Changed.Register(action);
 
-        /// <inheritdoc cref="IEventRegister.Unregister(Action)"/>
+        /// <inheritdoc cref="IEventRegister{TValue}.Unregister(Action{TValue})"/>
         void IEventRegister<<#= dataType #>>.Unregister(Action<<#= dataType #>> action) => Changed.Unregister(action);
 
-        /// <inheritdoc cref="IEventRegister.RegisterListener(IEventListener)"/>
+        /// <inheritdoc cref="IEventRegister{TValue}.RegisterListener(IEventListener{TValue})"/>
         void IEventRegister<<#= dataType #>>.RegisterListener(IEventListener<<#= dataType #>> listener) => Changed.RegisterListener(listener);
 
-        /// <inheritdoc cref="IEventRegister.RegisterListener(IEventListener)"/>
+        /// <inheritdoc cref="IEventRegister{TValue}.RegisterListener(IEventListener{TValue})"/>
         void IEventRegister<<#= dataType #>>.UnregisterListener(IEventListener<<#= dataType #>> listener) => Changed.UnregisterListener(listener);
 
-        /// <inheritdoc cref="IEventRegister2.Register(Action{T, T})"/>
+        /// <inheritdoc cref="IEventRegister2{TValue}.Register(Action{TValue, TValue})"/>
         void IEventRegister2<<#= dataType #>>.Register(Action<<#= dataType #>, <#= dataType #>> action) => ChangedWithHistory.Register(action);
 
-        /// <inheritdoc cref="IEventRegister2.Unregister(Action{T, T})"/>
+        /// <inheritdoc cref="IEventRegister2{TValue}.Unregister(Action{TValue, TValue})"/>
         void IEventRegister2<<#= dataType #>>.Unregister(Action<<#= dataType #>, <#= dataType #>> action) => ChangedWithHistory.Unregister(action);
 
-        /// <inheritdoc cref="IEventRegister2.RegisterListener(IEventListener2{T}))"/>
+        /// <inheritdoc cref="IEventRegister2{TValue}.RegisterListener(IEventListener2{TValue})"/>
         void IEventRegister2<<#= dataType #>>.RegisterListener(IEventListener2<<#= dataType #>> listener) => ChangedWithHistory.RegisterListener(listener);
 
-        /// <inheritdoc cref="IEventRegister2.UnregisterListener(IEventListener2{T})"/>
+        /// <inheritdoc cref="IEventRegister2{TValue}.UnregisterListener(IEventListener2{TValue})"/>
         void IEventRegister2<<#= dataType #>>.UnregisterListener(IEventListener2<<#= dataType #>> listener) => ChangedWithHistory.UnregisterListener(listener);
     }
 <#+

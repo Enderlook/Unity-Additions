@@ -24,7 +24,7 @@ namespace Enderlook.Unity.Utils
         public static TraceMode traceMode = TraceMode.FullStackTrace;
 
         /// <summary>
-        /// Print to console all <paramref name="objects"/> as strings separated by ', '.<br>
+        /// Print to console all <paramref name="objects"/> as strings separated by ', '.<br/>
         /// <see langword="null"/>s are turned into "null".
         /// Objects of type <see cref="Color"/> will have included the HTMl tag color.
         /// </summary>
@@ -32,7 +32,7 @@ namespace Enderlook.Unity.Utils
         public static void Log(params object[] objects) => Debug.Log(GetStrings(objects));
 
         /// <summary>
-        /// Print to console <paramref name="object"/> as strings.<br>
+        /// Print to console <paramref name="object"/> as strings.<br/>
         /// <see langword="null"/>s are turned into "null".
         /// Objects of type <see cref="Color"/> will have included the HTMl tag color.
         /// </summary>
@@ -56,7 +56,7 @@ namespace Enderlook.Unity.Utils
         public static void LogWarning(params object[] objects) => Debug.LogWarning(GetStrings(objects));
 
         /// <summary>
-        /// Print to console <paramref name="object"/> as strings.<br>
+        /// Print to console <paramref name="object"/> as strings.<br/>
         /// <see langword="null"/>s are turned into "null".
         /// Objects of type <see cref="Color"/> will have included the HTMl tag color.
         /// </summary>
@@ -80,7 +80,7 @@ namespace Enderlook.Unity.Utils
         public static void LogError(params object[] objects) => Debug.LogError(GetStrings(objects));
 
         /// <summary>
-        /// Print to console <paramref name="object"/> as strings.<br>
+        /// Print to console <paramref name="object"/> as strings.<br/>
         /// <see langword="null"/>s are turned into "null".
         /// Objects of type <see cref="Color"/> will have included the HTMl tag color.
         /// </summary>
@@ -125,7 +125,7 @@ namespace Enderlook.Unity.Utils
         }
 
         /// <summary>
-        /// Print to console all <paramref name="objects"/> as strings separated by ', ', preceded by message.<br>
+        /// Print to console all <paramref name="objects"/> as strings separated by ', ', preceded by message.<br/>
         /// <see langword="null"/>s are turned into "null".
         /// Objects of type <see cref="Color"/> will have included the HTMl tag color.
         /// </summary>
@@ -147,7 +147,7 @@ namespace Enderlook.Unity.Utils
         }
 
         /// <summary>
-        /// Print to console all <paramref name="objects"/> as strings separated by ', ', preceded by message.<br>
+        /// Print to console all <paramref name="objects"/> as strings separated by ', ', preceded by message.<br/>
         /// <see langword="null"/>s are turned into "null".
         /// Objects of type <see cref="Color"/> will have included the HTMl tag color.
         /// </summary>
@@ -169,7 +169,7 @@ namespace Enderlook.Unity.Utils
         }
 
         /// <summary>
-        /// Print to console all <paramref name="objects"/> as strings separated by ', ', preceded by message.<br>
+        /// Print to console all <paramref name="objects"/> as strings separated by ', ', preceded by message.<br/>
         /// <see langword="null"/>s are turned into "null".
         /// Objects of type <see cref="Color"/> will have included the HTMl tag color.
         /// </summary>
@@ -191,8 +191,8 @@ namespace Enderlook.Unity.Utils
         }
 
         /// <summary>
-        /// Return an string with the <paramref name="object"/> as string.<br>
-        /// <see langword="null"/>s are turned into "null".<br>
+        /// Return an string with the <paramref name="object"/> as string.<br/>
+        /// <see langword="null"/>s are turned into "null".<br/>
         /// Objects of type <see cref="Color"/> will have included the HTMl tag color.
         /// </summary>
         /// <param name="object">Object to get string.</param>
@@ -207,7 +207,7 @@ namespace Enderlook.Unity.Utils
         }
 
         /// <summary>
-        /// Return an string with all objects as strings separated by ', '.<br>
+        /// Return an string with all objects as strings separated by ', '.<br/>
         /// <see langword="null"/>s are turned into "null".
         /// Objects of type <see cref="Color"/> will have included the HTMl tag color.
         /// </summary>
@@ -218,7 +218,7 @@ namespace Enderlook.Unity.Utils
         private static string GetStrings(string message, object[] objects) => (message == null ? "" : message + ", ") + GetStrings(objects);
 
         /// <summary>
-        /// Print to console all <paramref name="enumerable"/> as strings separated by , preceded by message.<br>
+        /// Print to console all <paramref name="enumerable"/> as strings separated by , preceded by message.<br/>
         /// <see langword="null"/>s are turned into "null".
         /// Objects of type <see cref="Color"/> will have included the HTMl tag color.
         /// </summary>
@@ -245,7 +245,7 @@ namespace Enderlook.Unity.Utils
         }
 
         /// <summary>
-        /// Print to console all <paramref name="enumerable"/> as strings separated by , preceded by message.<br>
+        /// Print to console all <paramref name="enumerable"/> as strings separated by , preceded by message.<br/>
         /// <see langword="null"/>s are turned into "null".
         /// Objects of type <see cref="Color"/> will have included the HTMl tag color.
         /// </summary>
@@ -272,7 +272,7 @@ namespace Enderlook.Unity.Utils
         }
 
         /// <summary>
-        /// Print to console all <paramref name="enumerable"/> as strings separated by , preceded by message.<br>
+        /// Print to console all <paramref name="enumerable"/> as strings separated by , preceded by message.<br/>
         /// <see langword="null"/>s are turned into "null".
         /// Objects of type <see cref="Color"/> will have included the HTMl tag color.
         /// </summary>

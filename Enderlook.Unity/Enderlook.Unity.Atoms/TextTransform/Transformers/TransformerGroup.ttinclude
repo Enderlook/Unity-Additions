@@ -19,7 +19,7 @@ using UnityEngine;
         private List<<#= name #>Transformer> transformers;
 
         /// <summary>
-        <#= "///" #> Execute all the <see cref="<#= name #>Transformer"/> from <see cref="transformers"/>.</br>
+        <#= "///" #> Execute all the <see cref="<#= name #>Transformer"/> from <see cref="transformers"/>.<br/>
         /// In addition, it removes any <see langword="null"/> element from <see cref="transformers"/>.
         /// </summary>
         /// <param name="value">Value passed to first transformer to execute.</param>
@@ -47,10 +47,10 @@ using UnityEngine;
         }
 
         /// <summary>
-        /// Create a new <see cref="IntFunctionChain"/> with the given transformers in <paramref name="transformers"/>.
+        /// Create a new <see cref="<#= name #>TransformerGroup"/> with the given transformers in <paramref name="transformers"/>.
         /// </summary>
-        /// <param name="transformers">Functions executed in order by the new <see cref="IntFunctionChain"/>.</param>
-        /// <returns>New instance of <see cref="IntFunctionChain"/>.</returns>
+        /// <param name="transformers">Functions executed in order by the new <see cref="<#= name #>TransformerGroup"/>.</param>
+        /// <returns>New instance of <see cref="<#= name #>TransformerGroup"/>.</returns>
         public static <#= name #>TransformerGroup CreateFunctionChain(params <#= name #>Transformer[] transformers)
         {
             var instance = CreateInstance<<#= name #>TransformerGroup>();

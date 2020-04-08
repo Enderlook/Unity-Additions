@@ -15,7 +15,7 @@ namespace Enderlook.Unity.Attributes
         public HasConfirmationFieldAttribute(string confirmFieldName) => this.confirmFieldName = confirmFieldName;
 
         /// <summary>
-        /// Check if the given attribute is confirmed or not in <paramref name="instance"/>.<br>
+        /// Check if the given attribute is confirmed or not in <paramref name="instance"/>.<br/>
         /// Return <see langword="null"/> if the <c>instance.<see cref="confirmFieldName"/></c> wasn't found.
         /// </summary>
         /// <typeparam name="T">Type of data to look for the confirmation field.</typeparam>
@@ -29,7 +29,7 @@ namespace Enderlook.Unity.Attributes
         }
 
         /// <summary>
-        /// Check if the given attribute is confirmed or not in <paramref name="instance"/>.<br>
+        /// Check if the given attribute is confirmed or not in <paramref name="instance"/>.<br/>
         /// Return <see langword="null"/> if the <c>instance.<see cref="confirmFieldName"/></c> wasn't found.
         /// </summary>
         /// <typeparam name="T">Type of data to look for the confirmation field.</typeparam>

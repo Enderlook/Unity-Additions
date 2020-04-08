@@ -7,7 +7,7 @@ using UnityEngine;
 namespace Enderlook.Unity.Serializables.Physics
 {
     /// <summary>
-    /// Used to perform raycast with predefined parameters.<br>
+    /// Used to perform raycast with predefined parameters.<br/>
     /// It can be either serialized in Unity inspector or construct using new.
     /// </summary>
     [Serializable]

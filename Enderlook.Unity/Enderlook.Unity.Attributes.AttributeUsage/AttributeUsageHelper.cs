@@ -17,7 +17,7 @@ namespace Enderlook.Unity.Attributes.AttributeUsage
         /// Produces a <see cref="HashSet{T}"/> with <paramref name="types"/>.
         /// </summary>
         /// <param name="types">Array of <see cref="Type"/> to use.</param>
-        /// <param name="includeEnumerableTypes">If <see langword="true"/>, it will also check for array o list versions of types.<br>
+        /// <param name="includeEnumerableTypes">If <see langword="true"/>, it will also check for array o list versions of types.<br/>
         /// Useful because Unity <see cref="PropertyDrawer"/> are draw on each element of an array or list <see cref="SerializedProperty"/></param>
         /// <returns><see cref="HashSet{T}"/> with all types to check.</returns>
         /// <remarks>Only use in Unity Editor.</remarks>
