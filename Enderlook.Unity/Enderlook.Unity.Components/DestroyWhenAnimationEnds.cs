@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Enderlook.Unity.Components.Destroyers
+namespace Enderlook.Unity.Components
 {
     [RequireComponent(typeof(Animator)), AddComponentMenu("Enderlook/Destroyers/Destroy When Animations Ends")]
     public class DestroyWhenAnimationEnds : MonoBehaviour

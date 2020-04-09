@@ -2,7 +2,7 @@
 
 using UnityEngine;
 
-namespace Enderlook.Unity.Components.Destroyers
+namespace Enderlook.Unity.Components
 {
     [AddComponentMenu("Enderlook/Destroyers/Destroy Notifier")]
     public class DestroyNotifier : MonoBehaviour
