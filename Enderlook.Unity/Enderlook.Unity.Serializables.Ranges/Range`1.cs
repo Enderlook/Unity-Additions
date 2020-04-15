@@ -29,6 +29,9 @@ namespace Enderlook.Unity.Serializables.Ranges
         /// </summary>
         public T Min => min;
 
+        /// <summary>
+        /// A random value between <see cref="Min"/> and <see cref="Max"/>.
+        /// </summary>
         public abstract T Value { get; }
     }
 }

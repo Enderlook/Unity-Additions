@@ -7,22 +7,23 @@ namespace Enderlook.Unity.Serializables.Ranges
     [Serializable]
     public class RangeFloat : Range<float>, IRangeInt<float>
     {
+        /// <inheritdoc cref="Range{T}.Value"/>
         public override float Value => Random.Range(Min, Max);
 
         /// <summary>
-        /// Return a random integer value between <see cref="Min"/> and <see cref="Max"/>.
+        /// Return a random integer value between <see cref="Range{T}.Min"/> and <see cref="Range{T}.Max"/>.
         /// The result is always an integer. Decimal numbers are used as chance to increment by one.
         /// </summary>
         public virtual int ValueInt => FloatToIntByChance(Value);
 
         /// <summary>
-        /// Return a random value between <see cref="Min"/> and <see cref="Max"/>.
+        /// Return a random value between <see cref="Range{T}.Min"/> and <see cref="Range{T}.Max"/>.
         /// </summary>
         /// <param name="source"><see cref="RangeFloat"/> instance used to determine the random float.</param>
         public static explicit operator float(RangeFloat source) => source.Value;
 
         /// <summary>
-        /// Return a random value between <see cref="Min"/> and <see cref="Max"/>.
+        /// Return a random value between <see cref="Range{T}.Min"/> and <see cref="Range{T}.Max"/>.
         /// The result is always an integer. Decimal numbers are used as chance to increment by one.
         /// </summary>
         /// <param name="source"><see cref="RangeFloat"/> instance used to determine the random int.</param>
