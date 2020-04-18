@@ -85,7 +85,7 @@ namespace Enderlook.Unity.Utils.Clockworks
         /// <param name="deltaTime">Time since last increase.</param>
         public override void UpdateBehaviour(float deltaTime)
         {
-            if (IsEnabled && Recharge(deltaTime) && autoExecute)
+            if (IsEnabled && Recharge(deltaTime) && autoExecute && MustExecute())
                 Execute();
         }
 
