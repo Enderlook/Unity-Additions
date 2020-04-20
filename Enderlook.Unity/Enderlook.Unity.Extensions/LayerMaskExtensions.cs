@@ -26,6 +26,36 @@ namespace Enderlook.Unity.Extensions
         }
 
         /// <summary>
+        /// Convert a given layer to a layer mask.<br/>
+        /// <c>1 &lt;&lt; <paramref name="layer"/></c>.
+        /// </summary>
+        /// <param name="layer">Layer to produce a layer mask.</param>
+        /// <returns>Layer mast of layer</returns>
+        public static int ToLayerMask(this int layer) => 1 << layer;
+
+        /// <summary>
+        /// Convert a given layer to a layer mask.<br/>
+        /// <c>1 &lt;&lt; <paramref name="layer"/></c>.
+        /// </summary>
+        /// <param name="layer">Layer to produce a layer mask.</param>
+        /// <returns>Layer mast of layer</returns>
+        public static LayerMask ToLayerMask(this LayerMask layer) => 1 << layer;
+
+        /// <summary>
+        /// Invert a layer to match exactly the opposite.
+        /// </summary>
+        /// <param name="layer">Layer mask to invert.</param>
+        /// <returns>Inverted layermask.</returns>
+        public static int InvertLayerMask(this int layer) => ~layer;
+
+        /// <summary>
+        /// Invert a layer to match exactly the opposite.
+        /// </summary>
+        /// <param name="layer">Layer mask to invert.</param>
+        /// <returns>Inverted layermask.</returns>
+        public static LayerMask InvertLayerMask(this LayerMask layer) => ~layer;
+
+        /// <summary>
         /// Check if the <paramref name="layerToCheck"/> have <paramref name="layerTrigger"/>.
         /// </summary>
         /// <param name="layerToCheck">Layers to check if have <paramref name="layerTrigger"/>.</param>
