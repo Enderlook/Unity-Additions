@@ -40,7 +40,7 @@ using UnityEngine; // Used for atoms with Unity data types
         public abstract <#= dataType #> InitialValue { get; }
 
 #pragma warning disable CS1591
-        public void OnEnable() => SetValueInternal(InitialValue);
+        private void OnEnable() => SetValueInternal(InitialValue);
 #pragma warning restore CS1591
 
         /// <inheritdoc cref="IManaged{TValue}.Reset(bool)"/>
