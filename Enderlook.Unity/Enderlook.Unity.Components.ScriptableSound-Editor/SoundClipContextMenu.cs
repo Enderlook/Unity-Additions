@@ -20,9 +20,7 @@ namespace Enderlook.Unity.Components.ScriptableSound
             AudioClip[] audioClips = Selection.GetFiltered<AudioClip>(SelectionMode.DeepAssets).ToArray();
 
             foreach ((SoundClip soundClip, AudioClip audioClip) in CreateSoundClips(audioClips).Zip(audioClips, (s, a) => (s, a)))
-                AssetDatabaseHelper.CreateAsset(soundClip,
-                    string.Join(".", AssetDatabase.GetAssetPath(audioClip)
-                        .Split('.').Reverse().Skip(1).Reverse().Append("asset").ToArray()));
+                AssetDatabaseHelper.CreateAsset(soundClip, AssetDatabase.GetAssetPath(audioClip).WithDifferentExtension("asset"));
         }
 
         [MenuItem("Assets/Enderlook/Scriptable Sound/Sound Clip/Create all in a single asset")]

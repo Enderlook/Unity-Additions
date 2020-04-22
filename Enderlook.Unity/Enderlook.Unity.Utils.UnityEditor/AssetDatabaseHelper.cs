@@ -231,5 +231,25 @@ namespace Enderlook.Unity.Utils.UnityEditor
             ExtractSubAsset(ref subAsset, path);
             return path;
         }
+
+        /// <summary>
+        /// Replaces the last section of the <see cref="string"/> <paramref name="source"/> delimited by '.' with <paramref name="extension"/>.
+        /// </summary>
+        /// <param name="source">Base <see cref="string"/></param>
+        /// <param name="extension">New ending <see cref="string"/></param>
+        /// <returns><paramref name="source"/> with a <paramref name="extension"/> as replacement of its last '.' segment.</returns>
+        public static string WithDifferentExtension(this string source, string extension)
+        {
+            if (source is null) throw new ArgumentNullException(nameof(source));
+            if (extension is null) throw new ArgumentNullException(nameof(extension));
+            if (source.Length == 0) throw new ArgumentException("Can't be empty", nameof(source));
+            if (extension.Length == 0) throw new ArgumentException("Can't be empty", nameof(extension));
+
+            string[] parts = source.Split('.');
+            if (parts.Length == 1)
+                throw new ArgumentException("Must have at least one '.'.", nameof(source));
+            parts[parts.Length - 1] = extension;
+            return string.Join(".", parts);
+        }
     }
 }
