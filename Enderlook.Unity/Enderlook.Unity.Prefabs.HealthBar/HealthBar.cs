@@ -1,4 +1,7 @@
 using Enderlook.Unity.Utils;
+
+using System;
+
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,6 +10,8 @@ namespace Enderlook.Unity.Prefabs.HealthBarGUI
     [AddComponentMenu("Enderlook/Health Bar")]
     public class HealthBar : MonoBehaviour, IHealthBar
     {
+        private const string CAN_NOT_BE_NEGATIVE = "Can't be negative";
+
 #pragma warning disable CS0649
         [Header("Configuration")]
         [SerializeField, Tooltip("How numbers are shown, {0} is health, {1} is maximum health and {2} is percent of health. Eg: {0} / {1} ({2}%)")]
@@ -88,11 +93,15 @@ namespace Enderlook.Unity.Prefabs.HealthBarGUI
         /// <inheritdoc cref="IHealthBarViewer.IsEnabled"/>
         public bool IsEnabled { get; set; } = true;
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Code Quality", "IDE0051:Remove unused private members", Justification = "Used by Unity.")]
         private void Awake() => Setup();
 
         /// <inheritdoc cref="IHealthBarWorker.ManualUpdate(float, float)"/>
         public void ManualUpdate(float health, float maxHealth)
         {
+            if (health < 0) throw new ArgumentOutOfRangeException(CAN_NOT_BE_NEGATIVE, nameof(health));
+            if (maxHealth < 0) throw new ArgumentOutOfRangeException(CAN_NOT_BE_NEGATIVE, nameof(maxHealth));
+
             this.health = health;
             this.maxHealth = maxHealth;
 
@@ -100,7 +109,12 @@ namespace Enderlook.Unity.Prefabs.HealthBarGUI
         }
 
         /// <inheritdoc cref="IHealthBarWorker.ManualUpdate(float)"/>
-        public void ManualUpdate(float maxHealth) => ManualUpdate(maxHealth, maxHealth);
+        public void ManualUpdate(float maxHealth)
+        {
+            if (health < 0) throw new ArgumentOutOfRangeException(CAN_NOT_BE_NEGATIVE, nameof(health));
+
+            ManualUpdate(maxHealth, maxHealth);
+        }
 
         /// <inheritdoc cref="IHealthBarWorker.FinishCurrentAnimation"/>
         public void FinishCurrentAnimation()
@@ -124,6 +138,7 @@ namespace Enderlook.Unity.Prefabs.HealthBarGUI
         /// <returns>Color of the <see cref="healthImage"/></returns>
         private Color GetHealthColor() => Color.Lerp(minHealthColor, maxHealthColor, healthImage.fillAmount + (damageBar != null ? damageBar.fillAmount : 0) - (healingBar != null ? healingImage.fillAmount : 0));
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Code Quality", "IDE0051:Remove unused private members", Justification = "Used by Unity.")]
         private void Update()
         {
             if (IsEnabled)
@@ -153,12 +168,20 @@ namespace Enderlook.Unity.Prefabs.HealthBarGUI
         /// <inheritdoc cref="IHealthBarWorker.UpdateValues(float, float)"/>
         public void UpdateValues(float health, float maxHealth)
         {
+            if (health < 0) throw new ArgumentOutOfRangeException(CAN_NOT_BE_NEGATIVE, nameof(health));
+            if (maxHealth < 0) throw new ArgumentOutOfRangeException(CAN_NOT_BE_NEGATIVE, nameof(maxHealth));
+
             this.maxHealth = maxHealth;
             Set(health);
         }
 
         /// <inheritdoc cref="IHealthBarWorker.UpdateValues(float)"/>
-        public void UpdateValues(float health) => Set(health);
+        public void UpdateValues(float health)
+        {
+            if (health < 0) throw new ArgumentOutOfRangeException(CAN_NOT_BE_NEGATIVE, nameof(health));
+
+            Set(health);
+        }
 
         /// <summary>
         /// Set the new health value and updates bars.
@@ -281,13 +304,20 @@ namespace Enderlook.Unity.Prefabs.HealthBarGUI
         public int Health {
             set {
                 if (health != value)
-                    Set(value);
+                    if (value < 0)
+                        throw new ArgumentOutOfRangeException(CAN_NOT_BE_NEGATIVE, nameof(value));
+                    else
+                        Set(value);
             }
         }
 
         /// <inheritdoc cref="IHealthBarWorker.MaxHealth"/>
         public int MaxHealth {
-            set => maxHealth = value;
+            set {
+                if (value < 0)
+                    throw new ArgumentOutOfRangeException(CAN_NOT_BE_NEGATIVE, nameof(value));
+                maxHealth = value;
+            }
         }
     }
 }
