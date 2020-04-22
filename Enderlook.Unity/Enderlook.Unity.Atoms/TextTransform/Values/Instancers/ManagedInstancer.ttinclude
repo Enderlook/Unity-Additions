@@ -32,11 +32,13 @@ using UnityEngine;
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get => instacedAtom;
         }
+
         /// <inheritdoc />
         protected override IEventRegister2<<#= dataType#>> ChangedWithHistory {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get => instacedAtom;
         }
+
         /// <inheritdoc />
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public override <#= dataType#> GetValue() => instacedAtom.GetValue();
