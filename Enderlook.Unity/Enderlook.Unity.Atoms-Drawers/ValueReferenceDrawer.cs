@@ -11,7 +11,7 @@ namespace Enderlook.Unity.Atoms
     internal class ValueReferenceDrawer : SmartPropertyDrawer
     {
         private static PropertyPopup referenceDrawer = new PropertyPopup(
-            ReflectionExtesions.GetBackingFieldName("Mode"),
+            ReflectionExtensions.GetBackingFieldName("Mode"),
             ("Inline", "inline", (int)BaseValueReference.ReferenceMode.Inline),
             ("ScriptableObject", "scriptableObject", (int)BaseValueReference.ReferenceMode.ScriptableObject),
             ("Component", "component", (int)BaseValueReference.ReferenceMode.Component)

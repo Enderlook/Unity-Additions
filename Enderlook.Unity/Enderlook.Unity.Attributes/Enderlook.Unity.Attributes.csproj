@@ -70,6 +70,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Enderlook.Extensions" Version="1.10.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Enderlook.Unity.Attributes.AttributeUsage\Enderlook.Unity.Attributes.AttributeUsage.csproj" />
   </ItemGroup>
 

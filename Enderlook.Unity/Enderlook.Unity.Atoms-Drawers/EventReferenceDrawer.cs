@@ -11,7 +11,7 @@ namespace Enderlook.Unity.Atoms
     internal class EventReferenceDrawer : SmartPropertyDrawer
     {
         private static PropertyPopup referenceDrawer = new PropertyPopup(
-            ReflectionExtesions.GetBackingFieldName("Mode"),
+            ReflectionExtensions.GetBackingFieldName("Mode"),
             ("Event", "event", (int)BaseEventReference.ReferenceMode.Event),
             ("Managed Scriptable Object", "managedScriptableObject", (int)BaseEventReference.ReferenceMode.ManagedScriptableObject),
             ("Managed Component", "managedComponent", (int)BaseEventReference.ReferenceMode.ManagedComponent)

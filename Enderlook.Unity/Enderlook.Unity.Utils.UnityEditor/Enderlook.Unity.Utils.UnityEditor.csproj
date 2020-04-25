@@ -47,7 +47,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Enderlook.Extensions" Version="1.0.0" />
+    <PackageReference Include="Enderlook.Extensions" Version="1.10.0" />
   </ItemGroup>
 
   <ItemGroup>

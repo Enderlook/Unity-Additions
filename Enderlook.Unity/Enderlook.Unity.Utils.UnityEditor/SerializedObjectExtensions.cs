@@ -221,7 +221,7 @@ namespace Enderlook.Unity.Utils.UnityEditor
             if (name == null) throw new ArgumentNullException(nameof(name));
             if (name.Length == 0) throw new ArgumentException("Can't be empty.", nameof(name));
 
-            return source.FindProperty(ReflectionExtesions.GetBackingFieldName(name));
+            return source.FindProperty(ReflectionExtensions.GetBackingFieldName(name));
         }
 
         /// <summary>
@@ -238,7 +238,7 @@ namespace Enderlook.Unity.Utils.UnityEditor
 
             SerializedProperty serializedProperty = source.FindProperty(name);
             if (serializedProperty == null)
-                serializedProperty = source.FindProperty(ReflectionExtesions.GetBackingFieldName(name));
+                serializedProperty = source.FindProperty(ReflectionExtensions.GetBackingFieldName(name));
             return serializedProperty;
         }
     }
