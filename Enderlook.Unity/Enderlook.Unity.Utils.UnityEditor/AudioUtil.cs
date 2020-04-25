@@ -30,8 +30,10 @@ namespace Enderlook.Unity.Utils.UnityEditor
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "Unity called it in this way.")]
         public static bool canUseSpatializerEffect => canUseSpatializerEffectGetter();
 
+#if !UNITY_2019_1_OR_NEWER
         private static readonly Action<AudioClip> PlayClip1;
         private static readonly Action<AudioClip, int> PlayClip2;
+#endif
         private static readonly Action<AudioClip, int, bool> PlayClip3;
 
         public static readonly Action<AudioClip> StopClip;
@@ -88,8 +90,10 @@ namespace Enderlook.Unity.Utils.UnityEditor
 
             canUseSpatializerEffectGetter = CreateDelegate<Func<bool>>(audioUtilClass.GetProperty("canUseSpatializerEffect", bindingFlags).GetGetMethod());
 
+#if !UNITY_2019_1_OR_NEWER
             PlayClip1 = GetDelegate<Action<AudioClip>>("PlayClip", typeof(AudioClip));
             PlayClip2 = GetDelegate<Action<AudioClip, int>>("PlayClip", typeof(AudioClip), typeof(int));
+#endif
             PlayClip3 = GetDelegate<Action<AudioClip, int, bool>>("PlayClip", typeof(AudioClip), typeof(int), typeof(bool));
 
             StopClip = GetDelegate<Action<AudioClip>>("StopClip", typeof(AudioClip));
@@ -130,9 +134,23 @@ namespace Enderlook.Unity.Utils.UnityEditor
             GetCustomFilterMaxOut = GetDelegate<Func<MonoBehaviour, int, float>>("GetCustomFilterMaxOut", typeof(MonoBehaviour), typeof(int));
         }
 
-        public static void PlayClip(AudioClip audioClip) => PlayClip1(audioClip);
+        public static void PlayClip(AudioClip audioClip)
+        {
+#if !UNITY_2019_1_OR_NEWER
+            PlayClip1(audioClip);
+#else
+            PlayClip3(audioClip, 0, false);
+#endif
+        }
 
-        public static void PlayClip(AudioClip audioClip, int startSample = 0) => PlayClip2(audioClip, startSample);
+        public static void PlayClip(AudioClip audioClip, int startSample = 0)
+        {
+#if !UNITY_2019_1_OR_NEWER
+            PlayClip2(audioClip, startSample);
+#else
+            PlayClip3(audioClip, startSample, false);
+#endif
+        }
 
         public static void PlayClip(AudioClip audioClip, int startSample = 0, bool loop = false) => PlayClip3(audioClip, startSample, loop);
     }
