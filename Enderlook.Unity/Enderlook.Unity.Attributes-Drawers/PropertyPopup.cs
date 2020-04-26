@@ -2,7 +2,6 @@
 using Enderlook.Unity.Utils.UnityEditor;
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
@@ -17,6 +16,8 @@ namespace Enderlook.Unity.Attributes
     /// </summary>
     public class PropertyPopup
     {
+        private const string NOT_FOUND_OPTION = "Not found an option which satisfy {0} ({1}).";
+
         private readonly static GUIStyle popupStyle = new GUIStyle(GUI.skin.GetStyle("PaneOptions"))
         {
             imagePosition = ImagePosition.ImageOnly
@@ -91,16 +92,19 @@ namespace Enderlook.Unity.Attributes
                 mode.serializedObject.ApplyModifiedProperties();
             }
 
-            EditorGUI.PropertyField(position,
-                property.FindPropertyRelative(modes[newUsagePopupIndex].propertyName),
-                GUIContent.none);
+            if (newUsagePopupIndex != -1)
+                EditorGUI.PropertyField(position,
+                    property.FindPropertyRelative(modes[newUsagePopupIndex].propertyName),
+                    GUIContent.none);
+            else
+                EditorGUI.HelpBox(position, string.Format(NOT_FOUND_OPTION, mode.propertyPath, GetValue(mode)), MessageType.Error);
         }
 
         private (SerializedProperty mode, int index) GetModeAndIndex(SerializedProperty property)
         {
             // Get current mode
             SerializedProperty mode = property.FindPropertyRelative(modeProperty);
-            if (mode == null)
+            if (mode is null)
                 throw new ArgumentNullException(nameof(mode), $"Can't find propety {mode.name} at path {mode.propertyPath} in {property.name}.");
             int popupIndex = GetPopupIndex(mode);
             return (mode, popupIndex);
@@ -109,18 +113,26 @@ namespace Enderlook.Unity.Attributes
         private int GetPopupIndex(SerializedProperty mode)
         {
             int modeIndex = 0;
-            object value = mode.GetTargetObjectOfProperty();
+            object value = GetValue(mode);
 
+            for (; modeIndex < modes.Length; modeIndex++)
+            {
+                if (modes[modeIndex].target.Equals(value))
+                    return modeIndex;
+            }
+
+            Debug.LogError(string.Format(NOT_FOUND_OPTION, mode.propertyPath, value));
+            return -1;
+        }
+
+        private static object GetValue(SerializedProperty mode)
+        {
+            object value = mode.GetTargetObjectOfProperty();
             // We give special treat with enums
             Type type = value.GetType();
             if (value != null && type.IsEnum)
                 value = ((Enum)value).GetUnderlyingValue();
-
-            for (; modeIndex < modes.Length; modeIndex++)
-                if (modes[modeIndex].target.Equals(value))
-                    return modeIndex;
-
-            throw new KeyNotFoundException($"Not found an option which satisfy {mode.propertyPath} ({value}).");
+            return value;
         }
 
         /// <summary>
