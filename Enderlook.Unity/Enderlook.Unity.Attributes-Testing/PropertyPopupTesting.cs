@@ -1,5 +1,6 @@
 ﻿using Enderlook.Extensions;
 using Enderlook.Unity.Attributes.AttributeUsage;
+using Enderlook.Unity.Attributes.AttributeUsage.PostCompiling;
 using Enderlook.Unity.Attributes.AttributeUsage.PostCompiling.Attributes;
 
 using System;
@@ -24,8 +25,11 @@ namespace Enderlook.Unity.Attributes
                 return;
             if (type.GetCustomAttribute<PropertyPopupAttribute>() is PropertyPopupAttribute attribute)
             {
-                if (type.GetInheritedField(attribute.modeName, BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance) == null)
+                FieldInfo fieldInfo = type.GetInheritedField(attribute.modeName, BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance);
+                if (fieldInfo == null)
                     Debug.LogError($"Type {type} has attribute {nameof(PropertyPopupAttribute)}, but doesn't have a field named {attribute.modeName} as {nameof(PropertyPopupAttribute.modeName)} requires nor its bases classes have it.");
+                else if (fieldInfo.CanBeSerializedByUnity() && !fieldInfo.CheckIfShouldBeIgnored(typeof(PropertyPopupAttribute)))
+                    Debug.LogError($"Type {type} has attribute {nameof(PropertyPopupAttribute)} which uses the field {fieldInfo.Name} declared in {fieldInfo.DeclaringType} as mode field, but it's no serializable by Unity.");
             }
         }
 
@@ -50,9 +54,14 @@ namespace Enderlook.Unity.Attributes
         private static void CheckFields()
         {
             foreach (KeyValuePair<Type, List<FieldInfo>> kv in typesAndFieldAttributes)
+            {
                 if (!typesAndAttributes.ContainsKey(kv.Key))
                     foreach (FieldInfo field in kv.Value)
                         Debug.LogError($"Type {kv.Key} nor its base classes have attribute {nameof(PropertyPopupAttribute)}, but its field named {field.Name} has the attribute {nameof(PropertyPopupOptionAttribute)}.");
+                foreach (FieldInfo fieldInfo in kv.Value)
+                    if (!fieldInfo.CanBeSerializedByUnity())
+                        Debug.LogError($"Type {kv.Key} has a field named {fieldInfo.Name} with the attribute {nameof(PropertyPopupAttribute)}, but it's not serializable by unity.");
+            }
         }
     }
 }
