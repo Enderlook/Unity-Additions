@@ -6,7 +6,6 @@ using System.Linq;
 using System.Reflection;
 
 using UnityEditor;
-
 using UnityEngine;
 
 namespace Enderlook.Unity.Attributes.Drawers
@@ -26,14 +25,14 @@ namespace Enderlook.Unity.Attributes.Drawers
             if (alloweds.TryGetValue(classType, out PropertyPopup propertyPopup))
                 height = propertyPopup.DrawField(position, property, label);
             else if (disalloweds.Contains(classType))
-                EditorGUI.PropertyField(position, property, label);
+                EditorGUI.PropertyField(position, property, label, true);
             else
             {
                 PropertyPopupAttribute propertyPopupAttribute = classType.GetCustomAttribute<PropertyPopupAttribute>(true);
                 if (propertyPopupAttribute == null)
                 {
                     disalloweds.Add(classType);
-                    EditorGUI.PropertyField(position, property, label);
+                    EditorGUI.PropertyField(position, property, label, true);
                 }
                 else
                 {
@@ -41,7 +40,7 @@ namespace Enderlook.Unity.Attributes.Drawers
                         classType.GetInheritedFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)
                         .Select(e => (e, e.GetCustomAttribute<PropertyPopupOptionAttribute>(true)))
                         .Where(e => e.Item2 != null)
-                        .Select(e => new PropertyPopupOption(e.e.Name, e.Item2.target))
+                        .Select(e => new PropertyPopupOption(e.e.Name, e.Item2))
                         .ToArray();
 
                     propertyPopup = new PropertyPopup(propertyPopupAttribute.modeName, modes);
@@ -52,6 +51,6 @@ namespace Enderlook.Unity.Attributes.Drawers
         }
 
         public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
-            => height == -1 ? base.GetPropertyHeight(property, label) : height;
+            => height == -1 ? EditorGUI.GetPropertyHeight(property, label, true) : height;
     }
 }

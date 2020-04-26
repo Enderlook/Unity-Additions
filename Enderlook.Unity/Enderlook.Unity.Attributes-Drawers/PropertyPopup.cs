@@ -68,15 +68,17 @@ namespace Enderlook.Unity.Attributes
         private void OnGUI(Rect position, SerializedProperty property, GUIContent label, SerializedProperty mode, int popupIndex)
         {
             // Show field label
-            position = EditorGUI.PrefixLabel(position, label);
+            Rect newPosition = EditorGUI.PrefixLabel(position, label);
 
             // Calculate rect for configuration button
+            float labelWidth = GUI.skin.label.CalcSize(label).x;
             Rect buttonRect = new Rect(
-                position.x,
-                position.y + popupStyle.margin.top,
+                newPosition.x,
+                newPosition.y + popupStyle.margin.top,
                 popupStyle.fixedWidth + popupStyle.margin.right,
-                position.height - popupStyle.margin.top);
-            position.xMin = buttonRect.xMax;
+                newPosition.height - popupStyle.margin.top);
+
+            newPosition.xMin += buttonRect.width;
 
             int newUsagePopupIndex = EditorGUI.Popup(buttonRect, popupIndex, popupOptions, popupStyle);
             if (newUsagePopupIndex != popupIndex)
@@ -93,12 +95,34 @@ namespace Enderlook.Unity.Attributes
             }
 
             if (newUsagePopupIndex != -1)
-                EditorGUI.PropertyField(position,
-                    property.FindPropertyRelative(modes[newUsagePopupIndex].propertyName),
-                    GUIContent.none);
+            {
+                PropertyPopupOption propertyPopupOption = modes[newUsagePopupIndex];
+
+                SerializedProperty optionProperty = property.FindPropertyRelative(propertyPopupOption.propertyName);
+                if (IsLargerThanOneLine(optionProperty))
+                    EditorGUI.PropertyField(position, optionProperty, GUIContent.none, true);
+                else
+                    EditorGUI.PropertyField(newPosition, optionProperty, GUIContent.none, true);
+            }
             else
                 EditorGUI.HelpBox(position, string.Format(NOT_FOUND_OPTION, mode.propertyPath, GetValue(mode)), MessageType.Error);
         }
+
+        private static bool IsLargerThanOneLine(SerializedProperty optionProperty)
+        {
+            bool isExpanded = optionProperty.isExpanded;
+            GUIContent label = optionProperty.GetGUIContent();
+
+            optionProperty.isExpanded = false;
+            float nonExpanded = EditorGUI.GetPropertyHeight(optionProperty, label, true);
+            optionProperty.isExpanded = true;
+            float expanded = EditorGUI.GetPropertyHeight(optionProperty, label, true);
+
+            optionProperty.isExpanded = isExpanded;
+            return nonExpanded != expanded;
+        }
+
+        // => EditorGUI.GetPropertyHeight(optionProperty, optionProperty.GetGUIContent(), true) <= EditorGUIUtility.singleLineHeight;
 
         private (SerializedProperty mode, int index) GetModeAndIndex(SerializedProperty property)
         {
@@ -116,10 +140,8 @@ namespace Enderlook.Unity.Attributes
             object value = GetValue(mode);
 
             for (; modeIndex < modes.Length; modeIndex++)
-            {
                 if (modes[modeIndex].target.Equals(value))
                     return modeIndex;
-            }
 
             Debug.LogError(string.Format(NOT_FOUND_OPTION, mode.propertyPath, value));
             return -1;
@@ -149,8 +171,12 @@ namespace Enderlook.Unity.Attributes
 
         private float GetPropertyHeight(SerializedProperty property, GUIContent label, int popupIndex)
         {
-            SerializedProperty choosenProperty = property.FindPropertyRelative(modes[popupIndex].propertyName);
-            return EditorGUI.GetPropertyHeight(choosenProperty, label);
+            PropertyPopupOption propertyPopupOption = modes[popupIndex];
+            SerializedProperty choosenProperty = property.FindPropertyRelative(propertyPopupOption.propertyName);
+            float height = EditorGUI.GetPropertyHeight(property, label, false);
+            if (IsLargerThanOneLine(choosenProperty) && choosenProperty.isExpanded)
+                height += EditorGUI.GetPropertyHeight(choosenProperty, choosenProperty.GetGUIContent(), true);
+            return height;
         }
     }
 }

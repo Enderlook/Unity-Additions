@@ -17,5 +17,11 @@ namespace Enderlook.Unity.Attributes
 
         public PropertyPopupOption(string propertyName, object target)
             : this(propertyName, ObjectNames.NicifyVariableName(propertyName), target) { }
+
+        public PropertyPopupOption(string propertyName, PropertyPopupOptionAttribute propertyPopupOptionAttribute)
+            : this(propertyName, propertyPopupOptionAttribute.target) { }
+
+        public PropertyPopupOption(string propertyName, string displayName, PropertyPopupOptionAttribute propertyPopupOptionAttribute)
+            : this(propertyName, displayName, propertyPopupOptionAttribute.target) { }
     }
 }
