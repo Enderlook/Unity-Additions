@@ -7,7 +7,7 @@ using UnityEngine;
 namespace Enderlook.Unity.Attributes
 {
     [AttributeUsageRequireDataType(typeof(UnityEngine.Object), includeEnumerableTypes = true, typeFlags = TypeCasting.CheckSubclassOrAssignable)]
-    [AttributeUsageFieldMustBeSerializableByUnityAttribute]
+    [AttributeUsageFieldMustBeSerializableByUnity]
     [AttributeUsage(AttributeTargets.Field, AllowMultiple = false, Inherited = true)]
     public sealed class ExpandableAttribute : PropertyAttribute
     {

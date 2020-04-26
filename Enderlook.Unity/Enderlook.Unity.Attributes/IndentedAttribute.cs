@@ -9,7 +9,7 @@ namespace Enderlook.Unity.Attributes
     /// <summary>
     /// Add or remove indentation to the drew serialized property.
     /// </summary>
-    [AttributeUsageFieldMustBeSerializableByUnityAttribute]
+    [AttributeUsageFieldMustBeSerializableByUnity]
     [AttributeUsage(AttributeTargets.Field)]
     public sealed class IndentedAttribute : PropertyAttribute
     {

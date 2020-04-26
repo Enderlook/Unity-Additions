@@ -7,7 +7,7 @@ using UnityEngine;
 namespace Enderlook.Unity.Attributes
 {
     [AttributeUsageRequireDataType(typeof(AudioClip), includeEnumerableTypes = true)]
-    [AttributeUsageFieldMustBeSerializableByUnityAttribute]
+    [AttributeUsageFieldMustBeSerializableByUnity]
     [AttributeUsage(AttributeTargets.Field, AllowMultiple = false, Inherited = true)]
     public sealed class PlayAudioClipAttribute : PropertyAttribute
     {

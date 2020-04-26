@@ -8,7 +8,7 @@ using UnityEngine;
 namespace Enderlook.Unity.Attributes
 {
     [AttributeUsageAccessibility(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance)]
-    [AttributeUsageFieldMustBeSerializableByUnityAttribute]
+    [AttributeUsageFieldMustBeSerializableByUnity]
     [AttributeUsage(AttributeTargets.Field, AllowMultiple = true, Inherited = true)]
     public sealed class ShowIfAttribute : PropertyAttribute
     {
