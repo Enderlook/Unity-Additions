@@ -24,7 +24,7 @@ namespace Enderlook.Unity.Attributes
         };
 
         private readonly string modeProperty;
-        private readonly (string displayName, string propertyName, object target)[] modes;
+        private readonly PropertyPopupOption[] modes;
         private readonly string[] popupOptions;
 
         /// <summary>
@@ -32,7 +32,7 @@ namespace Enderlook.Unity.Attributes
         /// </summary>
         /// <param name="modeProperty">Property used to determine which property draw.</param>
         /// <param name="modes">Possible options. (name to show in inspector, name of property which must show if selected, target value to determine if chosen).</param>
-        public PropertyPopup(string modeProperty, params (string displayName, string propertyName, object target)[] modes)
+        public PropertyPopup(string modeProperty, params PropertyPopupOption[] modes)
         {
             this.modeProperty = modeProperty;
             this.modes = modes;

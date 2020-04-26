@@ -37,11 +37,11 @@ namespace Enderlook.Unity.Attributes.Drawers
                 }
                 else
                 {
-                    (string displayName, string propertyName, object target)[] modes =
+                    PropertyPopupOption[] modes =
                         classType.GetInheritedFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)
                         .Select(e => (e, e.GetCustomAttribute<PropertyPopupOptionAttribute>(true)))
                         .Where(e => e.Item2 != null)
-                        .Select(e => (ObjectNames.NicifyVariableName(e.e.Name), e.e.Name, e.Item2.target))
+                        .Select(e => new PropertyPopupOption(e.e.Name, e.Item2.target))
                         .ToArray();
 
                     propertyPopup = new PropertyPopup(propertyPopupAttribute.modeName, modes);

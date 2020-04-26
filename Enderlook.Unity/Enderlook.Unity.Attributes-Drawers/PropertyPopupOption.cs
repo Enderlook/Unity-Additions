@@ -1,0 +1,21 @@
+﻿using UnityEditor;
+
+namespace Enderlook.Unity.Attributes
+{
+    public struct PropertyPopupOption
+    {
+        public readonly string propertyName;
+        public readonly string displayName;
+        public readonly object target;
+
+        public PropertyPopupOption(string propertyName, string displayName, object target)
+        {
+            this.propertyName = propertyName;
+            this.displayName = displayName;
+            this.target = target;
+        }
+
+        public PropertyPopupOption(string propertyName, object target)
+            : this(propertyName, ObjectNames.NicifyVariableName(propertyName), target) { }
+    }
+}
