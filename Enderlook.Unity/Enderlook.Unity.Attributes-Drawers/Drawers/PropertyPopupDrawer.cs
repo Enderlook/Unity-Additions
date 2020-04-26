@@ -16,6 +16,8 @@ namespace Enderlook.Unity.Attributes.Drawers
     {
         private static readonly Dictionary<Type, PropertyPopup> alloweds = new Dictionary<Type, PropertyPopup>();
 
+        private static readonly HashSet<Type> disalloweds = new HashSet<Type>();
+
         private float height = -1;
 
         protected override void OnGUISmart(Rect position, SerializedProperty property, GUIContent label)
@@ -23,11 +25,16 @@ namespace Enderlook.Unity.Attributes.Drawers
             Type classType = fieldInfo.FieldType;
             if (alloweds.TryGetValue(classType, out PropertyPopup propertyPopup))
                 height = propertyPopup.DrawField(position, property, label);
+            else if (disalloweds.Contains(classType))
+                EditorGUI.PropertyField(position, property, label);
             else
             {
                 PropertyPopupAttribute propertyPopupAttribute = classType.GetCustomAttribute<PropertyPopupAttribute>(true);
                 if (propertyPopupAttribute == null)
+                {
+                    disalloweds.Add(classType);
                     EditorGUI.PropertyField(position, property, label);
+                }
                 else
                 {
                     (string displayName, string propertyName, object target)[] modes =
