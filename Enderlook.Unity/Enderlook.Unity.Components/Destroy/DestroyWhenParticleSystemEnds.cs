@@ -4,6 +4,9 @@ using UnityEngine;
 
 namespace Enderlook.Unity.Components.Destroy
 {
+    /// <summary>
+    /// Desotry <see cref="GameObject"/> when <see cref="ParticleSystem"/> is not alive.
+    /// </summary>
     [AddComponentMenu("Enderlook/Destroyers/Destroy When Particle System Is Not Alive")]
     public class DestroyWhenParticleSystemIsNotAlive : MonoBehaviour
     {
@@ -22,10 +25,9 @@ namespace Enderlook.Unity.Components.Destroy
         {
             bool destroy = true;
             for (int i = 0; i < particleSystems.Length; i++)
-            {
                 if (particleSystems[i].IsAlive())
                     destroy = false;
-            }
+
             if (destroy)
                 Destroy(gameObject);
         }

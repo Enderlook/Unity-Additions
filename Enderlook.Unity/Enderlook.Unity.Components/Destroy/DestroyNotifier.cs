@@ -4,6 +4,9 @@ using UnityEngine;
 
 namespace Enderlook.Unity.Components
 {
+    /// <summary>
+    /// Raises an event when the <see cref="GameObject"/> is destroyed.
+    /// </summary>
     [AddComponentMenu("Enderlook/Destroyers/Destroy Notifier")]
     public class DestroyNotifier : MonoBehaviour
     {
