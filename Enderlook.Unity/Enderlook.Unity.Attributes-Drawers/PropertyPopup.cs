@@ -1,4 +1,10 @@
-﻿using System.Linq;
+﻿using Enderlook.Extensions.code;
+using Enderlook.Unity.Utils.UnityEditor;
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 
 using UnityEditor;
 
@@ -17,15 +23,15 @@ namespace Enderlook.Unity.Attributes
         };
 
         private readonly string modeProperty;
-        private readonly (string displayName, string propertyName, int enumValue)[] modes;
+        private readonly (string displayName, string propertyName, object target)[] modes;
         private readonly string[] popupOptions;
 
         /// <summary>
         /// Determie the posible options for the popup.
         /// </summary>
         /// <param name="modeProperty">Property used to determine which property draw.</param>
-        /// <param name="modes">Possible options. (name to show in inspector, name of property which must show if selected, value of the enum to determine if chosen).</param>
-        public PropertyPopup(string modeProperty, params (string displayName, string propertyName, int enumValue)[] modes)
+        /// <param name="modes">Possible options. (name to show in inspector, name of property which must show if selected, target value to determine if chosen).</param>
+        public PropertyPopup(string modeProperty, params (string displayName, string propertyName, object target)[] modes)
         {
             this.modeProperty = modeProperty;
             this.modes = modes;
@@ -72,7 +78,18 @@ namespace Enderlook.Unity.Attributes
             position.xMin = buttonRect.xMax;
 
             int newUsagePopupIndex = EditorGUI.Popup(buttonRect, popupIndex, popupOptions, popupStyle);
-            mode.intValue = modes[newUsagePopupIndex].enumValue;
+            if (newUsagePopupIndex != popupIndex)
+            {
+                object parent = mode.GetParentTargetObjectOfProperty();
+                object value = modes[newUsagePopupIndex].target;
+                FieldInfo fieldInfo = mode.GetFieldInfo();
+                Type fieldType = fieldInfo.FieldType;
+                if (fieldType.IsEnum)
+                    fieldInfo.SetValue(parent, Enum.ToObject(fieldType, value));
+                else
+                    fieldInfo.SetValue(parent, value);
+                mode.serializedObject.ApplyModifiedProperties();
+            }
 
             EditorGUI.PropertyField(position,
                 property.FindPropertyRelative(modes[newUsagePopupIndex].propertyName),
@@ -83,6 +100,8 @@ namespace Enderlook.Unity.Attributes
         {
             // Get current mode
             SerializedProperty mode = property.FindPropertyRelative(modeProperty);
+            if (mode == null)
+                throw new ArgumentNullException(nameof(mode), $"Can't find propety {mode.name} at path {mode.propertyPath} in {property.name}.");
             int popupIndex = GetPopupIndex(mode);
             return (mode, popupIndex);
         }
@@ -90,13 +109,18 @@ namespace Enderlook.Unity.Attributes
         private int GetPopupIndex(SerializedProperty mode)
         {
             int modeIndex = 0;
-            int intValue = mode.intValue;
+            object value = mode.GetTargetObjectOfProperty();
+
+            // We give special treat with enums
+            Type type = value.GetType();
+            if (value != null && type.IsEnum)
+                value = ((Enum)value).GetUnderlyingValue();
 
             for (; modeIndex < modes.Length; modeIndex++)
-                if (modes[modeIndex].enumValue == intValue)
-                    break;
+                if (modes[modeIndex].target.Equals(value))
+                    return modeIndex;
 
-            return modeIndex;
+            throw new KeyNotFoundException($"Not found an option which satisfy {mode.propertyPath} ({value}).");
         }
 
         /// <summary>

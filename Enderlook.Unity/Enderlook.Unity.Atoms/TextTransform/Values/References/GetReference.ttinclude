@@ -3,6 +3,7 @@
     {
     WriteHeader();
 #>
+using Enderlook.Unity.Attributes;
 using Enderlook.Utils.Exceptions;
 
 using System;
@@ -14,13 +15,13 @@ using UnityEngine;
     [Serializable]
     public class <#= name #>GetReference : BaseValueReference, I<#= name #>Get
     {
-        [SerializeField]
+        [SerializeField, PropertyPopupOption((int)ReferenceMode.Inline)]
         private <#= dataType #> inline;
 
-        [SerializeField]
+        [SerializeField, PropertyPopupOption((int)ReferenceMode.ScriptableObject)]
         private <#= name #>GetSO scriptableObject;
 
-        [SerializeField]
+        [SerializeField, PropertyPopupOption((int)ReferenceMode.Component)]
         private <#= name #>GetComponent component;
 
         /// <summary>

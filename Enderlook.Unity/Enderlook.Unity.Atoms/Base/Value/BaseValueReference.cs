@@ -6,6 +6,7 @@ using UnityEngine;
 
 namespace Enderlook.Unity.Atoms
 {
+    [PropertyPopup("<Mode>k__BackingField")]
     public abstract class BaseValueReference
     {
         public enum ReferenceMode

@@ -6,9 +6,10 @@ using UnityEngine;
 
 namespace Enderlook.Unity.Atoms
 {
+    [PropertyPopup("<Mode>k__BackingField")]
     public abstract class BaseEventReference
     {
-        public enum ReferenceMode
+        public enum ReferenceMode : byte
         {
             Event,
             ManagedScriptableObject,
