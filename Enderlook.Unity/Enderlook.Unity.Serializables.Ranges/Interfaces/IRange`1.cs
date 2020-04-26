@@ -1,4 +1,6 @@
-﻿namespace Enderlook.Unity.Serializables.Ranges
+﻿using Enderlook.Unity.Utils.Interfaces;
+
+namespace Enderlook.Unity.Serializables.Ranges
 {
     public interface IRange<T> : IBasicRange<T>
     {

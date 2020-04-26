@@ -75,6 +75,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Enderlook.Unity.Attributes\Enderlook.Unity.Attributes.csproj" />
+    <ProjectReference Include="..\Enderlook.Unity.Utils.Interfaces\Enderlook.Unity.Utils.Interfaces.csproj" />
   </ItemGroup>
 
   <ItemGroup>
@@ -681,6 +682,34 @@
     <Reference Include="System.Xml.Serialization">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2019.2.17f1/Editor/Data/NetStandard/compat/2.0.0/shims/netfx/System.Xml.Serialization.dll</HintPath>
     </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Switches\DerivedSwitch.tt">
+      <LastGenOutput>DerivedSwitch.ignore.cs</LastGenOutput>
+      <Generator>TextTemplatingFileGenerator</Generator>
+    </None>
+    <None Update="Switches\Switch.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Switch.ignore.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Switches\DerivedSwitch.ignore.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>DerivedSwitch.tt</DependentUpon>
+    </Compile>
+    <Compile Update="Switches\Switch.ignore.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Switch.tt</DependentUpon>
+    </Compile>
   </ItemGroup>
 
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />
