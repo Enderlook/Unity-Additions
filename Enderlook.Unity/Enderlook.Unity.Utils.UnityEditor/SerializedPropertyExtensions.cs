@@ -141,7 +141,7 @@ namespace Enderlook.Unity.Utils.UnityEditor
                 if (includeItself)
                     yield return obj;
 
-                void NotFound(string element) => throw new KeyNotFoundException($"The element {element} was not found in {obj.GetType()} from {source.name} in path {path}.");
+                string GetNotFoundMessage(string element) => $"The element {element} was not found in {obj.GetType()} from {source.name} in path {path}.";
 
                 foreach (string element in path.Split('.'))
                     if (element.Contains("["))
@@ -158,14 +158,14 @@ namespace Enderlook.Unity.Utils.UnityEditor
                                 throw new IndexOutOfRangeException($"The element {element} has no index {index} in {obj.GetType()} from {source.name} in path {path}.", e);
                         }
                         if (obj == null && !preferNullInsteadOfException)
-                            NotFound(element);
+                            throw new KeyNotFoundException(GetNotFoundMessage(element));
                         yield return obj;
                     }
                     else
                     {
                         obj = obj.GetValue(element);
                         if (obj == null && !preferNullInsteadOfException)
-                            NotFound(element);
+                            throw new KeyNotFoundException(GetNotFoundMessage(element));
                         yield return obj;
                     }
             }
