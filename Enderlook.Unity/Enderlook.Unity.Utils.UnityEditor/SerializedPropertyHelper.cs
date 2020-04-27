@@ -173,19 +173,9 @@ namespace Enderlook.Unity.Utils.UnityEditor
         /// <returns>The <see cref="Attribute"/> of type <typeparamref name="T"/>.</returns>
         public T GetAttributeFromField<T>(bool includeInheritedPrivate = true) where T : Attribute
         {
-            if (TryGetParentTargetObjectOfProperty(out object parent))
-            {
-                Type type = parent.GetType();
-
-                FieldInfo fieldInfo;
-                if (includeInheritedPrivate)
-                    fieldInfo = type.GetInheritedField(serializedProperty.name, SerializedPropertyExtensions.bindingFlags);
-                else
-                    fieldInfo = type.GetField(serializedProperty.name, SerializedPropertyExtensions.bindingFlags);
-
-                return fieldInfo.GetCustomAttribute<T>(true);
-            }
-
+            // TODO: GetParentTargetObjectOfProperty is called twice
+            if (TryGetParentTargetObjectOfProperty(out object _))
+                return serializedProperty.GetFieldInfo(includeInheritedPrivate).GetCustomAttribute<T>(true);
             return null;
         }
 

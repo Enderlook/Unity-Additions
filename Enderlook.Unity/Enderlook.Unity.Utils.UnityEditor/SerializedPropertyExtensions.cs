@@ -29,14 +29,46 @@ namespace Enderlook.Unity.Utils.UnityEditor
         /// </summary>
         /// <param name="source"><see cref="SerializedProperty"/> to check.</param>
         /// <returns>Whenever it's an element of an array or list, or not.</returns>
-        public static bool IsArrayOrListElement(this SerializedProperty source) => isArrayRegex.IsMatch(source.propertyPath);
+        /// <exception cref="ArgumentNullException">Thrown when <paramref name="source"/> is <see langword="null"/>.</exception>
+        public static bool IsArrayOrListElement(this SerializedProperty source)
+        {
+            if (source is null) throw new ArgumentNullException(nameof(source));
+
+            return isArrayRegex.IsMatch(source.propertyPath);
+        }
+
+        /// <summary>
+        /// Get the last field name of the <paramref name="source"/>.<br/>
+        /// For array or list index or element it returns the field name instead of the index of the size property.
+        /// </summary>
+        /// <param name="source"><see cref="SerializedProperty"/> where field name is gotten.</param>
+        /// <returns>Last field name of <paramref name="source"/>.</returns>
+        public static string GetFieldName(this SerializedProperty source)
+        {
+            if (source is null) throw new ArgumentNullException(nameof(source));
+
+            string path;
+            if (source.IsArrayOrListSize())
+                path = source.propertyPath.Substring(0, source.propertyPath.Length - ".Array.size".Length);
+            else if (source.IsArrayOrListElement())
+                path = source.propertyPath.Split(new string[] { ".Array.data[" }, StringSplitOptions.None).Reverse().ElementAt(1);
+            else
+                path = source.propertyPath;
+            return path.Split('.').Last();
+        }
 
         /// <summary>
         /// Check if <paramref name="source"/> is the array or list size.
         /// </summary>
         /// <param name="source"><see cref="SerializedProperty"/> to check.</param>
         /// <returns>Whenever it's the array or list size, or not</returns>
-        public static bool IsArrayOrListSize(this SerializedProperty source) => source.propertyPath.EndsWith("Array.size");
+        /// <exception cref="ArgumentNullException">Thrown when <paramref name="source"/> is <see langword="null"/>.</exception>
+        public static bool IsArrayOrListSize(this SerializedProperty source)
+        {
+            if(source is null) throw new ArgumentNullException(nameof(source));
+
+            return source.propertyPath.EndsWith("Array.size");
+        }
 
         private static (Func<object> get, Action<object> set) GetAccessors(this object source, string name)
         {
@@ -83,6 +115,7 @@ namespace Enderlook.Unity.Utils.UnityEditor
         {
             if (source == null)
                 return null;
+
             Type type = source.GetType();
 
             while (type != null)
@@ -103,7 +136,6 @@ namespace Enderlook.Unity.Utils.UnityEditor
         private static object GetValue(this object source, string name, int index)
         {
             object obj = source.GetValue(name);
-
             if (obj is Array array)
                 return array.GetValue(index);
 
@@ -115,6 +147,7 @@ namespace Enderlook.Unity.Utils.UnityEditor
             for (int i = 0; i <= index; i++)
                 if (!enumerator.MoveNext())
                     throw new ArgumentOutOfRangeException($"{name} field from {source.GetType()} doesn't have an element at index {index}.");
+
             return enumerator.Current;
         }
 
@@ -251,7 +284,7 @@ namespace Enderlook.Unity.Utils.UnityEditor
         public static Type GetCurrentPropertyValueType(this SerializedProperty source)
         {
             object targetObject = source.GetTargetObjectOfProperty();
-            return targetObject != null ? targetObject.GetType() : null;
+            return targetObject?.GetType();
         }
 
         /// <summary>
@@ -263,10 +296,12 @@ namespace Enderlook.Unity.Utils.UnityEditor
         public static FieldInfo GetFieldInfo(this SerializedProperty source, bool includeInheritedPrivate = true)
         {
             Type type = source.GetParentTargetObjectOfProperty().GetType();
+            string name = source.GetFieldName();
+
             if (includeInheritedPrivate)
-                return type.GetInheritedField(source.name, bindingFlags);
+                return type.GetInheritedField(name, bindingFlags);
             else
-                return type.GetField(source.name, bindingFlags);
+                return type.GetField(name, bindingFlags);
         }
 
         /// <summary>
