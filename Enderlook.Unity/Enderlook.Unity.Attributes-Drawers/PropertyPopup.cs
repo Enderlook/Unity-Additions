@@ -122,8 +122,6 @@ namespace Enderlook.Unity.Attributes
             return nonExpanded != expanded;
         }
 
-        // => EditorGUI.GetPropertyHeight(optionProperty, optionProperty.GetGUIContent(), true) <= EditorGUIUtility.singleLineHeight;
-
         private (SerializedProperty mode, int index) GetModeAndIndex(SerializedProperty property)
         {
             // Get current mode
