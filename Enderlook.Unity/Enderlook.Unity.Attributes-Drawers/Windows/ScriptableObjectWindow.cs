@@ -17,7 +17,7 @@ namespace Enderlook.Unity.Attributes
     internal class ScriptableObjectWindow : EditorWindow
     {
         private static GUIContent CONTEXT_PROPERTY_MENU = new GUIContent("Scriptable Object Menu", "Open the Scriptable Object Menu.");
-        private static readonly GUIContent TILE_CONTENT = new GUIContent("Scriptable Object Manager");
+        private static readonly GUIContent TITLE_CONTENT = new GUIContent("Scriptable Object Manager");
         private static readonly GUIContent INSTANTIATE_TYPE_CONTENT = new GUIContent("Instance type", "Scriptable object instance type to create.");
         private static readonly GUIContent ADD_TO_ASSET_CONTENT = new GUIContent("Instantiate in field and add to asset", "Create and instance and assign to field. The scriptable object will be added to the asset or prefab file.");
         private static readonly GUIContent ADD_TO_SCENE_CONTENT = new GUIContent("Instantiate in field and add to scene", "Create and instance and assign to field. The scriptable object will be added to the scene file.");
@@ -144,7 +144,7 @@ namespace Enderlook.Unity.Attributes
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Code Quality", "IDE0051:Remove unused private members", Justification = "Used by Unity.")]
         private void OnGUI()
         {
-            titleContent = TILE_CONTENT;
+            titleContent = TITLE_CONTENT;
 
             ScriptableObject scriptableObject = (ScriptableObject)propertyWrapper.Get?.Invoke();
             bool hasScriptableObject = scriptableObject != null;

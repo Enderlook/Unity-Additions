@@ -15,7 +15,10 @@ namespace Enderlook.Unity.Attributes
     public class ObjectPickerWindow : EditorWindow
     {
         private static readonly GUIContent CONTEXT_PROPERTY_MENU = new GUIContent("Object Picker Menu", "Open the Object Picker Menu");
-        private static readonly GUIContent TILE_CONTENT = new GUIContent("Object Picker Menu");
+        private static readonly GUIContent TITLE_CONTENT = new GUIContent("Object Picker Menu");
+        private static readonly GUIContent REFRESH_SEARCH_CONTENT = new GUIContent("Refesh Search", "Search again for objects");
+        private static readonly GUIContent APPLY_CONTENT = new GUIContent("Apply", "Assign object to field");
+        private static readonly GUIContent INCLUDE_ASSETS_CONTENT = new GUIContent("Include Assets", "Whenever it should also look for in asset files");
 
         private PropertyWrapper propertyWrapper;
 
@@ -86,20 +89,20 @@ namespace Enderlook.Unity.Attributes
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Code Quality", "IDE0051:Remove unused private members", Justification = "Used by Unity.")]
         private void OnGUI()
         {
-            titleContent = TILE_CONTENT;
+            titleContent = TITLE_CONTENT;
 
-            bool oldGatherFromAssets = gatherFromAssets;
-            gatherFromAssets = EditorGUILayout.Toggle(new GUIContent("Include Assets", "Whenever it should also look for in asset files"), gatherFromAssets);
+            bool oldGatherFromAssets = gatherFromAssets;            
+            gatherFromAssets = EditorGUILayout.Toggle(INCLUDE_ASSETS_CONTENT, gatherFromAssets);
             if (oldGatherFromAssets != gatherFromAssets)
                 RefeshObjects();
 
-            if (GUILayout.Button(new GUIContent("Refesh Search", "Search again for objects")))
+            if (GUILayout.Button(REFRESH_SEARCH_CONTENT))
                 RefeshObjects();
 
             index = EditorGUILayout.Popup(index, objectsLabel);
 
             EditorGUI.BeginDisabledGroup(index == -1);
-            if (GUILayout.Button(new GUIContent("Apply", "Assign object to field")))
+            if (GUILayout.Button(APPLY_CONTENT))
             {
                 propertyWrapper.Set(objects[index]);
                 propertyWrapper.ApplyModifiedProperties();
