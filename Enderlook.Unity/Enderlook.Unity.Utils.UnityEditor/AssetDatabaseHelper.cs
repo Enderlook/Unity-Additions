@@ -17,6 +17,9 @@ namespace Enderlook.Unity.Utils.UnityEditor
     /// </summary>
     public static class AssetDatabaseHelper
     {
+        private const string CAN_NOT_BE_EMPTY = "Can't be empty";
+        private const string NOT_FOUND_ASSET = "Not found asset";
+
         private static string GetPathFromAssets(string path)
         {
             path = path.Replace('\\', '/');
@@ -25,8 +28,18 @@ namespace Enderlook.Unity.Utils.UnityEditor
 
         private static void CreateDirectoryIfDoesNotExist(string path)
         {
-            Directory.CreateDirectory(Path.GetDirectoryName(path));
-            AssetDatabase.Refresh();
+            string directory = Path.GetDirectoryName(path);
+            try
+            {
+                Directory.CreateDirectory(directory);
+                AssetDatabase.Refresh();
+            }
+            catch (ArgumentException)
+            {
+                string[] paths = directory.Split('/');
+                for (int i = 0; i < paths.Length - 1; i++)
+                    AssetDatabase.CreateFolder(string.Join("/", paths.Take(i + 1)), paths[i + 1]);
+            }            
         }
 
         /// <summary>
@@ -41,7 +54,7 @@ namespace Enderlook.Unity.Utils.UnityEditor
         {
             if (asset == null) throw new ArgumentNullException(nameof(asset));
             if (path == null) throw new ArgumentNullException(nameof(path));
-            if (path.Length == 0) throw new ArgumentException("Can't be empty", nameof(path));
+            if (path.Length == 0) throw new ArgumentException(CAN_NOT_BE_EMPTY, nameof(path));
 
             path = GetPathFromAssets(path);
             CreateDirectoryIfDoesNotExist(path);
@@ -66,7 +79,7 @@ namespace Enderlook.Unity.Utils.UnityEditor
         {
             if (objects == null) throw new ArgumentNullException(nameof(objects));
             if (path == null) throw new ArgumentNullException(nameof(path));
-            if (path.Length == 0) throw new ArgumentException("Can't be empty", nameof(path));
+            if (path.Length == 0) throw new ArgumentException(CAN_NOT_BE_EMPTY, nameof(path));
 
             path = CreateAsset(objects.First(), path, generateUniquePath);
             foreach (UnityObject @object in objects.Skip(1))
@@ -89,7 +102,7 @@ namespace Enderlook.Unity.Utils.UnityEditor
         {
             if (objectToAdd == null) throw new ArgumentNullException(nameof(objectToAdd));
             if (path == null) throw new ArgumentNullException(nameof(path));
-            if (path.Length == 0) throw new ArgumentException("Can't be empty", nameof(path));
+            if (path.Length == 0) throw new ArgumentException(CAN_NOT_BE_EMPTY, nameof(path));
 
             path = GetPathFromAssets(path);
             CreateDirectoryIfDoesNotExist(path);
@@ -101,7 +114,7 @@ namespace Enderlook.Unity.Utils.UnityEditor
                 if (createIfNotExist)
                     AssetDatabase.CreateAsset(objectToAdd, path);
                 else
-                    throw new FileNotFoundException("Not found asset", path);
+                    throw new FileNotFoundException(NOT_FOUND_ASSET, path);
             }
             AssetDatabase.Refresh();
             AssetDatabase.SaveAssets();
@@ -120,19 +133,12 @@ namespace Enderlook.Unity.Utils.UnityEditor
         {
             if (objectsToAdd == null) throw new ArgumentNullException(nameof(objectsToAdd));
             if (path == null) throw new ArgumentNullException(nameof(path));
-            if (path.Length == 0) throw new ArgumentException("Can't be empty", nameof(path));
+            if (path.Length == 0) throw new ArgumentException(CAN_NOT_BE_EMPTY, nameof(path));
 
             foreach (UnityObject objectToAdd in objectsToAdd)
                 path = AddObjectToAsset(objectToAdd, path, createIfNotExist);
             return path;
         }
-
-        /// <summary>
-        /// Get directory of the asset <paramref name="object"/>.
-        /// </summary>
-        /// <param name="object">Asset to get directory.</param>
-        /// <returns>Directory where thee asset is saved.</returns>
-        public static string GetAssetDirectory(UnityObject @object) => Path.GetDirectoryName(AssetDatabase.GetAssetPath(@object));
 
         /// <summary>
         /// Get the asset path of <paramref name="object"/>.<br/>
@@ -169,7 +175,8 @@ namespace Enderlook.Unity.Utils.UnityEditor
         /// </summary>
         /// <param serializedObject="object"><see cref="SerializedObject"/> to get asset path.</param>
         /// <returns>Asset path of object, if any.</returns>
-        public static string GetAssetPath(SerializedObject serializedObject) => GetAssetPath(serializedObject.targetObject);
+        public static string GetAssetPath(SerializedObject serializedObject)
+            => GetAssetPath(serializedObject.targetObject);
 
         /// <summary>
         /// Get the asset path of <paramref name="serializedProperty"/>.<br/>
@@ -177,7 +184,116 @@ namespace Enderlook.Unity.Utils.UnityEditor
         /// </summary>
         /// <param serializedProperty="object"><see cref="SerializedProperty"/> to get asset path.</param>
         /// <returns>Asset path of object, if any.</returns>
-        public static string GetAssetPath(SerializedProperty serializedProperty) => GetAssetPath(serializedProperty.serializedObject);
+        public static string GetAssetPath(SerializedProperty serializedProperty)
+            => GetAssetPath(serializedProperty.serializedObject);
+
+        /// <summary>
+        /// Get the asset directory path of <paramref name="object"/>.<br/>
+        /// For <see cref="GameObject"/>s it does return the directory of the file where it's being save, which can be an scene or prefab file.
+        /// </summary>
+        /// <param name="object">Object to get asset path.</param>
+        /// <returns>Asset directory path of object, if any.</returns>
+        public static string GetAssetDirectory(UnityObject @object)
+            => Path.GetDirectoryName(GetAssetPath(@object));
+
+        /// <summary>
+        /// Get the asset path of <paramref name="serializedObject"/>.<br/>
+        /// For <see cref="GameObject"/>s it does return the directory of the file where it's being save, which can be an scene or prefab file.
+        /// </summary>
+        /// <param serializedObject="object"><see cref="SerializedObject"/> to get asset path.</param>
+        /// <returns>Asset directory path of object, if any.</returns>
+        public static string GetAssetDirectory(SerializedObject serializedObject)
+            => Path.GetDirectoryName(GetAssetPath(serializedObject.targetObject));
+
+        /// <summary>
+        /// Get the asset path of <paramref name="serializedProperty"/>.<br/>
+        /// For <see cref="GameObject"/>s it does return the directory of the file where it's being save, which can be an scene or prefab file.
+        /// </summary>
+        /// <param serializedProperty="object"><see cref="SerializedProperty"/> to get asset path.</param>
+        /// <returns>Asset directory path of object, if any.</returns>
+        public static string GetAssetDirectory(SerializedProperty serializedProperty)
+            => Path.GetDirectoryName(GetAssetPath(serializedProperty.serializedObject));
+
+        /// <summary>
+        /// Get the asset file name of <paramref name="object"/>.<br/>
+        /// For <see cref="GameObject"/>s it does return file name where it's being save, which can be an scene or prefab file.
+        /// </summary>
+        /// <param name="object">Object to get asset path.</param>
+        /// <returns>Asset file name of object, if any.</returns>
+        public static string GetAssetFileName(UnityObject @object)
+            => Path.GetFileName(GetAssetPath(@object));
+
+        /// <summary>
+        /// Get the asset file name of <paramref name="serializedObject"/>.<br/>
+        /// For <see cref="GameObject"/>s it does return the file name where it's being save, which can be an scene or prefab file.
+        /// </summary>
+        /// <param serializedObject="object"><see cref="SerializedObject"/> to get asset path.</param>
+        /// <returns>Asset file name of object, if any.</returns>
+        public static string GetAssetFileName(SerializedObject serializedObject)
+            => Path.GetFileName(GetAssetPath(serializedObject.targetObject));
+
+        /// <summary>
+        /// Get the asset file name of <paramref name="serializedProperty"/>.<br/>
+        /// For <see cref="GameObject"/>s it does return the file name where it's being save, which can be an scene or prefab file.
+        /// </summary>
+        /// <param serializedProperty="object"><see cref="SerializedProperty"/> to get asset path.</param>
+        /// <returns>Asset file name of object, if any.</returns>
+        public static string GetAssetFileName(SerializedProperty serializedProperty)
+            => Path.GetFileName(GetAssetPath(serializedProperty.serializedObject));
+
+        /// <summary>
+        /// Get the asset file name without extension of <paramref name="object"/>.<br/>
+        /// For <see cref="GameObject"/>s it does return file name without extension where it's being save, which can be an scene or prefab file.
+        /// </summary>
+        /// <param name="object">Object to get asset path.</param>
+        /// <returns>Asset file name without extension of object, if any.</returns>
+        public static string GetAssetFileNameWithoutExtension(UnityObject @object)
+            => Path.GetFileNameWithoutExtension(GetAssetPath(@object));
+
+        /// <summary>
+        /// Get the asset file name without extension of <paramref name="serializedObject"/>.<br/>
+        /// For <see cref="GameObject"/>s it does return the file name without extension where it's being save, which can be an scene or prefab file.
+        /// </summary>
+        /// <param serializedObject="object"><see cref="SerializedObject"/> to get asset path.</param>
+        /// <returns>Asset file name without extension of object, if any.</returns>
+        public static string GetAssetFileNameWithoutExtension(SerializedObject serializedObject)
+            => Path.GetFileNameWithoutExtension(GetAssetPath(serializedObject.targetObject));
+
+        /// <summary>
+        /// Get the asset file name without extension of <paramref name="serializedProperty"/>.<br/>
+        /// For <see cref="GameObject"/>s it does return the file name without extension where it's being save, which can be an scene or prefab file.
+        /// </summary>
+        /// <param serializedProperty="object"><see cref="SerializedProperty"/> to get asset path.</param>
+        /// <returns>Asset file name without extension of object, if any.</returns>
+        public static string GetAssetFileNameWithoutExtension(SerializedProperty serializedProperty)
+            => Path.GetFileNameWithoutExtension(GetAssetPath(serializedProperty.serializedObject));
+
+        /// <summary>
+        /// Get the asset file extension of <paramref name="object"/>.<br/>
+        /// For <see cref="GameObject"/>s it does return file extension where it's being save, which can be an scene or prefab file.
+        /// </summary>
+        /// <param name="object">Object to get asset path.</param>
+        /// <returns>Asset file extension of object, if any.</returns>
+        public static string GetAssetExtension(UnityObject @object)
+            => Path.GetExtension(GetAssetPath(@object));
+
+        /// <summary>
+        /// Get the asset file extension of <paramref name="serializedObject"/>.<br/>
+        /// For <see cref="GameObject"/>s it does return the file extension where it's being save, which can be an scene or prefab file.
+        /// </summary>
+        /// <param serializedObject="object"><see cref="SerializedObject"/> to get asset path.</param>
+        /// <returns>Asset file extension of object, if any.</returns>
+        public static string GetAssetExtension(SerializedObject serializedObject)
+            => Path.GetExtension(GetAssetPath(serializedObject.targetObject));
+
+        /// <summary>
+        /// Get the asset file extension of <paramref name="serializedProperty"/>.<br/>
+        /// For <see cref="GameObject"/>s it does return the file extension where it's being save, which can be an scene or prefab file.
+        /// </summary>
+        /// <param serializedProperty="object"><see cref="SerializedProperty"/> to get asset path.</param>
+        /// <returns>Asset file extension of object, if any.</returns>
+        public static string GetAssetExtension(SerializedProperty serializedProperty)
+            => Path.GetExtension(GetAssetPath(serializedProperty.serializedObject));
 
         /// <summary>
         /// Extract a sub asset from an asset file to <paramref name="newPath"/>.
@@ -189,7 +305,7 @@ namespace Enderlook.Unity.Utils.UnityEditor
         {
             if (subAsset == null) throw new ArgumentNullException(nameof(subAsset));
             if (newPath == null) throw new ArgumentNullException(nameof(newPath));
-            if (newPath.Length == 0) throw new ArgumentException("Can't be empty", nameof(newPath));
+            if (newPath.Length == 0) throw new ArgumentException(CAN_NOT_BE_EMPTY, nameof(newPath));
 
             string path = AssetDatabase.GetAssetPath(subAsset);
             if (AssetDatabase.LoadMainAssetAtPath(path) != subAsset)
@@ -213,7 +329,7 @@ namespace Enderlook.Unity.Utils.UnityEditor
         {
             if (subAsset == null) throw new ArgumentNullException(nameof(subAsset));
             if (newPath == null) throw new ArgumentNullException(nameof(newPath));
-            if (newPath.Length == 0) throw new ArgumentException("Can't be empty", nameof(newPath));
+            if (newPath.Length == 0) throw new ArgumentException(CAN_NOT_BE_EMPTY, nameof(newPath));
 
             subAsset = ExtractSubAsset(subAsset, newPath);
         }
@@ -242,8 +358,8 @@ namespace Enderlook.Unity.Utils.UnityEditor
         {
             if (source is null) throw new ArgumentNullException(nameof(source));
             if (extension is null) throw new ArgumentNullException(nameof(extension));
-            if (source.Length == 0) throw new ArgumentException("Can't be empty", nameof(source));
-            if (extension.Length == 0) throw new ArgumentException("Can't be empty", nameof(extension));
+            if (source.Length == 0) throw new ArgumentException(CAN_NOT_BE_EMPTY, nameof(source));
+            if (extension.Length == 0) throw new ArgumentException(CAN_NOT_BE_EMPTY, nameof(extension));
 
             string[] parts = source.Split('.');
             if (parts.Length == 1)
