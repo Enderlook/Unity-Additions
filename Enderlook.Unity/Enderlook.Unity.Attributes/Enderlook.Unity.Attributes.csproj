@@ -39,7 +39,7 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug Editor|AnyCPU'">
-    <DefineConstants>DEBUG;TRACE;UNITY_EDITOR</DefineConstants>
+    <DefineConstants>DEBUG;TRACE;UNITY_EDITOR;UNITY_EDITOR_TESTING</DefineConstants>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -51,7 +51,7 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release Editor|AnyCPU'">
-    <DefineConstants>UNITY_EDITOR</DefineConstants>
+    <DefineConstants>UNITY_EDITOR;UNITY_EDITOR_TESTING</DefineConstants>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>../bin/Release Editor/</OutputPath>
@@ -60,6 +60,18 @@
     <NoWarn>0169</NoWarn>
     <AllowUnsafeBlocks>False</AllowUnsafeBlocks>
   </PropertyGroup>
+
+  <ItemGroup Condition="$(DefineConstants.Contains('UNITY_EDITOR'))=='false'">
+    <Compile Remove="Editor\**" />
+    <EmbeddedResource Remove="Editor\**" />
+    <None Remove="Editor\**" />
+  </ItemGroup>
+  
+  <ItemGroup Condition="$(DefineConstants.Contains('UNITY_EDITOR_TESTING'))=='false'">
+    <Compile Remove="Testing\**" />
+    <EmbeddedResource Remove="Testing\**" />
+    <None Remove="Testing\**" />
+  </ItemGroup>
 
   <ItemGroup>
     <Analyzer Include="C:\Program Files (x86)\Microsoft Visual Studio Tools for Unity\16.0\Analyzers\Microsoft.Unity.Analyzers.dll" />
@@ -75,6 +87,11 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Enderlook.Unity.Attributes.AttributeUsage\Enderlook.Unity.Attributes.AttributeUsage.csproj" />
+  </ItemGroup>
+
+  <ItemGroup Condition="$(DefineConstants.Contains('UNITY_EDITOR_TESTING'))">
+    <ProjectReference Include="..\Enderlook.Unity.Utils.UnityEditor\Enderlook.Unity.Utils.UnityEditor.csproj" />
+    <ProjectReference Include="..\Enderlook.Unity.Utils.Rects\Enderlook.Unity.Utils.Rects.csproj" />
   </ItemGroup>
 
   <ItemGroup>

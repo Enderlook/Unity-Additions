@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 using System.Reflection;
 
 namespace Enderlook.Unity.Attributes.AttributeUsage.PostCompiling.Attributes

@@ -42,6 +42,12 @@
     <Analyzer Include="C:\Program Files (x86)\Microsoft Visual Studio Tools for Unity\16.0\Analyzers\Microsoft.Unity.Analyzers.dll" />
   </ItemGroup>
 
+  <ItemGroup Condition="$(DefineConstants.Contains('UNITY_EDITOR'))=='false'">
+    <Compile Remove="Editor\**" />
+    <EmbeddedResource Remove="Editor\**" />
+    <None Remove="Editor\**" />
+  </ItemGroup>
+
   <PropertyGroup Label="UserMacros">
     <UnityVersion>2019.2.17f1</UnityVersion>
   </PropertyGroup>

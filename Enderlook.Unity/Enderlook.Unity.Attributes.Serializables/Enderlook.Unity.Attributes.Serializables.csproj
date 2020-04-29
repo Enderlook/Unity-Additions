@@ -60,9 +60,21 @@
     <NoWarn>0169</NoWarn>
     <AllowUnsafeBlocks>False</AllowUnsafeBlocks>
   </PropertyGroup>
-
+  
   <ItemGroup>
     <Analyzer Include="C:\Program Files (x86)\Microsoft Visual Studio Tools for Unity\16.0\Analyzers\Microsoft.Unity.Analyzers.dll" />
+  </ItemGroup>
+
+  <ItemGroup Condition="$(DefineConstants.Contains('UNITY_EDITOR'))=='false'">
+    <Compile Remove="Editor\**" />
+    <EmbeddedResource Remove="Editor\**" />
+    <None Remove="Editor\**" />
+  </ItemGroup>
+  
+  <ItemGroup Condition="$(DefineConstants.Contains('UNITY_EDITOR_TESTING'))=='false'">
+    <Compile Remove="Testing\**" />
+    <EmbeddedResource Remove="Testing\**" />
+    <None Remove="Testing\**" />
   </ItemGroup>
 
   <PropertyGroup Label="UserMacros">
@@ -74,7 +86,12 @@
     <ProjectReference Include="..\Enderlook.Unity.Serializables.Ranges\Enderlook.Unity.Serializables.Ranges.csproj" />
   </ItemGroup>
 
-<ItemGroup>
+  <ItemGroup Condition="$(DefineConstants.Contains('UNITY_EDITOR'))">
+    <ProjectReference Include="..\Enderlook.Unity.Utils.Rects\Enderlook.Unity.Utils.Rects.csproj" />
+    <ProjectReference Include="..\Enderlook.Unity.Utils.UnityEditor\Enderlook.Unity.Utils.UnityEditor.csproj" />
+  </ItemGroup>  
+
+  <ItemGroup>
     <Reference Include="UnityEngine">
       <HintPath>C:\Program Files\Unity\Hub\Editor\2019.2.17f1\Editor\Data\Managed/UnityEngine/UnityEngine.dll</HintPath>
     </Reference>

@@ -685,11 +685,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="Switches\DerivedSwitch.tt">
+    <None Update="Runtime\Switches\DerivedSwitch.tt">
       <LastGenOutput>DerivedSwitch.ignore.cs</LastGenOutput>
       <Generator>TextTemplatingFileGenerator</Generator>
     </None>
-    <None Update="Switches\Switch.tt">
+    <None Update="Runtime\Switches\Switch.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Switch.ignore.cs</LastGenOutput>
     </None>
@@ -700,12 +700,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Switches\DerivedSwitch.ignore.cs">
+    <Compile Update="Runtime\Switches\DerivedSwitch.ignore.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>DerivedSwitch.tt</DependentUpon>
     </Compile>
-    <Compile Update="Switches\Switch.ignore.cs">
+    <Compile Update="Runtime\Switches\Switch.ignore.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>Switch.tt</DependentUpon>
