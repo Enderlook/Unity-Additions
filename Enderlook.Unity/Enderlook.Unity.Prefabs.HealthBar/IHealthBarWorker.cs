@@ -51,12 +51,12 @@ namespace Enderlook.Unity.Prefabs.HealthBarGUI
         /// Modify current health and update animation if necessary.
         /// </summary>
         /// <exception cref="ArgumentOutOfRangeException">Thrown if <see langword="value"/> is negative.</exception>
-        int Health { set; }
+        float Health { set; }
 
         /// <summary>
         /// Modify maximum health and update animation if necessary.
         /// </summary>
         /// <exception cref="ArgumentOutOfRangeException">Thrown if <see langword="value"/> is negative.</exception>
-        int MaxHealth { set; }
+        float MaxHealth { set; }
     }
 }

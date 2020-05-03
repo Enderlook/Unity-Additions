@@ -301,7 +301,7 @@ namespace Enderlook.Unity.Prefabs.HealthBarGUI
         public bool IsDamageBarPercentHide => damageBar == null ? true : damageBar.fillAmount == 0;
 
         /// <inheritdoc cref="IHealthBarWorker.Health"/>
-        public int Health {
+        public float Health {
             set {
                 if (health != value)
                     if (value < 0)
@@ -312,7 +312,7 @@ namespace Enderlook.Unity.Prefabs.HealthBarGUI
         }
 
         /// <inheritdoc cref="IHealthBarWorker.MaxHealth"/>
-        public int MaxHealth {
+        public float MaxHealth {
             set {
                 if (value < 0)
                     throw new ArgumentOutOfRangeException(CAN_NOT_BE_NEGATIVE, nameof(value));
