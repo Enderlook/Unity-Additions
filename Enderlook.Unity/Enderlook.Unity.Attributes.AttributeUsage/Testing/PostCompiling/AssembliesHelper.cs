@@ -10,8 +10,7 @@ using UnityAssembly = UnityEditor.Compilation.Assembly;
 
 namespace Enderlook.Unity.Attributes.AttributeUsage.PostCompiling
 {
-    // TODO: Turn into internal
-    public static class AssembliesHelper
+    internal static class AssembliesHelper
     {
         private static SystemAssembly[] assemblies;
 
