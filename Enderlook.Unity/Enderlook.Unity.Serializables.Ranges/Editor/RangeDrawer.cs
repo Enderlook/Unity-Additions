@@ -46,8 +46,6 @@ namespace Enderlook.Unity.Serializables.Ranges
                 guiContents.Add(new GUIContent(STEP_FIELD_DISPLAY_NAME, stepProperty.tooltip));
             }
 
-            EditorGUI.BeginProperty(position, label, property);
-
             // This magically iterate over all sibling of the serialized property and show them in-line in the inspector
             // The serialized property is the first in being shown
             EditorGUI.MultiPropertyField(position, guiContents.ToArray(), property.FindPropertyRelative(MIN_FIELD_NAME), label);
@@ -78,15 +76,14 @@ namespace Enderlook.Unity.Serializables.Ranges
                 errors.Add($"Value of {minProperty.displayName} can't be higher or equal to {maxProperty.displayName}.");
             if (step != null && step > max - min)
                 errors.Add($"Value of {stepProperty.displayName} can't be higher than the difference between {minProperty.displayName} and {maxProperty.displayName}.");
-            if (errors.Count == 0)
-                return;
-            foreach (string error in errors)
-                Debug.LogWarning(error);
-            string message = string.Join("\n", errors);
-            errorHeight = GUI.skin.box.CalcHeight(new GUIContent(message), position.width);
-            EditorGUI.HelpBox(new Rect(position.x, position.y + position.height - errorHeight, position.width, errorHeight), message, MessageType.Error);
-
-            EditorGUI.EndProperty();
+            if (errors.Count > 0)
+            {
+                foreach (string error in errors)
+                    Debug.LogWarning(error);
+                string message = string.Join("\n", errors);
+                errorHeight = GUI.skin.box.CalcHeight(new GUIContent(message), position.width);
+                EditorGUI.HelpBox(new Rect(position.x, position.y + position.height - errorHeight, position.width, errorHeight), message, MessageType.Error);
+            }
         }
 
         public override float GetPropertyHeight(SerializedProperty property, GUIContent label) => EditorGUI.GetPropertyHeight(property, label) + errorHeight + (EditorGUIUtility.wideMode ? 0 : EditorGUIUtility.singleLineHeight);
