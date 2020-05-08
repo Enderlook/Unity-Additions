@@ -86,7 +86,7 @@ namespace Enderlook.Unity.Components
         {
             if (clip == null) throw new ArgumentNullException(nameof(clip));
             if (volume > 1 || volume < 0) throw new ArgumentOutOfRangeException(nameof(volume), volume, VOLUME_OUT_OF_RANGE);
-            if (pitch > 1 || pitch < 0) throw new ArgumentOutOfRangeException(nameof(pitch), pitch, PITCH_OUT_OF_RANGE);
+            if (pitch > 3 || pitch < -3) throw new ArgumentOutOfRangeException(nameof(pitch), pitch, PITCH_OUT_OF_RANGE);
 
             AudioSource audioSource = CreateBase(clip, destroyMode);
             audioSource.transform.position = position;
@@ -109,7 +109,7 @@ namespace Enderlook.Unity.Components
         {
             if (clip == null) throw new ArgumentNullException(nameof(clip));
             if (volume > 1 || volume < 0) throw new ArgumentOutOfRangeException(nameof(volume), volume, VOLUME_OUT_OF_RANGE);
-            if (pitch > 1 || pitch < 0) throw new ArgumentOutOfRangeException(nameof(pitch), pitch, PITCH_OUT_OF_RANGE);
+            if (pitch > 3 || pitch < -3) throw new ArgumentOutOfRangeException(nameof(pitch), pitch, PITCH_OUT_OF_RANGE);
 
             AudioSource audioSource = CreateBase(clip, destroyMode);
             audioSource.transform.position = position;
@@ -148,7 +148,7 @@ namespace Enderlook.Unity.Components
         {
             if (clip == null) throw new ArgumentNullException(nameof(clip));
             if (volume > 1 || volume < 0) throw new ArgumentOutOfRangeException(nameof(volume), volume, VOLUME_OUT_OF_RANGE);
-            if (pitch > 1 || pitch < 0) throw new ArgumentOutOfRangeException(nameof(pitch), pitch, PITCH_OUT_OF_RANGE);
+            if (pitch > 3 || pitch < -3) throw new ArgumentOutOfRangeException(nameof(pitch), pitch, PITCH_OUT_OF_RANGE);
 
             AudioSource audioSource = CreateBase(clip, destroyMode);
             audioSource.volume = volume;
@@ -169,7 +169,7 @@ namespace Enderlook.Unity.Components
         {
             if (clip == null) throw new ArgumentNullException(nameof(clip));
             if (volume > 1 || volume < 0) throw new ArgumentOutOfRangeException(nameof(volume), volume, VOLUME_OUT_OF_RANGE);
-            if (pitch > 1 || pitch < 0) throw new ArgumentOutOfRangeException(nameof(pitch), pitch, PITCH_OUT_OF_RANGE);
+            if (pitch > 3 || pitch < -3) throw new ArgumentOutOfRangeException(nameof(pitch), pitch, PITCH_OUT_OF_RANGE);
 
             AudioSource audioSource = CreateBase(clip, destroyMode);
             audioSource.volume = volume;
