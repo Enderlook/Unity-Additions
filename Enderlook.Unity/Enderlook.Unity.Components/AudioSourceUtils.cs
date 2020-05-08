@@ -13,6 +13,8 @@ namespace Enderlook.Unity.Components
     public static class AudioSourceUtils
     {
         private const string BASE_NAME = nameof(AudioSourceUtils) + "." + nameof(PlayAndDestroy);
+        private const string VOLUME_OUT_OF_RANGE = "Must be between 0 and 1.";
+        private const string PITCH_OUT_OF_RANGE = "Must be between -3 and 3.";
 
         private static AudioSource CreateBase(AudioClip clip, DestroyWhenAudioSourceEnds.Mode destroyMode)
         {
@@ -63,7 +65,7 @@ namespace Enderlook.Unity.Components
         public static void PlayAndDestroy(AudioClip clip, Vector3 position, float volume, DestroyWhenAudioSourceEnds.Mode destroyMode = DestroyWhenAudioSourceEnds.Mode.CheckOnStartForClipLength)
         {
             if (clip == null) throw new ArgumentNullException(nameof(clip));
-            if (volume > 1 || volume < 0) throw new ArgumentOutOfRangeException($"Must be between 0 and 1. Was {volume}", nameof(volume));
+            if (volume > 1 || volume < 0) throw new ArgumentOutOfRangeException(nameof(volume), volume, VOLUME_OUT_OF_RANGE);
 
             AudioSource audioSource = CreateBase(clip, destroyMode);
             audioSource.transform.position = position;
@@ -83,8 +85,8 @@ namespace Enderlook.Unity.Components
         public static void PlayAndDestroy(AudioClip clip, Vector3 position, float volume, float pitch, DestroyWhenAudioSourceEnds.Mode destroyMode = DestroyWhenAudioSourceEnds.Mode.CheckOnStartForClipLength)
         {
             if (clip == null) throw new ArgumentNullException(nameof(clip));
-            if (volume > 1 || volume < 0) throw new ArgumentOutOfRangeException($"Must be between 0 and 1. Was {volume}", nameof(volume));
-            if (pitch > 1 || pitch < 0) throw new ArgumentOutOfRangeException($"Must be between -3 and 3. Was {pitch}", nameof(pitch));
+            if (volume > 1 || volume < 0) throw new ArgumentOutOfRangeException(nameof(volume), volume, VOLUME_OUT_OF_RANGE);
+            if (pitch > 1 || pitch < 0) throw new ArgumentOutOfRangeException(nameof(pitch), pitch, PITCH_OUT_OF_RANGE);
 
             AudioSource audioSource = CreateBase(clip, destroyMode);
             audioSource.transform.position = position;
@@ -106,8 +108,8 @@ namespace Enderlook.Unity.Components
         public static void PlayAndDestroy(AudioClip clip, Vector3 position = default, float volume = 1, float pitch = 1, AudioMixerGroup audioMixerGroup = null, DestroyWhenAudioSourceEnds.Mode destroyMode = DestroyWhenAudioSourceEnds.Mode.CheckOnStartForClipLength)
         {
             if (clip == null) throw new ArgumentNullException(nameof(clip));
-            if (volume > 1 || volume < 0) throw new ArgumentOutOfRangeException($"Must be between 0 and 1. Was {volume}", nameof(volume));
-            if (pitch > 1 || pitch < 0) throw new ArgumentOutOfRangeException($"Must be between -3 and 3. Was {pitch}", nameof(pitch));
+            if (volume > 1 || volume < 0) throw new ArgumentOutOfRangeException(nameof(volume), volume, VOLUME_OUT_OF_RANGE);
+            if (pitch > 1 || pitch < 0) throw new ArgumentOutOfRangeException(nameof(pitch), pitch, PITCH_OUT_OF_RANGE);
 
             AudioSource audioSource = CreateBase(clip, destroyMode);
             audioSource.transform.position = position;
@@ -127,7 +129,7 @@ namespace Enderlook.Unity.Components
         public static void PlayAndDestroy(AudioClip clip, float volume, DestroyWhenAudioSourceEnds.Mode destroyMode = DestroyWhenAudioSourceEnds.Mode.CheckOnStartForClipLength)
         {
             if (clip == null) throw new ArgumentNullException(nameof(clip));
-            if (volume > 1 || volume < 0) throw new ArgumentOutOfRangeException($"Must be between 0 and 1. Was {volume}", nameof(volume));
+            if (volume > 1 || volume < 0) throw new ArgumentOutOfRangeException(nameof(volume), volume, VOLUME_OUT_OF_RANGE);
 
             AudioSource audioSource = CreateBase(clip, destroyMode);
             audioSource.volume = volume;
@@ -145,8 +147,8 @@ namespace Enderlook.Unity.Components
         public static void PlayAndDestroy(AudioClip clip, float volume, float pitch, DestroyWhenAudioSourceEnds.Mode destroyMode = DestroyWhenAudioSourceEnds.Mode.CheckOnStartForClipLength)
         {
             if (clip == null) throw new ArgumentNullException(nameof(clip));
-            if (volume > 1 || volume < 0) throw new ArgumentOutOfRangeException($"Must be between 0 and 1. Was {volume}", nameof(volume));
-            if (pitch > 1 || pitch < 0) throw new ArgumentOutOfRangeException($"Must be between -3 and 3. Was {pitch}", nameof(pitch));
+            if (volume > 1 || volume < 0) throw new ArgumentOutOfRangeException(nameof(volume), volume, VOLUME_OUT_OF_RANGE);
+            if (pitch > 1 || pitch < 0) throw new ArgumentOutOfRangeException(nameof(pitch), pitch, PITCH_OUT_OF_RANGE);
 
             AudioSource audioSource = CreateBase(clip, destroyMode);
             audioSource.volume = volume;
@@ -166,8 +168,8 @@ namespace Enderlook.Unity.Components
         public static void PlayAndDestroy(AudioClip clip, float volume, float pitch, AudioMixerGroup audioMixerGroup, DestroyWhenAudioSourceEnds.Mode destroyMode = DestroyWhenAudioSourceEnds.Mode.CheckOnStartForClipLength)
         {
             if (clip == null) throw new ArgumentNullException(nameof(clip));
-            if (volume > 1 || volume < 0) throw new ArgumentOutOfRangeException($"Must be between 0 and 1. Was {volume}", nameof(volume));
-            if (pitch > 1 || pitch < 0) throw new ArgumentOutOfRangeException($"Must be between -3 and 3. Was {pitch}", nameof(pitch));
+            if (volume > 1 || volume < 0) throw new ArgumentOutOfRangeException(nameof(volume), volume, VOLUME_OUT_OF_RANGE);
+            if (pitch > 1 || pitch < 0) throw new ArgumentOutOfRangeException(nameof(pitch), pitch, PITCH_OUT_OF_RANGE);
 
             AudioSource audioSource = CreateBase(clip, destroyMode);
             audioSource.volume = volume;
@@ -203,7 +205,7 @@ namespace Enderlook.Unity.Components
         public static void PlayAndDestroy(AudioClip clip, Vector3 position, float volume, AudioMixerGroup audioMixerGroup, DestroyWhenAudioSourceEnds.Mode destroyMode = DestroyWhenAudioSourceEnds.Mode.CheckOnStartForClipLength)
         {
             if (clip == null) throw new ArgumentNullException(nameof(clip));
-            if (volume > 1 || volume < 0) throw new ArgumentOutOfRangeException($"Must be between 0 and 1. Was {volume}", nameof(volume));
+            if (volume > 1 || volume < 0) throw new ArgumentOutOfRangeException(nameof(volume), volume, VOLUME_OUT_OF_RANGE);
 
             AudioSource audioSource = CreateBase(clip, destroyMode);
             audioSource.transform.position = position;
@@ -240,7 +242,7 @@ namespace Enderlook.Unity.Components
         public static void PlayAndDestroy(AudioClip clip, float volume, AudioMixerGroup audioMixerGroup, DestroyWhenAudioSourceEnds.Mode destroyMode = DestroyWhenAudioSourceEnds.Mode.CheckOnStartForClipLength)
         {
             if (clip == null) throw new ArgumentNullException(nameof(clip));
-            if (volume > 1 || volume < 0) throw new ArgumentOutOfRangeException($"Must be between 0 and 1. Was {volume}", nameof(volume));
+            if (volume > 1 || volume < 0) throw new ArgumentOutOfRangeException(nameof(volume), volume, VOLUME_OUT_OF_RANGE);
 
             AudioSource audioSource = CreateBase(clip, destroyMode);
             audioSource.volume = volume;
