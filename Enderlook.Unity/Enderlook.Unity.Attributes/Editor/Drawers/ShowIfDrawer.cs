@@ -26,13 +26,8 @@ namespace Enderlook.Unity.Attributes
                 EditorGUI.BeginProperty(position, label, property);
                 void DrawField()
                 {
-                    bool idented = showIfAttribute.indented;
-                    if (idented)
-                        EditorGUI.indentLevel++;
                     SerializedPropertyGUIHelper.GetGUIContent(helper, ref label);
                     EditorGUI.PropertyField(position, property, label, true);
-                    if (idented)
-                        EditorGUI.indentLevel--;
                 }
 
                 active = active == showIfAttribute.goal;

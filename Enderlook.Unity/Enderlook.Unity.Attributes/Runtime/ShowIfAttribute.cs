@@ -32,8 +32,6 @@ namespace Enderlook.Unity.Attributes
         public readonly bool goal;
         public readonly ActionMode mode;
 
-        public bool indented;
-
         /// <summary>
         /// Action to take depending of the condition.
         /// </summary>

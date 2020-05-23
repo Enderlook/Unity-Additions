@@ -18,7 +18,7 @@ namespace Enderlook.Unity.Components.ScriptableSound
         [SerializeField, Tooltip("If start playing on awake.")]
         private bool playOnAwake;
 
-        [SerializeField, Tooltip("Which playlist play on awake."), ShowIf(nameof(playOnAwake), indented = true)]
+        [SerializeField, Tooltip("Which playlist play on awake."), ShowIf(nameof(playOnAwake)), Indented]
         private int onAwakeIndex;
 #pragma warning restore CS0649
 
