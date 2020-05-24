@@ -137,7 +137,6 @@ namespace Enderlook.Unity.Attributes
             }
             if (!string.IsNullOrEmpty(drawVectorRelativeToTransform.icon))
                 Handles.Label(position, (Texture2D)EditorGUIUtility.Load(drawVectorRelativeToTransform.icon));
-
         }
 
         private static void RenderSceneGUI(SceneView sceneview)

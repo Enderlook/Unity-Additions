@@ -109,6 +109,7 @@ namespace Enderlook.Unity.Attributes
                 Set(stepper(value, step));
         }
 
-        public override float GetPropertyHeight(SerializedProperty property, GUIContent label) => EditorGUI.GetPropertyHeight(property) + (foldout ? EditorGUIUtility.singleLineHeight : 0);
+        protected override float GetPropertyHeightSmart(SerializedProperty property, GUIContent label)
+            => EditorGUI.GetPropertyHeight(property) + (foldout ? EditorGUIUtility.singleLineHeight : 0);
     }
 }

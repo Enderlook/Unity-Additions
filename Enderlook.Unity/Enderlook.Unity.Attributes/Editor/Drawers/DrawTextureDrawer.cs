@@ -128,7 +128,7 @@ namespace Enderlook.Unity.Attributes
                 texture = null;
         }
 
-        public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
+        protected override float GetPropertyHeightSmart(SerializedProperty property, GUIContent label)
             => base.GetPropertyHeight(property, label) + (texture == null ? 0 : additionalHeight);
     }
 }

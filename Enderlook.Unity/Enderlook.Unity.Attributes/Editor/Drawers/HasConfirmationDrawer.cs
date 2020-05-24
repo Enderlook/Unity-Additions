@@ -42,6 +42,6 @@ namespace Enderlook.Unity.Attributes
             EditorGUI.EndProperty();
         }
 
-        public override float GetPropertyHeight(SerializedProperty property, GUIContent label) => confirm ? EditorGUI.GetPropertyHeight(property) + EditorGUIUtility.singleLineHeight : EditorGUIUtility.singleLineHeight;
+        protected override float GetPropertyHeightSmart(SerializedProperty property, GUIContent label) => confirm ? EditorGUI.GetPropertyHeight(property) + EditorGUIUtility.singleLineHeight : EditorGUIUtility.singleLineHeight;
     }
 }

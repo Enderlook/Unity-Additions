@@ -3,6 +3,7 @@
 using UnityEditor;
 
 using UnityEngine;
+
 namespace Enderlook.Unity.Attributes
 {
     [CustomPropertyDrawer(typeof(ShowIfAttribute))]
@@ -11,7 +12,7 @@ namespace Enderlook.Unity.Attributes
         /// <summary>
         /// If <see langword="true"/>, the property field is either disabled or hidden.
         /// </summary>
-        private bool active;
+        private bool? active;
 
         private ShowIfAttribute.ActionMode mode;
 
@@ -20,37 +21,50 @@ namespace Enderlook.Unity.Attributes
             ShowIfAttribute showIfAttribute = (ShowIfAttribute)attribute;
             mode = showIfAttribute.mode;
 
-            if (helper.TryGetParentTargetObjectOfProperty(out object parent))
+            if (IsActive)
             {
-                active = parent.GetValueFromFirstMember<bool>(showIfAttribute.nameOfConditional);
-                EditorGUI.BeginProperty(position, label, property);
-                void DrawField()
-                {
-                    SerializedPropertyGUIHelper.GetGUIContent(helper, ref label);
-                    EditorGUI.PropertyField(position, property, label, true);
-                }
-
-                active = active == showIfAttribute.goal;
-
                 if (mode == ShowIfAttribute.ActionMode.ShowHide)
-                {
-                    if (active)
-                        DrawField();
-                }
+                    DrawField();
                 else if (mode == ShowIfAttribute.ActionMode.EnableDisable)
                 {
-                    EditorGUI.BeginDisabledGroup(!active);
+                    EditorGUI.BeginDisabledGroup(active.Value);
                     DrawField();
                     EditorGUI.EndDisabledGroup();
                 }
-
-                EditorGUI.EndProperty();
             }
+
+            void DrawField()
+            {
+                SerializedPropertyGUIHelper.GetGUIContent(helper, ref label);
+                EditorGUI.PropertyField(position, property, label, true);
+            }
+
+            // Force re-checking on next draw
+            active = null;
         }
 
-        public override float GetPropertyHeight(SerializedProperty property, GUIContent label) =>
-            mode == ShowIfAttribute.ActionMode.EnableDisable || active
-                ? EditorGUI.GetPropertyHeight(property, label, true)
+        protected override float GetPropertyHeightSmart(SerializedProperty property, GUIContent label)
+            => mode == ShowIfAttribute.ActionMode.EnableDisable || IsActive ?
+                EditorGUI.GetPropertyHeight(property, label, true)
                 : 0;
+
+        private bool IsActive {
+            get {
+                if (active.HasValue)
+                    return active.Value;
+
+                ShowIfAttribute showIfAttribute = (ShowIfAttribute)attribute;
+                mode = showIfAttribute.mode;
+
+                if (helper.TryGetParentTargetObjectOfProperty(out object parent))
+                {
+                    active = parent.GetValueFromFirstMember<bool>(showIfAttribute.nameOfConditional);
+                    active = active == showIfAttribute.goal;
+                    return active.Value;
+                }
+
+                return false;
+            }
+        }
     }
 }
