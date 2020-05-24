@@ -16,8 +16,10 @@ using UnityEngine;
     [CreateAssetMenu(fileName = "<#= name #>TransformerClamp", menuName = "<#= menuPath #>Transformers/Clamp/<#= name #>")]
     public class <#= name #>TransformerClamp : <#= name #>Transformer
     {
+#pragma warning disable CS0649
         [SerializeField, Tooltip("Minimum value.")]
         private <#= name #>GetReference min;
+#pragma warning restore CS0649
 
 <#+
         if (isFloating)

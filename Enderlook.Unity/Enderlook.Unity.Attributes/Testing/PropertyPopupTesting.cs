@@ -25,10 +25,11 @@ namespace Enderlook.Unity.Attributes
                 return;
             if (type.GetCustomAttribute<PropertyPopupAttribute>() is PropertyPopupAttribute attribute)
             {
+                typesAndAttributes.Add(type, attribute);
                 FieldInfo fieldInfo = type.GetInheritedField(attribute.modeName, BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance);
                 if (fieldInfo == null)
                     Debug.LogError($"Type {type} has attribute {nameof(PropertyPopupAttribute)}, but doesn't have a field named {attribute.modeName} as {nameof(PropertyPopupAttribute.modeName)} requires nor its bases classes have it.");
-                else if (fieldInfo.CanBeSerializedByUnity() && !fieldInfo.CheckIfShouldBeIgnored(typeof(PropertyPopupAttribute)))
+                else if (!fieldInfo.CanBeSerializedByUnity() && !fieldInfo.CheckIfShouldBeIgnored(typeof(PropertyPopupAttribute)))
                     Debug.LogError($"Type {type} has attribute {nameof(PropertyPopupAttribute)} which uses the field {fieldInfo.Name} declared in {fieldInfo.DeclaringType} as mode field, but it's no serializable by Unity.");
             }
         }
@@ -39,7 +40,7 @@ namespace Enderlook.Unity.Attributes
         {
             if (fieldInfo.CheckIfShouldBeIgnored(typeof(PropertyPopupOptionAttribute)))
                 return;
-            if (fieldInfo.GetCustomAttribute<PropertyPopupOptionAttribute>() is PropertyPopupOptionAttribute attribute)
+            if (fieldInfo.GetCustomAttribute<PropertyPopupOptionAttribute>() is PropertyPopupOptionAttribute)
             {
                 Type type = fieldInfo.DeclaringType;
                 if (typesAndFieldAttributes.TryGetValue(type, out List<FieldInfo> list))
@@ -55,9 +56,18 @@ namespace Enderlook.Unity.Attributes
         {
             foreach (KeyValuePair<Type, List<FieldInfo>> kv in typesAndFieldAttributes)
             {
-                if (!typesAndAttributes.ContainsKey(kv.Key))
-                    foreach (FieldInfo field in kv.Value)
-                        Debug.LogError($"Type {kv.Key} nor its base classes have attribute {nameof(PropertyPopupAttribute)}, but its field named {field.Name} has the attribute {nameof(PropertyPopupOptionAttribute)}.");
+                Type type = kv.Key;
+                while (type != null)
+                {
+                    if (typesAndAttributes.ContainsKey(type))
+                        goto next;
+                    else
+                        type = type.BaseType;
+                }
+                foreach (FieldInfo field in kv.Value)
+                    Debug.LogError($"Type {kv.Key} nor its base classes have attribute {nameof(PropertyPopupAttribute)}, but its field named {field.Name} has the attribute {nameof(PropertyPopupOptionAttribute)}.");
+                
+                next:
                 foreach (FieldInfo fieldInfo in kv.Value)
                     if (!fieldInfo.CanBeSerializedByUnity())
                         Debug.LogError($"Type {kv.Key} has a field named {fieldInfo.Name} with the attribute {nameof(PropertyPopupAttribute)}, but it's not serializable by unity.");

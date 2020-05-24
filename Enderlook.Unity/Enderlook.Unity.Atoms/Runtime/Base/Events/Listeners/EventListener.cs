@@ -12,6 +12,7 @@ namespace Enderlook.Unity.Atoms
         where TEventReference : BaseEventReference, IEventRegister<TValue>
         where TAction : AtomAction<TValue>
     {
+#pragma warning disable CS0649
         [SerializeField]
         private TEventReference @event;
 
@@ -21,6 +22,7 @@ namespace Enderlook.Unity.Atoms
 
         [SerializeField]
         private List<TAction> actions;
+#pragma warning restore CS0649
 
         /// <inheritdoc cref="IEventListener{TValue}.OnEventRaised(TValue)"/>
         public void OnEventRaised(TValue parameter)

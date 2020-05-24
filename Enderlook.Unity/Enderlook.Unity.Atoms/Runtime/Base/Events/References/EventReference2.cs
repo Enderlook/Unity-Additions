@@ -1,4 +1,5 @@
 ﻿using Enderlook.Unity.Attributes;
+using Enderlook.Unity.Attributes.AttributeUsage;
 using Enderlook.Utils.Exceptions;
 
 using System;
@@ -15,13 +16,13 @@ namespace Enderlook.Unity.Atoms
         where TManagedSO : UnityObject, IEventRegister2<TValue>
         where TManagedComponent : UnityObject, IEventRegister2<TValue>
     {
-        [SerializeField, PropertyPopupOption((byte)ReferenceMode.Event)]
+        [SerializeField, PropertyPopupOption((byte)ReferenceMode.Event), DoNotCheck(typeof(PropertyPopupOptionAttribute))]
         protected TEvent @event;
 
-        [SerializeField, PropertyPopupOption((byte)ReferenceMode.ManagedScriptableObject)]
+        [SerializeField, PropertyPopupOption((byte)ReferenceMode.ManagedScriptableObject), DoNotCheck(typeof(PropertyPopupOptionAttribute))]
         protected TManagedSO managedScriptableObject;
 
-        [SerializeField, PropertyPopupOption((byte)ReferenceMode.ManagedComponent)]
+        [SerializeField, PropertyPopupOption((byte)ReferenceMode.ManagedComponent), DoNotCheck(typeof(PropertyPopupOptionAttribute))]
         protected TManagedComponent managedComponent;
 
         /// <summary>

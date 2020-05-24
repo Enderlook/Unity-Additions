@@ -1,7 +1,7 @@
 ﻿<#+
     void WriteGetReference(string name, string dataType)
     {
-    WriteHeader();
+        WriteHeader();
 #>
 using Enderlook.Unity.Attributes;
 using Enderlook.Utils.Exceptions;
@@ -15,6 +15,7 @@ using UnityEngine;
     [Serializable]
     public class <#= name #>GetReference : BaseValueReference, I<#= name #>Get
     {
+#pragma warning disable CS0649
         [SerializeField, PropertyPopupOption((int)ReferenceMode.Inline)]
         private <#= dataType #> inline;
 
@@ -23,6 +24,7 @@ using UnityEngine;
 
         [SerializeField, PropertyPopupOption((int)ReferenceMode.Component)]
         private <#= name #>GetComponent component;
+#pragma warning restore CS0649
 
         /// <summary>
         <#= "///" #> Creates an <see cref="<#= name #>GetReference"/> of mode <see cref="BaseValueReference.ReferenceMode.Inline"/>.

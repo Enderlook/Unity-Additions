@@ -15,11 +15,13 @@ using UnityEngine;
     [DefaultExecutionOrder(AtomsInternal.ExecutionOrder.VARIABLE_INSTANCER)]
     public class <#= name #>GetSetInstancer : <#= name #>GetSetComponent
     {
+#pragma warning disable CS0649
         [SerializeField, Tooltip("Variable template to instance.")]
         private <#= name #>GetSetSO baseAtom;
 
         [SerializeField, ReadOnly]
         private <#= name #>GetSetSO instacedAtom;
+#pragma warning restore CS0649
 
         /// <inheritdoc />
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

@@ -1,12 +1,12 @@
 ﻿<#+
     void WriteEventListener2(string name, string dataType)
-{
-    WriteHeader();
+    {
+        WriteHeader();
 #>
-    using System;
+using System;
 
-    using UnityEngine;
-    using UnityEngine.Events;
+using UnityEngine;
+using UnityEngine.Events;
 <#+
         WriteNamespace();
 #>

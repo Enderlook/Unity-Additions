@@ -17,6 +17,7 @@ namespace Enderlook.Unity.Components
         public class UnityEventTransform : UnityEvent<Transform> { }
 #pragma warning restore CS1591
 
+#pragma warning disable CS0649
         [SerializeField, Tooltip("Event raised when a GameObject gets within range.")]
         private UnityEventGameObject enterGameObjectEvent;
 
@@ -34,6 +35,7 @@ namespace Enderlook.Unity.Components
 
         [SerializeField, Tooltip("Event raised when a Transform is within range. This is caled once per frame.")]
         private UnityEventTransform stayTransformEvent;
+#pragma warning restore CS0649
 
         private event Action<GameObject> EnterGameObject;
         private event Action<GameObject> ExitGameObject;

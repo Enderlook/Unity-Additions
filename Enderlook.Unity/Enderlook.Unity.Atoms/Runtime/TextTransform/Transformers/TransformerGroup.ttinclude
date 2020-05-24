@@ -15,8 +15,10 @@ using UnityEngine;
     [CreateAssetMenu(fileName = "<#= name #>TransformerGroup", menuName = "<#= menuPath #>Transformers/Groups/<#= name #>")]
     public class <#= name #>TransformerGroup : <#= name #>Transformer
     {
+#pragma warning disable CS0649
         [SerializeField, Tooltip("In order sequence of transformers to execute.")]
         private List<<#= name #>Transformer> transformers;
+#pragma warning restore CS0649
 
         /// <summary>
         <#= "///" #> Execute all the <see cref="<#= name #>Transformer"/> from <see cref="transformers"/>.<br/>

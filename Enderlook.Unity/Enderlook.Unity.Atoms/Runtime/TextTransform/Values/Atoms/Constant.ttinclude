@@ -12,8 +12,10 @@ using UnityEngine;
     [CreateAssetMenu(fileName = "<#= name #>Constant", menuName = "<#= menuPath #>Values/Constants/<#= name #>")]
     public sealed class <#= name #>Constant : <#= name #>GetSO
     {
+#pragma warning disable CS0649
         [SerializeField, Tooltip("Value stored in this atom.")]
         private <#= dataType #> value;
+#pragma warning restore CS0649
 
         /// <inheritdoc />
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

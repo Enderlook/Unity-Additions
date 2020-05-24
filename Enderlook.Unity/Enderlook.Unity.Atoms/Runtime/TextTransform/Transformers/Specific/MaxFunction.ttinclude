@@ -16,8 +16,10 @@ using UnityEngine;
     [CreateAssetMenu(fileName = "<#= name #>TransformerMax", menuName = "<#= menuPath #>Transformers/Max/<#= name #>")]
     public class <#= name #>TransformerMax : <#= name #>Transformer
     {
+#pragma warning disable CS0649
         [SerializeField, Tooltip("Maximum value.")]
         private <#= name #>GetReference max;
+#pragma warning restore CS0649
 
 <#+
         if (isFloating)

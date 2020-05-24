@@ -10,8 +10,10 @@ namespace Enderlook.Unity.Components.Destroy
     [AddComponentMenu("Enderlook/Destroyers/Destroy When Particle System Is Not Alive")]
     public class DestroyWhenParticleSystemIsNotAlive : MonoBehaviour
     {
+#pragma warning disable CS0649
         [SerializeField, Tooltip("Whenever it should also include nested particle systems.")]
         private bool includeNestedParticleSystems;
+#pragma warning restore CS0649
 
         private ParticleSystem[] particleSystems;
 
