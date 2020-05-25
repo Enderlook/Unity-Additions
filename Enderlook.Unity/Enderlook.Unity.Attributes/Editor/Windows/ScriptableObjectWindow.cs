@@ -55,7 +55,11 @@ namespace Enderlook.Unity.Attributes
                     return;
 
                 FieldInfo fieldInfo = property.GetFieldInfo();
-                if (typeof(UnityObject).IsAssignableFrom(fieldInfo.FieldType))
+                Type fieldType = fieldInfo.FieldType;
+                if (fieldType.IsArrayOrList())
+                    fieldType = fieldType.GetElementTypeOfArrayOrList();
+
+                if (typeof(UnityObject).IsAssignableFrom(fieldType))
                     menu.AddItem(
                         CONTEXT_PROPERTY_MENU,
                         false,
