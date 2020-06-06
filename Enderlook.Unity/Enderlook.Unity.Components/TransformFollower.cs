@@ -340,6 +340,13 @@ namespace Enderlook.Unity.Components
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Code Quality", "IDE0051:Remove unused private members", Justification = "Used by Unity.")]
         private void Update()
         {
+            if (transformToFollow == null)
+            {
+                Debug.LogWarning($"{nameof(Transform)} of field {nameof(transformToFollow)} in class {nameof(TransformFollower)} in {nameof(GameObject)} {gameObject.name} got null. This component will be automatically destroyed.");
+                Destroy(this);
+                return;
+            }
+
             Vector3 targetPosition = isLocalPosition ? transformToFollow.localPosition : transformToFollow.position;
             Vector3 targetRotation = (isLocalRotation ? transformToFollow.localRotation : transformToFollow.rotation).eulerAngles;
             Vector3 targetScale = transformToFollow.localScale;
