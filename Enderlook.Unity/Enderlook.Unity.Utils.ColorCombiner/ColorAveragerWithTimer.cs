@@ -219,7 +219,7 @@ namespace Enderlook.Unity.Utils.ColorCombiner
         {
             HasChanged = true;
             colors.Clear();
-			expirationOrder.Clear();
+            expirationOrder.Clear();
         }
 
         /// <inheritdoc />

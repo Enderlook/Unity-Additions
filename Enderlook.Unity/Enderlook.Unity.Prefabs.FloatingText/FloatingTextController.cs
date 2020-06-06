@@ -178,7 +178,7 @@ namespace Enderlook.Unity.Prefabs.FloatingText
                 timeBeforeDestroy != null ? timeBeforeDestroy : this.timeBeforeDestroy,
                 randomOffset != null ? randomOffset : this.randomOffset,
                 digitPrecision != null ? digitPrecision : this.digitPrecision,
-                roundingMode != null ? roundingMode : this.roundingType
+                roundingMode != null ? roundingMode : roundingType
             );
         }
     }

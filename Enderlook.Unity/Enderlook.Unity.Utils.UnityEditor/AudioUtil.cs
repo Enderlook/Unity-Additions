@@ -134,23 +134,19 @@ namespace Enderlook.Unity.Utils.UnityEditor
             GetCustomFilterMaxOut = GetDelegate<Func<MonoBehaviour, int, float>>("GetCustomFilterMaxOut", typeof(MonoBehaviour), typeof(int));
         }
 
-        public static void PlayClip(AudioClip audioClip)
-        {
+        public static void PlayClip(AudioClip audioClip) =>
 #if !UNITY_2019_1_OR_NEWER
             PlayClip1(audioClip);
 #else
             PlayClip3(audioClip, 0, false);
 #endif
-        }
 
-        public static void PlayClip(AudioClip audioClip, int startSample = 0)
-        {
+        public static void PlayClip(AudioClip audioClip, int startSample = 0) =>
 #if !UNITY_2019_1_OR_NEWER
             PlayClip2(audioClip, startSample);
 #else
             PlayClip3(audioClip, startSample, false);
 #endif
-        }
 
         public static void PlayClip(AudioClip audioClip, int startSample = 0, bool loop = false) => PlayClip3(audioClip, startSample, loop);
     }

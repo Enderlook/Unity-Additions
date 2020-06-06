@@ -39,7 +39,7 @@ namespace Enderlook.Unity.Utils.UnityEditor
                 string[] paths = directory.Split('/');
                 for (int i = 0; i < paths.Length - 1; i++)
                     AssetDatabase.CreateFolder(string.Join("/", paths.Take(i + 1)), paths[i + 1]);
-            }            
+            }
         }
 
         /// <summary>

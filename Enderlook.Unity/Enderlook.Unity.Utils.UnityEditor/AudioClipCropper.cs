@@ -10,10 +10,10 @@ namespace Enderlook.Unity.Utils.UnityEditor
 {
     public class AudioClipCropper : EditorWindow
     {
-        private readonly static GUIContent TITLE_CONTENT = new GUIContent("Audio Clip Cropper");
-        private readonly static GUIContent ADD_AUDIO_CLIP_CONTENT = EditorGUIUtility.IconContent("d_SVN_AddedLocal", "Add new Audio Clip.");
-        private readonly static GUIContent REMOVE_ALL_CONTENT = new GUIContent("Remove All");
-        private readonly static GUIContent CROP_CONTENT = new GUIContent("Crop Audio Clips", "Creates new  Audio Clips with the specified ranges.");
+        private static readonly GUIContent TITLE_CONTENT = new GUIContent("Audio Clip Cropper");
+        private static readonly GUIContent ADD_AUDIO_CLIP_CONTENT = EditorGUIUtility.IconContent("d_SVN_AddedLocal", "Add new Audio Clip.");
+        private static readonly GUIContent REMOVE_ALL_CONTENT = new GUIContent("Remove All");
+        private static readonly GUIContent CROP_CONTENT = new GUIContent("Crop Audio Clips", "Creates new  Audio Clips with the specified ranges.");
         private static GUIContent ADD_CROP_CONTENT;
         private static GUIContent REMOVE_CONTENT;
 

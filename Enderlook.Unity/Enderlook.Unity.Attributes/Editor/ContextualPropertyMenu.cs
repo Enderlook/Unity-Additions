@@ -10,22 +10,19 @@ namespace Enderlook.Unity.Attributes
     {
         public static event EditorApplication.SerializedPropertyCallbackFunction contextualPropertyMenu;
 
-        static ContextualPropertyMenu()
-        {
-            EditorApplication.contextualPropertyMenu += (GenericMenu menu, SerializedProperty property) =>
-            {
-                foreach (Delegate item in contextualPropertyMenu.GetInvocationList())
-                {
-                    try
-                    {
-                        ((EditorApplication.SerializedPropertyCallbackFunction)item)(menu, property);
-                    }
-                    catch (Exception e)
-                    {
-                        Debug.LogException(e);
-                    }
-                }
-            };
-        }
+        static ContextualPropertyMenu() => EditorApplication.contextualPropertyMenu += (GenericMenu menu, SerializedProperty property) =>
+                                         {
+                                             foreach (Delegate item in contextualPropertyMenu.GetInvocationList())
+                                             {
+                                                 try
+                                                 {
+                                                     ((EditorApplication.SerializedPropertyCallbackFunction)item)(menu, property);
+                                                 }
+                                                 catch (Exception e)
+                                                 {
+                                                     Debug.LogException(e);
+                                                 }
+                                             }
+                                         };
     }
 }

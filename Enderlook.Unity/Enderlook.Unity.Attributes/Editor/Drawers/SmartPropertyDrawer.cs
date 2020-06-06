@@ -37,11 +37,9 @@ namespace Enderlook.Unity.Attributes
         }
 
         private void After(Rect position, SerializedProperty property, GUIContent label)
-        {
-            EditorGUI.indentLevel -= identationOffset;
-        }
+            => EditorGUI.indentLevel -= identationOffset;
 
-        public override sealed void OnGUI(Rect position, SerializedProperty property, GUIContent label)
+        public sealed override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
             Before(ref position, ref property, ref label);
             OnGUISmart(position, property, label);
@@ -51,7 +49,7 @@ namespace Enderlook.Unity.Attributes
         protected virtual void OnGUISmart(Rect position, SerializedProperty property, GUIContent label)
             => EditorGUI.PropertyField(position, property);
 
-        public override sealed float GetPropertyHeight(SerializedProperty property, GUIContent label)
+        public sealed override float GetPropertyHeight(SerializedProperty property, GUIContent label)
         {
             TryCreateHelper(property);
             SerializedPropertyGUIHelper.GetGUIContent(property, ref label);

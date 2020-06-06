@@ -65,7 +65,7 @@ namespace Enderlook.Unity.Utils.UnityEditor
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="source"/> is <see langword="null"/>.</exception>
         public static bool IsArrayOrListSize(this SerializedProperty source)
         {
-            if(source is null) throw new ArgumentNullException(nameof(source));
+            if (source is null) throw new ArgumentNullException(nameof(source));
 
             return source.propertyPath.EndsWith("Array.size");
         }

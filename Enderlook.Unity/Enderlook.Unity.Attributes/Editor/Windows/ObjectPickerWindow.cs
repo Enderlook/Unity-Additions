@@ -34,22 +34,19 @@ namespace Enderlook.Unity.Attributes
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Code Quality", "IDE0051:Remove unused private members", Justification = "Used by Unity.")]
         [InitializeOnLoadMethod]
-        private static void AddContextualPropertyMenu()
-        {
-            ContextualPropertyMenu.contextualPropertyMenu += (GenericMenu menu, SerializedProperty property) =>
-            {
-                if (property.propertyPath.EndsWith(".Array.Size"))
-                    return;
+        private static void AddContextualPropertyMenu() => ContextualPropertyMenu.contextualPropertyMenu += (GenericMenu menu, SerializedProperty property) =>
+                                                         {
+                                                             if (property.propertyPath.EndsWith(".Array.Size"))
+                                                                 return;
 
-                FieldInfo fieldInfo = property.GetFieldInfo();
-                if (typeof(UnityObject).IsAssignableFrom(fieldInfo.FieldType))
-                    menu.AddItem(
-                        CONTEXT_PROPERTY_MENU,
-                        false,
-                        () => CreateWindow(property, fieldInfo)
-                    );
-            };
-        }
+                                                             FieldInfo fieldInfo = property.GetFieldInfo();
+                                                             if (typeof(UnityObject).IsAssignableFrom(fieldInfo.FieldType))
+                                                                 menu.AddItem(
+                                                                     CONTEXT_PROPERTY_MENU,
+                                                                     false,
+                                                                     () => CreateWindow(property, fieldInfo)
+                                                                 );
+                                                         };
 
         private static void CreateWindow(SerializedProperty property, FieldInfo fieldInfo)
         {
@@ -91,7 +88,7 @@ namespace Enderlook.Unity.Attributes
         {
             titleContent = TITLE_CONTENT;
 
-            bool oldGatherFromAssets = gatherFromAssets;            
+            bool oldGatherFromAssets = gatherFromAssets;
             gatherFromAssets = EditorGUILayout.Toggle(INCLUDE_ASSETS_CONTENT, gatherFromAssets);
             if (oldGatherFromAssets != gatherFromAssets)
                 RefeshObjects();

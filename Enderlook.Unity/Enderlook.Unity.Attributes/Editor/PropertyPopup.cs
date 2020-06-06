@@ -18,7 +18,7 @@ namespace Enderlook.Unity.Attributes
     {
         private const string NOT_FOUND_OPTION = "Not found an option which satisfy {0} ({1}).";
 
-        private readonly static GUIStyle popupStyle = new GUIStyle(GUI.skin.GetStyle("PaneOptions"))
+        private static readonly GUIStyle popupStyle = new GUIStyle(GUI.skin.GetStyle("PaneOptions"))
         {
             imagePosition = ImagePosition.ImageOnly
         };

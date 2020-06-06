@@ -11,7 +11,7 @@ using UnityEngine;
 
 namespace Enderlook.Unity.Attributes
 {
-    internal class PropertyPopupTesting
+    internal static class PropertyPopupTesting
     {
         private static readonly Dictionary<Type, PropertyPopupAttribute> typesAndAttributes = new Dictionary<Type, PropertyPopupAttribute>();
 
@@ -66,7 +66,7 @@ namespace Enderlook.Unity.Attributes
                 }
                 foreach (FieldInfo field in kv.Value)
                     Debug.LogError($"Type {kv.Key} nor its base classes have attribute {nameof(PropertyPopupAttribute)}, but its field named {field.Name} has the attribute {nameof(PropertyPopupOptionAttribute)}.");
-                
+
                 next:
                 foreach (FieldInfo fieldInfo in kv.Value)
                     if (!fieldInfo.CanBeSerializedByUnity())

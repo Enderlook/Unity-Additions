@@ -230,7 +230,7 @@ namespace Enderlook.Unity.Prefabs.HealthBarGUI
                 {
                     // On damage, the healing bar is reduced to avoid overlapping
                     healingImage.fillAmount -= amount / maxHealth;
-                    healingBar.transform.localPosition = new Vector3(healthTransform.rect.width * healthImage.fillAmount - healingTransform.rect.width, 0, 0);
+                    healingBar.transform.localPosition = new Vector3((healthTransform.rect.width * healthImage.fillAmount) - healingTransform.rect.width, 0, 0);
                 }
             }
             else if (amount > 0)
@@ -239,7 +239,7 @@ namespace Enderlook.Unity.Prefabs.HealthBarGUI
                 {
                     healingImage.fillAmount += amount / maxHealth;
                     // Move the healing bar adjacent (next to the end) of the health bar but overlap part of it by its filled part
-                    healingBar.transform.localPosition = new Vector3(healthTransform.rect.width * healthImage.fillAmount - healingTransform.rect.width, 0, 0);
+                    healingBar.transform.localPosition = new Vector3((healthTransform.rect.width * healthImage.fillAmount) - healingTransform.rect.width, 0, 0);
                 }
                 if (damageBar != null)
                 {
@@ -249,8 +249,8 @@ namespace Enderlook.Unity.Prefabs.HealthBarGUI
                 }
             }
             // Fix bug, preventing the healing bar overflow from the left side
-            if (healingBar != null && healingTransform.rect.width < healingTransform.rect.width * healingImage.fillAmount - healingBar.transform.localPosition.x)
-                healingImage.fillAmount -= (healingTransform.rect.width * healingImage.fillAmount - healingBar.transform.localPosition.x - healingTransform.rect.width) / healingTransform.rect.width;
+            if (healingBar != null && healingTransform.rect.width < (healingTransform.rect.width * healingImage.fillAmount) - healingBar.transform.localPosition.x)
+                healingImage.fillAmount -= ((healingTransform.rect.width * healingImage.fillAmount) - healingBar.transform.localPosition.x - healingTransform.rect.width) / healingTransform.rect.width;
         }
 
 #if UNITY_EDITOR
