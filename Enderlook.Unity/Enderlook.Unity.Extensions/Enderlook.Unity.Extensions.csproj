@@ -75,8 +75,8 @@
     <UnityVersion>2019.2.17f1</UnityVersion>
   </PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Enderlook.Extensions" Version="2.2.0" />
+  <ItemGroup Condition="$(DefineConstants.Contains('UNITY_EDITOR'))">
+    <PackageReference Include="Enderlook.Text" Version="1.0.0" />
   </ItemGroup>
 
   <ItemGroup>

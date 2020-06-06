@@ -74,7 +74,7 @@
   <PropertyGroup Label="UserMacros">
     <UnityVersion>2019.2.17f1</UnityVersion>
   </PropertyGroup>
-
+  
   <ItemGroup>
     <PackageReference Include="Enderlook.Collections" Version="1.0.0" />
   </ItemGroup>

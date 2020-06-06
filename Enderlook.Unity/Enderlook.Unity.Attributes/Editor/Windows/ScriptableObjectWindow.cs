@@ -1,4 +1,5 @@
-﻿using Enderlook.Extensions;
+﻿using Enderlook.Enumerables;
+using Enderlook.Reflection;
 using Enderlook.Unity.Utils.UnityEditor;
 
 using System;
@@ -48,8 +49,7 @@ namespace Enderlook.Unity.Attributes
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Code Quality", "IDE0051:Remove unused private members", Justification = "Used by Unity.")]
         [InitializeOnLoadMethod]
         private static void AddContextualPropertyMenu()
-        {
-            ContextualPropertyMenu.contextualPropertyMenu += (GenericMenu menu, SerializedProperty property) =>
+            => ContextualPropertyMenu.contextualPropertyMenu += (GenericMenu menu, SerializedProperty property) =>
             {
                 if (property.propertyPath.EndsWith(".Array.Size"))
                     return;
@@ -66,7 +66,6 @@ namespace Enderlook.Unity.Attributes
                         () => CreateWindow(property, fieldInfo)
                     );
             };
-        }
 
         private static void InitializeDerivedTypes()
         {

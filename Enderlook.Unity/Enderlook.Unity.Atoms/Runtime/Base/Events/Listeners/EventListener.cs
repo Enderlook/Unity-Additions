@@ -1,4 +1,4 @@
-﻿using Enderlook.Extensions;
+﻿using Enderlook.Collections;
 
 using System.Collections.Generic;
 

@@ -1,4 +1,4 @@
-using Enderlook.Extensions;
+using Enderlook.Text;
 
 using System;
 using System.Collections.Generic;

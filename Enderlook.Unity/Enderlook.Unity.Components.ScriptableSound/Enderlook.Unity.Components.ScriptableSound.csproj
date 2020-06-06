@@ -76,10 +76,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Enderlook.Collections" Version="1.0.0" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\Enderlook.Unity.Attributes\Enderlook.Unity.Attributes.csproj" />
     <ProjectReference Include="..\Enderlook.Unity.Serializables.Ranges\Enderlook.Unity.Serializables.Ranges.csproj" />
     <ProjectReference Include="..\Enderlook.Unity.Utils.Interfaces\Enderlook.Unity.Utils.Interfaces.csproj" />

@@ -1,5 +1,5 @@
-﻿using Enderlook.Unity.Attributes;
-using Enderlook.Utils.Exceptions;
+﻿using Enderlook.Exceptions;
+using Enderlook.Unity.Attributes;
 
 using System;
 using System.Collections.Generic;

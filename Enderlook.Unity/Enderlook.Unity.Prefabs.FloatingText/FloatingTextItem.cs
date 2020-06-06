@@ -1,7 +1,6 @@
 using Enderlook.Unity.Utils;
 
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace Enderlook.Unity.Prefabs.FloatingText
 {
@@ -31,7 +30,7 @@ namespace Enderlook.Unity.Prefabs.FloatingText
 
         [Header("Setup")]
         [SerializeField, Tooltip("Text component to write.")]
-        private Text text;
+        private UnityEngine.UI.Text text;
 
         [SerializeField, Tooltip("Animator component of text.")]
         private Animator animator;

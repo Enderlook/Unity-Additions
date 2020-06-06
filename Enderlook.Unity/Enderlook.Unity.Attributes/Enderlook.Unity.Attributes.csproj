@@ -73,6 +73,13 @@
     <None Remove="Testing\**" />
   </ItemGroup>
 
+  <ItemGroup Condition="$(DefineConstants.Contains('UNITY_EDITOR'))">
+    <PackageReference Include="Enderlook.Enumerables" Version="1.0.0" />
+    <PackageReference Include="Enderlook.Exceptions" Version="1.0.0" />
+    <PackageReference Include="Enderlook.Reflection" Version="1.0.0" />
+    <PackageReference Include="Enderlook.Utils" Version="1.0.0" />
+  </ItemGroup>
+
   <ItemGroup>
     <Analyzer Include="C:\Program Files (x86)\Microsoft Visual Studio Tools for Unity\16.0\Analyzers\Microsoft.Unity.Analyzers.dll" />
   </ItemGroup>
@@ -80,10 +87,6 @@
   <PropertyGroup Label="UserMacros">
     <UnityVersion>2019.2.17f1</UnityVersion>
   </PropertyGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Enderlook.Extensions" Version="2.2.0" />
-  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Enderlook.Unity.Attributes.AttributeUsage\Enderlook.Unity.Attributes.AttributeUsage.csproj" />

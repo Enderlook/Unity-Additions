@@ -1,6 +1,6 @@
-﻿using Enderlook.Unity.Attributes;
+﻿using Enderlook.Exceptions;
+using Enderlook.Unity.Attributes;
 using Enderlook.Unity.Attributes.AttributeUsage;
-using Enderlook.Utils.Exceptions;
 
 using System;
 

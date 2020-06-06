@@ -1,4 +1,4 @@
-﻿using Enderlook.Extensions;
+﻿using Enderlook.Enumerables;
 
 using System;
 using System.Linq;

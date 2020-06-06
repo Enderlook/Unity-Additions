@@ -53,7 +53,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Enderlook.Extensions" Version="2.2.0" />
+    <PackageReference Include="Enderlook.Reflection" Version="1.0.0" />
   </ItemGroup>
 
   <ItemGroup>

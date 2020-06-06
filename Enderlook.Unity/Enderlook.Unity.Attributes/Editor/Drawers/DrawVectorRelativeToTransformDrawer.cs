@@ -1,6 +1,6 @@
-﻿using Enderlook.Unity.Extensions;
+﻿using Enderlook.Exceptions;
+using Enderlook.Unity.Extensions;
 using Enderlook.Unity.Utils.UnityEditor;
-using Enderlook.Utils.Exceptions;
 
 using System;
 using System.Reflection;

@@ -70,10 +70,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Enderlook.Utils" Version="1.0.0" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\Enderlook.Unity.Serializables.Ranges\Enderlook.Unity.Serializables.Ranges.csproj" />
   </ItemGroup>
 

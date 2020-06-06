@@ -1,6 +1,4 @@
-﻿using Enderlook.Extensions;
-
-using System;
+﻿using System;
 using System.Reflection;
 
 using UnityEditor;

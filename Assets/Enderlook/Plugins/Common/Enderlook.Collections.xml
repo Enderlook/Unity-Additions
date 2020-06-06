@@ -4,6 +4,42 @@
         <name>Enderlook.Collections</name>
     </assembly>
     <members>
+        <member name="T:Enderlook.Collections.PriorityQueue`1">
+            <summary>
+            A data structure to store elements with priority.
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="P:Enderlook.Collections.PriorityQueue`1.Count">
+            <summary>
+            Count of elements.
+            </summary>
+        </member>
+        <member name="M:Enderlook.Collections.PriorityQueue`1.Enqueue(`0,System.Single)">
+            <summary>
+            Add an element.
+            </summary>
+            <param name="item">Element to add.</param>
+            <param name="priority">Priority of the element.</param>
+        </member>
+        <member name="M:Enderlook.Collections.PriorityQueue`1.DequeueMin">
+            <summary>
+            Dequeues the element with lowest priority.
+            </summary>
+            <returns>Element with lowest priority.</returns>
+        </member>
+        <member name="M:Enderlook.Collections.PriorityQueue`1.DequeueMax">
+            <summary>
+            Dequeues the element with highest priority.
+            </summary>
+            <returns>Element with highest priority.</returns>
+        </member>
+        <member name="T:Enderlook.Collections.SortedList`1">
+            <summary>
+            List data structured which store elements in a sorted way.
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
         <member name="P:Enderlook.Collections.SortedList`1.Capacity">
             <summary>
             Internal capacity of this <see cref="T:Enderlook.Collections.SortedList`1"/>.
@@ -39,6 +75,24 @@
             <param name="index">Index of element.</param>
             <returns>Element at <paramref name="index"/>.</returns>
         </member>
+        <member name="M:Enderlook.Collections.SortedList`1.#ctor(System.Collections.Generic.IComparer{`0})">
+            <summary>
+            Creates a sorted list.
+            </summary>
+            <param name="comparer">Comparer used to sort elements.</param>
+        </member>
+        <member name="M:Enderlook.Collections.SortedList`1.#ctor">
+            <summary>
+            Creates a sorted list.
+            </summary>
+        </member>
+        <member name="M:Enderlook.Collections.SortedList`1.#ctor(System.Int32,System.Collections.Generic.IComparer{`0})">
+            <summary>
+            Creates a sorted list.
+            </summary>
+            <param name="capacity">Initial capacity of its backign array.</param>
+            <param name="comparer">Comparer used to sort elements.</param>
+        </member>
         <member name="M:Enderlook.Collections.SortedList`1.Add(`0)">
             <summary>
             Adds the given <paramref name="item"/> to this <see cref="T:Enderlook.Collections.SortedList`1"/> in a sorted index.
@@ -72,19 +126,19 @@
         </member>
         <member name="M:Enderlook.Collections.SortedList`1.BinarySearch(`0)">
             <summary>
-            Uses a binary search algorithm to locate the element <see cref="!:item"/> in this <see cref="T:Enderlook.Collections.SortedList`1"/>.
+            Uses a binary search algorithm to locate the element <paramref name="item"/> in this <see cref="T:Enderlook.Collections.SortedList`1"/>.
             </summary>
             <param name="item">The object to locate. The value can be <see langword="null"/> for reference types.</param>
-            <returns>The zero-based index of <see cref="!:item"/> in this <see cref="T:Enderlook.Collections.SortedList`1"/>, if item is found; otherwise, a negative number that is the bitwise complement of the index of the next element that is larger than item or, if there is no larger element, the bitwise complement of <see cref="P:Enderlook.Collections.SortedList`1.Count"/>.</returns>
+            <returns>The zero-based index of <paramref name="item"/> in this <see cref="T:Enderlook.Collections.SortedList`1"/>, if item is found; otherwise, a negative number that is the bitwise complement of the index of the next element that is larger than item or, if there is no larger element, the bitwise complement of <see cref="P:Enderlook.Collections.SortedList`1.Count"/>.</returns>
         </member>
         <member name="M:Enderlook.Collections.SortedList`1.BinarySearch(System.Int32,System.Int32,`0)">
             <summary>
-            Uses a binary search algorithm to locate the element <see cref="!:item"/> in this <see cref="T:Enderlook.Collections.SortedList`1"/>.
+            Uses a binary search algorithm to locate the element <paramref name="item"/> in this <see cref="T:Enderlook.Collections.SortedList`1"/>.
             </summary>
             <param name="index">The zero-based starting index of the range to search.</param>
             <param name="count">The length of the range to search.</param>
             <param name="item">The object to locate. The value can be <see langword="null"/> for reference types.</param>
-            <returns>The zero-based index of <see cref="!:item"/> in this <see cref="T:Enderlook.Collections.SortedList`1"/>, if item is found; otherwise, a negative number that is the bitwise complement of the index of the next element that is larger than item or, if there is no larger element, the bitwise complement of <see cref="P:Enderlook.Collections.SortedList`1.Count"/>.</returns>
+            <returns>The zero-based index of <paramref name="item"/> in this <see cref="T:Enderlook.Collections.SortedList`1"/>, if item is found; otherwise, a negative number that is the bitwise complement of the index of the next element that is larger than item or, if there is no larger element, the bitwise complement of <see cref="P:Enderlook.Collections.SortedList`1.Count"/>.</returns>
         </member>
         <member name="M:Enderlook.Collections.SortedList`1.Clear">
             <summary>

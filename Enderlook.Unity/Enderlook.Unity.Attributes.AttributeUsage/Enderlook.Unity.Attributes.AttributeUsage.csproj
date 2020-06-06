@@ -81,12 +81,11 @@
     <UnityVersion>2019.2.17f1</UnityVersion>
   </PropertyGroup>
 
-  <ItemGroup>
+  <ItemGroup Condition="$(DefineConstants.Contains('UNITY_EDITOR'))">
+    <PackageReference Include="Enderlook.Enumerables" Version="1.0.0" />
+    <PackageReference Include="Enderlook.Exceptions" Version="1.0.0" />
+    <PackageReference Include="Enderlook.Reflection" Version="1.0.0" />
     <PackageReference Include="Enderlook.Utils" Version="1.0.0" />
-  </ItemGroup>
-  
-  <ItemGroup Condition="$(DefineConstants.Contains('UNITY_EDITOR_TESTING'))">
-    <PackageReference Include="Enderlook.Extensions" Version="2.2.0" />
   </ItemGroup>
     
   <ItemGroup>

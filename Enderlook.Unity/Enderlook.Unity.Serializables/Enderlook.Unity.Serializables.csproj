@@ -70,7 +70,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Enderlook.Extensions" Version="2.2.0" />
+    <PackageReference Include="Enderlook.Exceptions" Version="1.0.0" />
+    <PackageReference Include="Enderlook.Text" Version="1.0.0" />
   </ItemGroup>
 
   <ItemGroup>

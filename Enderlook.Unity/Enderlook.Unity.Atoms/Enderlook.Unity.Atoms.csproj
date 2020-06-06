@@ -76,10 +76,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Enderlook.Extensions" Version="2.2.0" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\Enderlook.Unity.Attributes.AttributeUsage\Enderlook.Unity.Attributes.AttributeUsage.csproj" />
     <ProjectReference Include="..\Enderlook.Unity.Attributes\Enderlook.Unity.Attributes.csproj" />
     <ProjectReference Include="..\Enderlook.Unity.Utils.Interfaces\Enderlook.Unity.Utils.Interfaces.csproj" />
@@ -716,6 +712,11 @@
 
   <ItemGroup>
     <Folder Include="Runtime\TextTransform\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Enderlook.Collections-Extensions" Version="1.0.0" />
+    <PackageReference Include="Enderlook.Exceptions" Version="1.0.0" />
   </ItemGroup>
 
   <PropertyGroup>

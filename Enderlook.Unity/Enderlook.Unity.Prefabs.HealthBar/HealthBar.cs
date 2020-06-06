@@ -31,7 +31,7 @@ namespace Enderlook.Unity.Prefabs.HealthBarGUI
 
         [Header("Setup")]
         [SerializeField, Tooltip("Used to show numbers of health. Use null to deactivate it.")]
-        private Text textNumber;
+        private UnityEngine.UI.Text textNumber;
 
         [SerializeField, Tooltip("Represent object health.")]
         private GameObject healthBar;

@@ -1,4 +1,4 @@
-﻿using Enderlook.Utils.Exceptions;
+﻿using Enderlook.Exceptions;
 
 using UnityEditor;
 
