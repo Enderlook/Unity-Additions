@@ -1,4 +1,6 @@
-﻿using Enderlook.Exceptions;
+﻿#if UNITY_EDITOR
+using Enderlook.Exceptions;
+#endif
 
 using System;
 using System.Collections.Generic;
