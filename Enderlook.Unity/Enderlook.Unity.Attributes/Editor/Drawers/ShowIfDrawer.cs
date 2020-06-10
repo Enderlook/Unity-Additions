@@ -58,7 +58,7 @@ namespace Enderlook.Unity.Attributes
 
                 if (helper.TryGetParentTargetObjectOfProperty(out object parent))
                 {
-                    active = parent.GetValueFromFirstMember<bool>(showIfAttribute.nameOfConditional);
+                    active = parent.GetValueFromFirstMember<bool>(showIfAttribute.nameOfConditional, true);
                     active = active == showIfAttribute.goal;
                     return active.Value;
                 }

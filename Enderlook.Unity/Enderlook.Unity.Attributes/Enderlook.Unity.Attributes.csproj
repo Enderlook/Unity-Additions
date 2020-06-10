@@ -76,7 +76,7 @@
   <ItemGroup Condition="$(DefineConstants.Contains('UNITY_EDITOR'))">
     <PackageReference Include="Enderlook.Enumerables" Version="1.0.0" />
     <PackageReference Include="Enderlook.Exceptions" Version="1.0.0" />
-    <PackageReference Include="Enderlook.Reflection" Version="1.0.0" />
+    <PackageReference Include="Enderlook.Reflection" Version="1.1.0" />
     <PackageReference Include="Enderlook.Utils" Version="1.0.0" />
   </ItemGroup>
 
