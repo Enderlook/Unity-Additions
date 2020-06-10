@@ -71,6 +71,7 @@ namespace Enderlook.Unity.Serializables.Physics
         }
 
         private static float Flip(float value, bool invert) => invert ? -value : value;
+
         private Vector2 FlipIfNecessary(Vector2 value) => new Vector2(Flip(value.x, FlipX), Flip(value.y, FlipY));
 
         public void SetReference(Transform referencePosition, SpriteRenderer referenceSprite = null)
