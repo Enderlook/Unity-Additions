@@ -715,7 +715,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Enderlook.Collections-Extensions" Version="1.0.0" />
+    <PackageReference Include="Enderlook.Collections-Extensions" Version="1.0.1" />
     <PackageReference Include="Enderlook.Exceptions" Version="1.0.0" />
   </ItemGroup>
 
