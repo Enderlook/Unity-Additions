@@ -129,7 +129,8 @@ namespace Enderlook.Unity.Prefabs.HealthBarGUI
             if (healingImage != null)
                 healingImage.fillAmount = 0;
 
-            UpdateNonDynamicNumber();
+            if (textNumber != null)
+                UpdateNonDynamicNumber();
         }
 
         /// <summary>
