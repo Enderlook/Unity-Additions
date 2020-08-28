@@ -24,6 +24,14 @@ namespace Enderlook.Unity.Attributes
         // How color is multiplied in the area fields
         private const float COLOR_MULTIPLIER = .9f;
 
+        // Whenever it should show a button to open it as a window
+        private const bool SHOW_BUTTON = false;
+
+        private static readonly GUIStyle popupStyle = new GUIStyle(GUI.skin.GetStyle("PaneOptions"))
+        {
+            imagePosition = ImagePosition.ImageOnly
+        };
+
         static ExpandableDrawer()
         {
             if (COLOR_MULTIPLIER > 1 || COLOR_MULTIPLIER <= 0)
@@ -34,7 +42,30 @@ namespace Enderlook.Unity.Attributes
         {
             object reference = property.objectReferenceValue;
 
-            EditorGUI.PropertyField(position, property, label, true);
+            ExpandableAttribute expandableAttribute = (ExpandableAttribute)attribute;
+
+            if (expandableAttribute.showButton ?? SHOW_BUTTON)
+            {
+                // Show field label
+                Rect newPosition = EditorGUI.PrefixLabel(position, label);
+
+                // Calculate rect for button
+                Rect buttonRect = new Rect(
+                    newPosition.x,
+                    newPosition.y + popupStyle.margin.top,
+                    popupStyle.fixedWidth + popupStyle.margin.right - (EditorGUI.indentLevel * popupStyle.fixedWidth),
+                    newPosition.height - popupStyle.margin.top
+                );
+
+                if (GUI.Button(buttonRect, GUIContent.none, popupStyle))
+                    ExpandableWindow.CreateWindow(property);
+
+                newPosition.xMin += buttonRect.width;
+
+                EditorGUI.PropertyField(newPosition, property, GUIContent.none, true);
+            }
+            else
+                EditorGUI.PropertyField(position, property, label, true);
 
             Type type = property.serializedObject.targetObject.GetType();
             if (!type.IsSubclassOf(typeof(UnityEngine.Object)))
@@ -42,8 +73,6 @@ namespace Enderlook.Unity.Attributes
                 Debug.LogError($"{nameof(ExpandableAttribute)} can only be used on types subclasses of {nameof(UnityEngine.Object)}. {property.name} from {property.GetParentTargetObjectOfProperty()} (path {property.propertyPath}) is type {type}.");
                 return;
             }
-
-            ExpandableAttribute expandableAttribute = (ExpandableAttribute)attribute;
 
             // If we have a value
             if (reference != null)
