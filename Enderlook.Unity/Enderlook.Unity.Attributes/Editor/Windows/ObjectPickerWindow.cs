@@ -12,7 +12,7 @@ using UnityObject = UnityEngine.Object;
 
 namespace Enderlook.Unity.Attributes
 {
-    public class ObjectPickerWindow : EditorWindow
+    internal class ObjectPickerWindow : EditorWindow
     {
         private static readonly GUIContent CONTEXT_PROPERTY_MENU = new GUIContent("Object Picker Menu", "Open the Object Picker Menu");
         private static readonly GUIContent TITLE_CONTENT = new GUIContent("Object Picker Menu");
