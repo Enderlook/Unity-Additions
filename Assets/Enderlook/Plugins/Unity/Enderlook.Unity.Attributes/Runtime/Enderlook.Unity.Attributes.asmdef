@@ -1,0 +1,17 @@
+{
+    "name": "Enderlook.Unity.Attributes",
+    "references": [
+        "GUID:2961b0f4e0ca13a4dafeea1a2acfe97e",
+        "GUID:38c1567aec1ad1b409fef6f67b36a9a6",
+        "GUID:eab80c24b088fb24db8d67944ca595fe",
+        "GUID:98860ef3d112de64496170c0cc4b6532"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": []
+}

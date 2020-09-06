@@ -1,0 +1,17 @@
+{
+    "name": "Enderlook.Unity.ScriptableObjects.PolySwitchers-Editor",
+    "references": [
+        "GUID:7390cb209d6af834da6ec1f888ea4e22",
+        "GUID:eab80c24b088fb24db8d67944ca595fe"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": []
+}

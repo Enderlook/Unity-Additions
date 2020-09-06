@@ -1,0 +1,17 @@
+{
+    "name": "Enderlook.Unity.Components.Navigation",
+    "references": [
+        "GUID:2961b0f4e0ca13a4dafeea1a2acfe97e",
+        "GUID:d11355b756af5f64e8727c229cf80f0c",
+        "GUID:7fa9013c9e19acc46a1c16bdebdb19d2",
+        "GUID:eab80c24b088fb24db8d67944ca595fe"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": []
+}

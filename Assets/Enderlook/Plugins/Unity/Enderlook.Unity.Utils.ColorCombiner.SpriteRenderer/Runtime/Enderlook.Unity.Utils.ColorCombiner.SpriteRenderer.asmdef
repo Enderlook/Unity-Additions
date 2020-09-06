@@ -1,0 +1,16 @@
+{
+    "name": "Enderlook.Unity.Utils.ColorCombiner.SpriteRenderer",
+    "references": [
+        "GUID:08f6c8d531802904a862af8d86810aae",
+        "GUID:7fa9013c9e19acc46a1c16bdebdb19d2",
+        "GUID:826c5301f6a753347acc164954da1eac"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": []
+}

@@ -1,0 +1,17 @@
+{
+    "name": "Enderlook.Unity.Components.ScriptableSound-Editor",
+    "references": [
+        "GUID:88cdf4c8509ef7148a25d90ac386dc38",
+        "GUID:eab80c24b088fb24db8d67944ca595fe"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": []
+}

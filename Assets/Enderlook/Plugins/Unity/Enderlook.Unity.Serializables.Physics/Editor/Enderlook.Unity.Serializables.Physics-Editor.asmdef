@@ -1,0 +1,18 @@
+{
+    "name": "Enderlook.Unity.Serializables.Physics-Editor",
+    "references": [
+        "GUID:38c1567aec1ad1b409fef6f67b36a9a6",
+        "GUID:5267958c3f3cb104a8179111d2ca984a",
+        "GUID:eab80c24b088fb24db8d67944ca595fe"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": []
+}

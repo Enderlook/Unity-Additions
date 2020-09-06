@@ -1,0 +1,16 @@
+{
+    "name": "Enderlook.Unity.Utils.UnityEditor",
+    "references": [
+        "GUID:d11355b756af5f64e8727c229cf80f0c"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": []
+}

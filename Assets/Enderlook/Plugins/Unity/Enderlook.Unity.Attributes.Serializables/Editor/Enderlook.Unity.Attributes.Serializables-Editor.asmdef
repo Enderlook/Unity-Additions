@@ -1,0 +1,21 @@
+{
+    "name": "Enderlook.Unity.Attributes.Serializables-Editor",
+    "references": [
+        "GUID:38c1567aec1ad1b409fef6f67b36a9a6",
+        "GUID:cc45adc05c8db254c8a4b9541ccc334b",
+        "GUID:eab80c24b088fb24db8d67944ca595fe",
+        "GUID:26cff7e8b6832944ebb98f436e4adba4",
+        "GUID:3aec6c26edddc64419aeee18ec2e29c8",
+        "GUID:84b27ab5b449b2e45917447944af3694"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": []
+}

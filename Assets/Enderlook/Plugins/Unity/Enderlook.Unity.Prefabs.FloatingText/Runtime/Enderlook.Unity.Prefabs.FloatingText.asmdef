@@ -1,0 +1,15 @@
+{
+    "name": "Enderlook.Unity.Prefabs.FloatingText",
+    "references": [
+        "GUID:7fa9013c9e19acc46a1c16bdebdb19d2",
+        "GUID:d11355b756af5f64e8727c229cf80f0c"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": []
+}

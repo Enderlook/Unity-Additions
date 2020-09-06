@@ -1,0 +1,14 @@
+{
+    "name": "Enderlook.Unity.Utils",
+    "references": [
+        "GUID:98860ef3d112de64496170c0cc4b6532"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": []
+}

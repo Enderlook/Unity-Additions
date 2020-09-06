@@ -1,0 +1,16 @@
+{
+    "name": "Enderlook.Unity.Serializables.Ranges-Editor",
+    "references": [
+        "GUID:cc45adc05c8db254c8a4b9541ccc334b"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": []
+}

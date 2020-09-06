@@ -1,0 +1,16 @@
+{
+    "name": "Enderlook.Unity.Serializables",
+    "references": [
+        "GUID:7fa9013c9e19acc46a1c16bdebdb19d2",
+        "GUID:826c5301f6a753347acc164954da1eac",
+        "GUID:2961b0f4e0ca13a4dafeea1a2acfe97e"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": []
+}

@@ -1,0 +1,14 @@
+{
+    "name": "Enderlook.Unity.Utils.Clockwork",
+    "references": [
+        "GUID:826c5301f6a753347acc164954da1eac"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": []
+}

@@ -1,0 +1,17 @@
+{
+    "name": "Enderlook.Unity.Serializables.Collections-Editor",
+    "references": [
+        "GUID:38c1567aec1ad1b409fef6f67b36a9a6",
+        "GUID:50f0fa56a9d83914b920a5a24662ed01"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": []
+}
