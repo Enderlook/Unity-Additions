@@ -13,119 +13,292 @@ namespace Enderlook.Unity.Attributes
     [CustomPropertyDrawer(typeof(ExpandableAttribute), true)]
     internal class ExpandableDrawer : SmartPropertyDrawer
     {
-        // https://forum.unity.com/threads/editor-tool-better-scriptableobject-inspector-editing.484393/
+        /// <summary>
+        /// How button to open in window must be shown.
+        /// </summary>
+        private enum ButtonDisplayMode
+        {
+            /// <summary>
+            /// No button is show.
+            /// </summary>
+            None,
 
-        // Cached scriptable object editor
-        private Editor editor;
+            /// <summary>
+            /// The button is show in the same line.
+            /// </summary>
+            Inline,
 
-        // Whenever wrap fields in a box
-        private const bool USE_BOX = true;
+            /// <summary>
+            /// The button is shown inside the foldout.
+            /// </summary>
+            Foldout,
+        }
 
-        // How color is multiplied in the area fields
-        private const float COLOR_MULTIPLIER = .9f;
+        /// <summary>
+        /// How button is show.
+        /// </summary>
+        private const ButtonDisplayMode SHOW_OPEN_IN_WINDOW_BUTTON = ButtonDisplayMode.Inline;
 
-        // Whenever it should show a button to open it as a window
-        private const bool SHOW_BUTTON = false;
+        /// <summary>
+        /// Whenever the script field type must be shown on foldout.
+        /// </summary>
+        private const bool SHOW_SCRIPT_FIELD = true;
 
-        private static readonly GUIStyle popupStyle = new GUIStyle(GUI.skin.GetStyle("PaneOptions"))
+        /// <summary>
+        /// Whenever the foldout has an outline or not.
+        /// </summary>
+        private const bool HAS_OUTLINE = true;
+
+        /// <summary>
+        /// Determines the color applied to the foldout.
+        /// </summary>
+        private enum FoldoutColor
+        {
+            /// <summary>
+            /// Apply background color.
+            /// </summary>
+            None,
+
+            /// <summary>
+            /// Apply a dark color.
+            /// </summary>
+            Dark,
+
+            /// <summary>
+            /// Apply a dark color which becomes darker when nested.
+            /// </summary>
+            Darker,
+
+            /// <summary>
+            /// Apply a light color.
+            /// </summary>
+            Light,
+
+            /// <summary>
+            /// Apply a light color which becomes darker when nested.
+            /// </summary>
+            Lighten,
+
+            /// <summary>
+            /// Apply a help box style.
+            /// </summary>
+            HelpBox,
+        }
+
+        /// <summary>
+        /// Determines the foldout color
+        /// </summary>
+        private const FoldoutColor HAS_FOLDOUT_COLOR = FoldoutColor.Darker;
+
+        /// <summary>
+        /// Determines the color on <see cref="FoldoutColor.Dark"/>
+        /// </summary>
+        private static readonly Color DARK_FOLDOUT_COLOR = new Color(0, 0, 0, .2f);
+
+        /// <summary>
+        /// Determines the color on <see cref="FoldoutColor.Light"/>
+        /// </summary>
+        private static readonly Color LIGHT_FOLDOUT_COLOR = new Color(1, 1, 1, .2f);
+
+        /// <summary>
+        /// Determines how color is multplied on <see cref="FoldoutColor.Darker"/>.
+        /// </summary>
+        private const float DARKER_MULTIPLIER = 0.9f;
+
+        /// <summary>
+        /// Determines how color is multplied on <see cref="FoldoutColor.Lighten"/>.
+        /// </summary>
+        private const float LIGHTEN_MULTIPLIER = 1.1f;
+
+        private const int INDENT_WIDTH = 8; // TODO: This is wrong.
+
+        /// <summary>
+        /// Determines spacing amount of space inside the foldout.
+        /// </summary>
+        private const float INNER_SPACING = 4;
+
+        /// <summary>
+        /// Determines spacing amount of space outside the foldout.
+        /// </summary>
+        private const float OUTER_SPACING = 1.5f;
+
+        private static readonly GUIContent OPEN_IN_NEW_WINDOW_BUTTON = new GUIContent("Open in Window", "Open a window to edit this content.");
+
+        private static readonly GUIStyle inlineButtonStyle = new GUIStyle(GUI.skin.GetStyle("PaneOptions"))
         {
             imagePosition = ImagePosition.ImageOnly
         };
 
-        static ExpandableDrawer()
-        {
-            if (COLOR_MULTIPLIER > 1 || COLOR_MULTIPLIER <= 0)
-                throw new ArgumentOutOfRangeException(nameof(COLOR_MULTIPLIER), COLOR_MULTIPLIER, "Must be greater than 0 and lower or equal 1.");
-        }
-
+#pragma warning disable CS0162
         protected override void OnGUISmart(Rect position, SerializedProperty property, GUIContent label)
         {
-            object reference = property.objectReferenceValue;
-
-            ExpandableAttribute expandableAttribute = (ExpandableAttribute)attribute;
-
-            if (expandableAttribute.showButton ?? SHOW_BUTTON)
-            {
-                // Show field label
-                Rect newPosition = EditorGUI.PrefixLabel(position, label);
-
-                // Calculate rect for button
-                Rect buttonRect = new Rect(
-                    newPosition.x,
-                    newPosition.y + popupStyle.margin.top,
-                    popupStyle.fixedWidth + popupStyle.margin.right - (EditorGUI.indentLevel * popupStyle.fixedWidth),
-                    newPosition.height - popupStyle.margin.top
-                );
-
-                if (GUI.Button(buttonRect, GUIContent.none, popupStyle))
-                    ExpandableWindow.CreateWindow(property);
-
-                newPosition.xMin += buttonRect.width;
-
-                EditorGUI.PropertyField(newPosition, property, GUIContent.none, true);
-            }
-            else
-                EditorGUI.PropertyField(position, property, label, true);
-
             Type type = property.serializedObject.targetObject.GetType();
             if (!type.IsSubclassOf(typeof(UnityEngine.Object)))
             {
                 Debug.LogError($"{nameof(ExpandableAttribute)} can only be used on types subclasses of {nameof(UnityEngine.Object)}. {property.name} from {property.GetParentTargetObjectOfProperty()} (path {property.propertyPath}) is type {type}.");
+                EditorGUI.PropertyField(position, property, GUIContent.none, true);
                 return;
             }
 
-            // If we have a value
-            if (reference != null)
-                // We can make the field expandable with a Foldout
-                // No GUIContent because the property field below already has it.
-                property.isExpanded = EditorGUI.Foldout(position, property.isExpanded, GUIContent.none, true);
+            Rect fieldRect = position;
+            fieldRect.height = EditorGUIUtility.singleLineHeight;
 
-            // If the foldout is expanded
-            if (property.isExpanded)
+            if (SHOW_OPEN_IN_WINDOW_BUTTON == ButtonDisplayMode.Inline)
             {
-                EditorGUI.indentLevel++;
+                // Show field label
+                Rect newPosition = EditorGUI.PrefixLabel(fieldRect, label);
 
-                if (editor == null)
-                    Editor.CreateCachedEditor(property.objectReferenceValue, null, ref editor);
-                // Check again because it may not be created by the Editor.CreateChachedEditor
-                if (editor != null)
-                {
-                    #region Style
-                    // https://forum.unity.com/threads/giving-unitygui-elements-a-background-color.20510/
-                    bool isBoxed = expandableAttribute.isBoxed ?? USE_BOX;
-                    Color color = GUI.backgroundColor;
-                    float colorMultiplier = expandableAttribute.colorMultiplier ?? COLOR_MULTIPLIER;
-                    if (isBoxed)
-                    {
-                        if (colorMultiplier != 1)
-                            GUI.backgroundColor = new Color(color.r * colorMultiplier, color.g * colorMultiplier, color.b * colorMultiplier);
-                        GUILayout.BeginVertical("box");
-                    }
-                    else
-                        if (colorMultiplier != 1)
-                    {
-                        GUIStyle guiStyle = new GUIStyle();
-                        Texture2D texture2D = new Texture2D(1, 1);
-                        texture2D.SetPixel(0, 0, new Color(0, 0, 0, 1 - colorMultiplier));
-                        texture2D.Apply();
-                        guiStyle.normal.background = texture2D;
-                        GUILayout.BeginVertical(guiStyle);
-                    }
-                    else
-                        GUILayout.BeginVertical();
-                    #endregion
-                    EditorGUI.BeginChangeCheck();
-                    editor.OnInspectorGUI();
-                    if (EditorGUI.EndChangeCheck())
-                        property.serializedObject.ApplyModifiedProperties();
-                    GUILayout.EndVertical();
-                    #region Style
-                    if (colorMultiplier != 1)
-                        GUI.backgroundColor = color;
-                    #endregion
-                }
-                EditorGUI.indentLevel--;
+                // Calculate rect for button
+                Rect buttonRect = new Rect(
+                    newPosition.x,
+                    newPosition.y + inlineButtonStyle.margin.top,
+                    inlineButtonStyle.fixedWidth + inlineButtonStyle.margin.right - (EditorGUI.indentLevel * inlineButtonStyle.fixedWidth),
+                    newPosition.height - inlineButtonStyle.margin.top
+                );
+
+                // Add button
+                GUI.enabled = property.objectReferenceValue != null;
+                if (GUI.Button(buttonRect, GUIContent.none, inlineButtonStyle))
+                    ExpandableWindow.CreateWindow(property);
+                GUI.enabled = true;
+                newPosition.xMin += buttonRect.width;
+
+                // Add property
+                EditorGUI.PropertyField(newPosition, property, GUIContent.none, true);
             }
+            else
+                EditorGUI.PropertyField(fieldRect, property, label, true);
+
+            if (property.objectReferenceValue == null)
+                return;
+
+            property.isExpanded = EditorGUI.Foldout(fieldRect, property.isExpanded, GUIContent.none, true);
+
+            if (!property.isExpanded)
+                return;
+
+            SerializedObject targetObject = new SerializedObject(property.objectReferenceValue);
+
+            if (targetObject == null)
+                return;
+
+            SerializedProperty field = targetObject.GetIterator();
+            field.NextVisible(true);
+            
+            fieldRect.x += INDENT_WIDTH;
+            fieldRect.y += INNER_SPACING + OUTER_SPACING;
+
+            Rect box = position;
+            // Calculate container box
+            if (HAS_OUTLINE || HAS_FOLDOUT_COLOR != FoldoutColor.None)
+            {
+                box.y += EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing;// + OUTER_SPACING; // That may be added
+                box.height -= EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing;
+                box.height += INNER_SPACING;
+                box.height -= OUTER_SPACING * 3; // If problems, this value should be 2
+                box.width += INDENT_WIDTH * 2;
+                box.x -= INDENT_WIDTH;
+            }
+
+            if (HAS_OUTLINE)
+                GUI.Box(box, GUIContent.none);
+
+            Color backgroundColorOld = GUI.backgroundColor;
+            switch (HAS_FOLDOUT_COLOR)
+            {
+                case FoldoutColor.Dark:
+                    EditorGUI.DrawRect(box, DARK_FOLDOUT_COLOR);
+                    break;
+                case FoldoutColor.Light:
+                    EditorGUI.DrawRect(box, LIGHT_FOLDOUT_COLOR);
+                    break;
+                case FoldoutColor.HelpBox:
+                    EditorGUI.HelpBox(box, "", MessageType.None);
+                    break;
+                case FoldoutColor.Darker:
+                    GUI.backgroundColor = new Color(
+                        GUI.backgroundColor.r * DARKER_MULTIPLIER,
+                        GUI.backgroundColor.g * DARKER_MULTIPLIER,
+                        GUI.backgroundColor.b * DARKER_MULTIPLIER,
+                        GUI.backgroundColor.a
+                    );
+                    break;
+                case FoldoutColor.Lighten:
+                    GUI.backgroundColor = new Color(
+                        GUI.backgroundColor.r * LIGHTEN_MULTIPLIER,
+                        GUI.backgroundColor.g * LIGHTEN_MULTIPLIER,
+                        GUI.backgroundColor.b * LIGHTEN_MULTIPLIER,
+                        GUI.backgroundColor.a
+                    );
+                    break;
+            }
+
+            if (SHOW_OPEN_IN_WINDOW_BUTTON == ButtonDisplayMode.Foldout)
+            {
+                fieldRect.y += EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing;
+                if (GUI.Button(fieldRect, OPEN_IN_NEW_WINDOW_BUTTON))
+                    ExpandableWindow.CreateWindow(property);
+            }
+
+            if (SHOW_SCRIPT_FIELD)
+            {
+                fieldRect.y += EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing;
+                EditorGUI.BeginDisabledGroup(true);
+                EditorGUI.PropertyField(fieldRect, field, true);
+                EditorGUI.EndDisabledGroup();
+            }
+
+            while (field.NextVisible(true))
+            {
+                fieldRect.y += EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing;
+                fieldRect.height = EditorGUI.GetPropertyHeight(field, true);
+
+                try
+                {
+                    EditorGUI.PropertyField(fieldRect, field, true);
+                }
+                catch (StackOverflowException)
+                {
+                    field.objectReferenceValue = null;
+                    Debug.LogError("Detected self-nesting which caused StackOverFlowException. Avoid circular reference in nested objects.");
+                }
+            }
+
+            GUI.backgroundColor = backgroundColorOld;
         }
+
+        protected override float GetPropertyHeightSmart(SerializedProperty property, GUIContent label)
+        {
+            float totalHeight = EditorGUIUtility.singleLineHeight;
+
+            if (property.objectReferenceValue == null)
+                return totalHeight;
+
+            if (!property.isExpanded)
+                return totalHeight;
+
+            totalHeight += (INNER_SPACING * 2) + (OUTER_SPACING * 2);
+
+            SerializedObject targetObject = new SerializedObject(property.objectReferenceValue);
+
+            if (targetObject == null)
+                return totalHeight;
+
+            SerializedProperty field = targetObject.GetIterator();
+
+            field.NextVisible(true);
+
+            if (SHOW_OPEN_IN_WINDOW_BUTTON == ButtonDisplayMode.Foldout)
+                totalHeight += EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing;
+
+            if (SHOW_SCRIPT_FIELD)
+                totalHeight += EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing;
+
+            while (field.NextVisible(false))
+                totalHeight += EditorGUI.GetPropertyHeight(field, true) + EditorGUIUtility.standardVerticalSpacing;
+
+            return totalHeight;
+        }
+#pragma warning restore CS162
     }
 }
