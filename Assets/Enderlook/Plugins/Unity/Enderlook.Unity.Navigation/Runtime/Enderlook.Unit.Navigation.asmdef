@@ -1,0 +1,17 @@
+{
+    "name": "Enderlook.Unit.Navigation",
+    "references": [
+        "GUID:5de307f302d28844bb21154cddf83825",
+        "GUID:7fa9013c9e19acc46a1c16bdebdb19d2",
+        "GUID:2961b0f4e0ca13a4dafeea1a2acfe97e",
+        "GUID:98860ef3d112de64496170c0cc4b6532"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": []
+}

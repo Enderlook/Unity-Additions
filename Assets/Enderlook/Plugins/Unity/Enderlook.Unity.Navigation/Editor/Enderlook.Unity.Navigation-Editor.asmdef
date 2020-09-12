@@ -1,0 +1,18 @@
+{
+    "name": "Enderlook.Unity.Navigation-Editor",
+    "references": [
+        "GUID:5f40d88b7c80386419a5c326ed74cf0a",
+        "GUID:eab80c24b088fb24db8d67944ca595fe",
+        "GUID:98860ef3d112de64496170c0cc4b6532"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": []
+}
