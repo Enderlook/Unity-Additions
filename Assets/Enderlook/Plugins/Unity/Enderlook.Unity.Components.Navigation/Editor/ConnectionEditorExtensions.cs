@@ -28,16 +28,17 @@ namespace Enderlook.Unity.Components.Navigation
             Vector2 half = (start + end) / 2;
 
             // Draw arrow
-            Handles.DrawSolidArc(half, Vector3.forward, (start - end).normalized, 35, arrowDrawSize);
-            Handles.DrawSolidArc(half, Vector3.forward, (start - end).normalized, -35, arrowDrawSize);
+            Vector2 normalized = (start - end).normalized;
+            Handles.DrawSolidArc(half, Vector3.forward, normalized, 35, arrowDrawSize);
+            Handles.DrawSolidArc(half, Vector3.forward, normalized, -35, arrowDrawSize);
             if (fontSize > 0)
                 start.DrawDistance(end, color, fontSize, fontStyle);
 
             if (connection.IsExtreme)
             {
                 Handles.color = NavigationGraphEditor.extremeColor;
-                Handles.DrawWireArc(half, Vector3.forward, (start - end).normalized, 35, arrowDrawSize);
-                Handles.DrawWireArc(half, Vector3.forward, (start - end).normalized, -35, arrowDrawSize);
+                Handles.DrawWireArc(half, Vector3.forward, normalized, 35, arrowDrawSize);
+                Handles.DrawWireArc(half, Vector3.forward, normalized, -35, arrowDrawSize);
             }
         }
 

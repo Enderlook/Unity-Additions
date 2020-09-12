@@ -22,7 +22,8 @@ namespace Enderlook.Unity.Components.Navigation
             switch (distanceFormula)
             {
                 case DistanceFormula.Euclidean:
-                    return Distances.CalculateEuclideanDistance;
+                    return Distances
+                        .CalculateEuclideanDistance;
                 case DistanceFormula.Manhattan:
                     return Distances.CalculateManhattanDistance;
                 case DistanceFormula.Chebyshov:

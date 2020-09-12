@@ -41,7 +41,7 @@ namespace Enderlook.Unity.Components.Navigation
             private set => Graph.Grid = value;
         }
 
-        public Transform Reference => ((IGraphReader)Graph).Reference;
+        public Transform Reference => Graph.Reference;
 
         public void ResetGrid() => Graph.Grid = new List<Node>();
 
