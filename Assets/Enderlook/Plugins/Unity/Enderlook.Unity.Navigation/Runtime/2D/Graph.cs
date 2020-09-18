@@ -28,6 +28,12 @@ namespace Enderlook.Unity.Navigation.D2
 #pragma warning restore CS0649
 
         /// <summary>
+        /// Configures the orientation of this graph.
+        /// </summary>
+        /// <param name="orientation">New orientation.</param>
+        public void SetOrientation(Orientation orientation) => this.orientation = orientation;
+
+        /// <summary>
         /// Get the normal according to <see cref="orientation"/>.
         /// </summary>
         /// <returns>Normal.</returns>

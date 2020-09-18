@@ -90,6 +90,22 @@ namespace Enderlook.Unity.Navigation
             return pathList[index];
         }
 
+        /// <inheritdoc cref="IPathIndexing{T}.TryGetValueAt(int, out T)"/>
+        public bool TryGetValueAt(int index, out TNode value)
+        {
+            Debug.Assert(FoundPath);
+
+            if (pathList.Count == 0)
+                CalculatePathList();
+            if (index < pathList.Count)
+            {
+                value = pathList[index];
+                return true;
+            }
+            value = default;
+            return false;
+        }
+
         /// <inheritdoc cref="IPathIndexing{T}.TryGetNext(ref int, out T)"/>
         public bool TryGetNext(ref int index, out TNode value)
         {
@@ -100,8 +116,7 @@ namespace Enderlook.Unity.Navigation
 
             if (index < pathList.Count)
             {
-                index++;
-                value = pathList[index];
+                value = pathList[index++];
                 return true;
             }
 

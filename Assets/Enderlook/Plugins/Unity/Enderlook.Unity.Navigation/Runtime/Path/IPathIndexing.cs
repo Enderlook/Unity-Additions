@@ -17,6 +17,14 @@ namespace Enderlook.Unity.Navigation
         T GetValueAt(int index);
 
         /// <summary>
+        /// TRy get node at index <paramref name="index"/>.
+        /// </summary>
+        /// <param name="index">Index to look for node.</param>
+        /// <param name="value">Node at index <paramref name="index"/>, if any</param>
+        /// <returns>Whenever there was a node or not.</returns>
+        bool TryGetValueAt(int index, out T value);
+
+        /// <summary>
         /// Try to get next node.
         /// </summary>
         /// <param name="index">Old index.</param>
