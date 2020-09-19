@@ -17,7 +17,7 @@ namespace Enderlook.Unity.Navigation
     {
         private HashSet<TNode> visited = new HashSet<TNode>();
 
-        private PriorityQueue<TNode> toVisit = new PriorityQueue<TNode>();
+        private BinaryHeapMin<TNode, float> toVisit = new BinaryHeapMin<TNode, float>();
 
         /* https://code.msdn.microsoft.com/windowsdesktop/Dijkstras-Single-Soruce-69faddb3
         * https://www.geeksforgeeks.org/csharp-program-for-dijkstras-shortest-path-algorithm-greedy-algo-7/
@@ -40,12 +40,11 @@ namespace Enderlook.Unity.Navigation
             path.SetCostTo(from, 0);
 
             visited = new HashSet<TNode>();
-            toVisit = new PriorityQueue<TNode>();
+            toVisit = new BinaryHeapMin<TNode, float>();
             toVisit.Enqueue(from, 0);
 
-            while (toVisit.Count > 0)
+            while (toVisit.TryDequeue(out TNode node, out _))
             {
-                TNode node = toVisit.DequeueMin();
                 if (visited.Contains(node))
                     continue;
                 visited.Add(node);

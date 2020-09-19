@@ -49,12 +49,11 @@ namespace Enderlook.Unity.Components.Navigation
             previous = new Dictionary<Node, Connection>();
             distances = InitializeDistances(navigation, source);
             HashSet<Node> visited = new HashSet<Node>();
-            PriorityQueue<Node> toVisit = new PriorityQueue<Node>();
+            BinaryHeapMin<Node, float> toVisit = new BinaryHeapMin<Node, float>();
             toVisit.Enqueue(source, 0);
 
-            while (toVisit.Count > 0)
+            while (toVisit.TryDequeue(out Node node, out _))
             {
-                Node node = toVisit.DequeueMin();
                 if (visited.Contains(node))
                     continue;
                 visited.Add(node);
