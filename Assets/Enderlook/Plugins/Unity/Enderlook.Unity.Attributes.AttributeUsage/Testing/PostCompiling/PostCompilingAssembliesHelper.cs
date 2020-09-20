@@ -140,9 +140,12 @@ namespace Enderlook.Unity.Attributes.AttributeUsage.PostCompiling
         private static readonly List<MethodInfo> methodInfos = new List<MethodInfo>();
 
         [InitializeOnLoadMethod]
-        private static void Initialize() =>
+        private static void Initialize()
+        {
             // Add this to guarantee that task is completed.
-            EditorApplication.update += () =>
+            EditorApplication.update += Work;
+
+            void Work()
             {
                 if (task != null)
                     if (task.IsCompleted)
@@ -154,9 +157,11 @@ namespace Enderlook.Unity.Attributes.AttributeUsage.PostCompiling
                     {
                         Exception exception = task.Exception;
                         task = null;
+                        EditorApplication.update -= Work;
                         throw exception;
                     }
             };
+        }
 
         private static Task task;
 
