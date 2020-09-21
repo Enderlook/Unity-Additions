@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Threading;
 using System.Threading.Tasks;
 
 using UnityEditor;
@@ -138,45 +139,23 @@ namespace Enderlook.Unity.Attributes.AttributeUsage.PostCompiling
         private static readonly List<FieldInfo> fieldInfosSerializableByUnity = new List<FieldInfo>();
         private static readonly List<PropertyInfo> propertyInfos = new List<PropertyInfo>();
         private static readonly List<MethodInfo> methodInfos = new List<MethodInfo>();
-
-        [InitializeOnLoadMethod]
-        private static void Initialize()
-        {
-            // Add this to guarantee that task is completed.
-            EditorApplication.update += Work;
-
-            void Work()
-            {
-                if (task != null)
-                    if (task.IsCompleted)
-                    {
-                        task.Wait();
-                        task = null;
-                    }
-                    else if (task.IsFaulted)
-                    {
-                        Exception exception = task.Exception;
-                        task = null;
-                        EditorApplication.update -= Work;
-                        throw exception;
-                    }
-            };
-        }
-
-        private static Task task;
-
+        
         [DidReloadScripts(2)]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Code Quality", "IDE0051:Remove unused private members", Justification = "Used by Unity Editor")]
-        private static void ExecuteAnalysis()
+        private static async void ExecuteAnalysis()
         {
+            // When Unity is started the assemblies haven't loaded yet but this method is called, by adding this timer we reduce the chance of error
+            // TODO: This is prone to race condition
+            await Task.Delay(5).ConfigureAwait(true);
+
             // Can't do unsafe work in non-main thread. And this is unsafe
             IEnumerable<Type> types = GetAllTypesThatShouldBeInspected();
-            task = new Task(() =>
+
+            await Task.Run(() =>
             {
                 ScanAssemblies(types);
                 ExecuteCallbacks();
             });
-            task.Start();
         }
 
         private static IEnumerable<Assembly> GetAssemblies()
