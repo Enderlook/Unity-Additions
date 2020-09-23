@@ -39,8 +39,8 @@ namespace Enderlook.Unity.Navigation
             path.SetFromTo(from, to);
             path.SetCostTo(from, 0);
 
-            visited = new HashSet<TNode>();
-            toVisit = new BinaryHeapMin<TNode, float>();
+            visited.Clear();
+            toVisit.Clear();
             toVisit.Enqueue(from, 0);
 
             while (toVisit.TryDequeue(out TNode node, out _))
@@ -60,7 +60,7 @@ namespace Enderlook.Unity.Navigation
                     TNode neighbour = edge.To;
                     float distance = Relax(path, edge, distanceFromSource);
 
-                    toVisit.Enqueue(neighbour, distance + Heuristic(neighbour, from));
+                    toVisit.Enqueue(neighbour, distance + Heuristic(neighbour, to));
 
                     if (EqualityComparer<TNode>.Default.Equals(neighbour, to))
                     {
