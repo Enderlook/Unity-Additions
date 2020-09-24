@@ -10,14 +10,14 @@ namespace Enderlook.Unity.Navigation
     /// </summary>
     /// <typeparam name="TNode">Type of node.</typeparam>
     /// <typeparam name="TEdge">Type of edge.</typeparam>
-    /// <typeparam name="T">Type used to query nodes.</typeparam>
+    /// <typeparam name="TCoordinate">Type used to query nodes.</typeparam>
     /// <typeparam name="TRootSerializer">Type of root serializer.</typeparam>
     [Serializable]
-    public abstract class Graph<TNode, TEdge, T, TRootSerializer>
+    public abstract class Graph<TNode, TEdge, TCoordinate, TRootSerializer>
         : ScriptableObject,
             IGraphAtoms<TNode, TEdge>,
             IGraphSetter<TNode, TEdge>,
-            IGraphPathfinder<TNode, TEdge, T>,
+            IGraphPathfinder<TNode, TEdge, TCoordinate>,
             IGraphWrite<TNode, TEdge>,
             ISerializationCallbackReceiver
         where TNode : INode<TEdge>, INodeWrite<TNode, TEdge>
@@ -47,7 +47,7 @@ namespace Enderlook.Unity.Navigation
         IReadOnlyCollection<(TEdge, TEdge)> IGraphAtoms<TNode, TEdge>.EdgesDoubles => cacher.EdgesDoubles;
 
         /// <inheritdoc cref="IGraph{TNode, TEdge, T}.FindClosestNode(T)"/>
-        public TNode FindClosestNode(T value)
+        public TNode FindClosestNode(TCoordinate value)
         {
             float distance = float.PositiveInfinity;
             TNode closest = default;
@@ -70,10 +70,10 @@ namespace Enderlook.Unity.Navigation
         /// <param name="node">Node to compare value.</param>
         /// <param name="value">Value looked.</param>
         /// <returns>Distance from <paramref name="node"/> to <paramref name="value"/>.</returns>
-        protected abstract float GetDistance(TNode node, T value);
+        protected abstract float GetDistance(TNode node, TCoordinate value);
 
         /// <inheritdoc cref="IGraph{TNode, TEdge, T}.CalculatePath{TGraphPathfinder, TPath}(TGraphPathfinder, T, T, TPath)"/>
-        public void CalculatePath<TGraphPathfinder, TPath>(TGraphPathfinder pathfinder, T from, T to, TPath path)
+        public void CalculatePath<TGraphPathfinder, TPath>(TGraphPathfinder pathfinder, TCoordinate from, TCoordinate to, TPath path)
             where TGraphPathfinder : IPathfinder<TPath, TNode, TEdge>
             where TPath : IPathWriter<TNode, TEdge>
             => pathfinder.CalculatePath(FindClosestNode(from), FindClosestNode(to), path);
