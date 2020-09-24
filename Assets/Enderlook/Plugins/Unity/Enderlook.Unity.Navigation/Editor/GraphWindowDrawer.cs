@@ -13,6 +13,8 @@ namespace Enderlook.Unity.Navigation
         where TEdge : IEdge<TNode>
     {
         private readonly GUIContent DRAW_NODE_CHECKBOX = new GUIContent("Draw", "Whenever to draw nodes or not.");
+        private readonly GUIContent DRAW_OFFSET = new GUIContent("Offset", "Offset used to place node in scene when drawing.");
+        private readonly GUIContent DRAW_OFFSET_TRANSFORM = new GUIContent("Offset Transform", "Transform used to calculate offset used to place node in scene when drawing.");
         private readonly GUIContent DRAW_ARROWS_CHECKBOX = new GUIContent("Draw Arrow", "Whenever to draw flow arros in edges or not.");
         private readonly GUIContent INSPECT_NODES_CHECKBOX = new GUIContent("Inspect", "Allow inspection of nodes and edges.");
         private readonly GUIContent MOVE_NODES_CHECKBOX = new GUIContent("Move Nodes", "Allow to edit nodes position.");
@@ -27,6 +29,9 @@ namespace Enderlook.Unity.Navigation
         private Quaternion normalRotationQuaternion;
         private bool draw;
         private bool drawArrows;
+
+        private Transform drawOffsetTransform;
+        private Vector3 drawOffset;
 
         protected virtual bool AllowEditingPosition => false;
         private bool moveNodes;
@@ -56,6 +61,18 @@ namespace Enderlook.Unity.Navigation
             if (draw = EditorGUILayout.Toggle(DRAW_NODE_CHECKBOX, draw))
             {
                 EditorGUI.indentLevel++;
+
+                drawOffsetTransform = (Transform)EditorGUILayout.ObjectField(DRAW_OFFSET_TRANSFORM, drawOffsetTransform, typeof(Transform), true);
+                if (drawOffsetTransform != null)
+                {
+                    drawOffset = drawOffsetTransform.position;
+                    EditorGUI.BeginDisabledGroup(true);
+                }
+                else
+                    EditorGUI.BeginDisabledGroup(false);
+
+                drawOffset = EditorGUILayout.Vector3Field(DRAW_OFFSET, drawOffset);
+                EditorGUI.EndDisabledGroup();
 
                 drawArrows = EditorGUILayout.Toggle(DRAW_ARROWS_CHECKBOX, drawArrows);
 
@@ -113,6 +130,13 @@ namespace Enderlook.Unity.Navigation
             normalQuaternion = Quaternion.Euler(normal.x, normal.y, normal.z);
             normalRotationQuaternion = Quaternion.LookRotation(normal);
 
+            if (drawOffsetTransform != null && drawOffset != drawOffsetTransform.position)
+            {
+                // Update this value here to prevent one-frame old values
+                drawOffset = drawOffsetTransform.position;
+                window.Repaint();
+            }
+
             if (draw)
             {
                 foreach (TNode node in Graph.Nodes)
@@ -131,6 +155,7 @@ namespace Enderlook.Unity.Navigation
 
         private void DrawPoint(TNode node, Vector3 point)
         {
+            point += drawOffset;
             if (moveNodes && AllowEditingPosition)
             {
                 Vector3 newPosition;
@@ -140,7 +165,7 @@ namespace Enderlook.Unity.Navigation
                     newPosition = Handles.FreeMoveHandle(point, normalQuaternion, NODE_SIZE, Vector3.zero, Handles.CircleHandleCap);
 
                 if (newPosition != point)
-                    SetPosition(node, newPosition);
+                    SetPosition(node, newPosition - drawOffset);
             }
             else
             {
@@ -160,6 +185,9 @@ namespace Enderlook.Unity.Navigation
 
         private void DrawLine(Vector3 from, Vector3 to, (TEdge, TEdge) pair, bool doubleSide)
         {
+            from += drawOffset;
+            to += drawOffset;
+
             Handles.DrawLine(from, to);
 
             if (drawArrows)
