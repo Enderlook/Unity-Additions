@@ -265,6 +265,9 @@ namespace Enderlook.Unity.Attributes
             }
 
             GUI.backgroundColor = backgroundColorOld;
+
+            if (GUI.changed)
+                targetObject.ApplyModifiedProperties();
         }
 
         protected override float GetPropertyHeightSmart(SerializedProperty property, GUIContent label)
