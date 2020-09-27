@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Threading;
 using System.Threading.Tasks;
 
 using UnityEditor;
@@ -146,7 +145,9 @@ namespace Enderlook.Unity.Attributes.AttributeUsage.PostCompiling
         {
             // When Unity is started the assemblies haven't loaded yet but this method is called, by adding this timer we reduce the chance of error
             // TODO: This is prone to race condition
-            await Task.Delay(5).ConfigureAwait(true);
+            int millisecondsDelay = (10 - (int)EditorApplication.timeSinceStartup) * 1000;
+            if (millisecondsDelay > 0)
+                await Task.Delay(millisecondsDelay).ConfigureAwait(true);
 
             // Can't do unsafe work in non-main thread. And this is unsafe
             IEnumerable<Type> types = GetAllTypesThatShouldBeInspected();
