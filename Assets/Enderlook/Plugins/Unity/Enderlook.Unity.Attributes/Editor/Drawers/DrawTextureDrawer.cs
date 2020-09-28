@@ -10,21 +10,20 @@ namespace Enderlook.Unity.Attributes
     [CustomPropertyDrawer(typeof(DrawTextureAttribute))]
     internal class DrawTextureDrawer : SmartPropertyDrawer
     {
-        private float additionalHeight;
-        private Texture texture;
+        private const int INDENT_WIDTH = 8; // TODO: This is wrong.
+
+        private GUIContent textureContent;
 
         protected override void OnGUISmart(Rect position, SerializedProperty property, GUIContent label)
         {
-            SetTexture(property);
-
             Rect mainPosition = position;
             Rect texturePosition;
 
             if (attribute is DrawTextureAttribute drawTextureAttribute)
             {
-                float height = drawTextureAttribute.height;
-                if (height == -1)
-                    height = position.height;
+                float height = CalculateTextureHeight(position.height, drawTextureAttribute);
+                if (textureContent != null)
+                    mainPosition.height -= height + EditorGUIUtility.singleLineHeight;
 
                 float width = drawTextureAttribute.width;
                 if (width == -1)
@@ -32,27 +31,21 @@ namespace Enderlook.Unity.Attributes
 
                 void SetTexturePositionInNewLine()
                 {
-                    // Not exactly sure why half of height. I think it's because additionalHeight is computed twice due GetPropertyHeight. Not sure...
-                    additionalHeight = height / 2;
-
                     float x = position.x;
                     if (drawTextureAttribute.centered)
                         x += position.width / 2;
 
-                    // We must deduct the additional height that is added by GetPropertyHeight
-                    texturePosition = new Rect(x, position.y + position.height - additionalHeight, width, height);
+                    texturePosition = new Rect(x + INDENT_WIDTH, position.y + EditorGUIUtility.singleLineHeight, width - INDENT_WIDTH, height);
                 }
 
                 void SetTexturePositionInSameLine()
                 {
                     texturePosition = new Rect(position.x + mainPosition.width, position.y, height, width);
-                    additionalHeight = 0;
                 }
 
                 switch (drawTextureAttribute.hideMode)
                 {
                     case DrawTextureAttribute.Hide.All:
-                        additionalHeight = 0;
                         texturePosition = new Rect(position.x, position.y, height, width);
                         break;
                     case DrawTextureAttribute.Hide.None:
@@ -95,14 +88,18 @@ namespace Enderlook.Unity.Attributes
             if (Event.current.type != EventType.Repaint && property.objectReferenceValue != null)
                 return;
 
-            if (property.objectReferenceValue is Sprite sprite)
+            Texture texture = GetTexture(property);
+            if (texture != null)
             {
-                GUIContent content = new GUIContent
-                {
-                    tooltip = label.text + "\n" + label.tooltip,
-                    image = sprite.texture
-                };
-                EditorGUI.LabelField(texturePosition, content);
+                if (textureContent is null)
+                    textureContent = new GUIContent
+                    {
+                        tooltip = label.text + "\n" + label.tooltip,
+                        image = texture
+                    };
+                else if (textureContent.image != texture)
+                    textureContent.image = texture;
+                EditorGUI.LabelField(texturePosition, textureContent);
             }
             else if (property.objectReferenceValue != null)
             {
@@ -118,17 +115,53 @@ namespace Enderlook.Unity.Attributes
             }
         }
 
-        private void SetTexture(SerializedProperty property)
+        private Texture GetTexture(SerializedProperty property)
         {
             if (property.objectReferenceValue is Texture2D texture2D)
-                texture = texture2D;
+                return texture2D;
             else if (property.objectReferenceValue is Sprite sprite)
-                texture = sprite.texture;
+                return sprite.texture;
             else
-                texture = null;
+                return null;
+        }
+
+        private float CalculateTextureHeight(float height, DrawTextureAttribute drawTextureAttribute)
+        {
+            float height_ = drawTextureAttribute.height;
+            if (height_ == -1)
+                return height;
+            return height;
         }
 
         protected override float GetPropertyHeightSmart(SerializedProperty property, GUIContent label)
-            => EditorGUI.GetPropertyHeight(property, label) + (texture == null ? 0 : additionalHeight);
+        {
+            float height = EditorGUI.GetPropertyHeight(property, label);
+            return CalculateAditionalPropertyHeight(property, height);
+        }
+
+        private float CalculateAditionalPropertyHeight(SerializedProperty property, float height)
+        {
+            if (attribute is DrawTextureAttribute drawTextureAttribute)
+            {
+                switch (drawTextureAttribute.hideMode)
+                {
+                    case DrawTextureAttribute.Hide.All:
+                        return height;
+                    case DrawTextureAttribute.Hide.None:
+                    case DrawTextureAttribute.Hide.Label:
+                    case DrawTextureAttribute.Hide.Field:
+                        if (drawTextureAttribute.drawOnSameLine)
+                            return height;
+                        else if (GetTexture(property) != null)
+                            return height + EditorGUIUtility.singleLineHeight + CalculateTextureHeight(height, drawTextureAttribute);
+                        else
+                            return height;
+                    default:
+                        throw new ImpossibleStateException();
+                }
+            }
+            else
+                return height;
+        }
     }
 }
