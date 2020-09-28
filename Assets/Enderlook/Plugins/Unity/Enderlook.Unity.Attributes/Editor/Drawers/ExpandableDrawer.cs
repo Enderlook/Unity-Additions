@@ -161,7 +161,9 @@ namespace Enderlook.Unity.Attributes
                 if (GUI.Button(buttonRect, GUIContent.none, inlineButtonStyle))
                     ExpandableWindow.CreateWindow(property);
                 GUI.enabled = true;
+
                 newPosition.xMin += buttonRect.width;
+                newPosition.width -= buttonRect.width;
 
                 // Add property
                 EditorGUI.PropertyField(newPosition, property, GUIContent.none, true);
@@ -186,6 +188,7 @@ namespace Enderlook.Unity.Attributes
             field.NextVisible(true);
             
             fieldRect.x += INDENT_WIDTH;
+            fieldRect.width -= INDENT_WIDTH;
             fieldRect.y += INNER_SPACING + OUTER_SPACING;
 
             Rect box = position;
