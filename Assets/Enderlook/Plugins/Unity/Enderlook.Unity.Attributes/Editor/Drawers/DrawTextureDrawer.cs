@@ -35,12 +35,19 @@ namespace Enderlook.Unity.Attributes
                     if (drawTextureAttribute.centered)
                         x += position.width / 2;
 
-                    texturePosition = new Rect(x + INDENT_WIDTH, position.y + EditorGUIUtility.singleLineHeight, width - INDENT_WIDTH, height);
+                    float width_ = width - INDENT_WIDTH;
+                    float height_ = width_;
+                    if (textureContent != null && textureContent.image != null)
+                        height_ = height_ / textureContent.image.width * textureContent.image.height;
+                    texturePosition = new Rect(x + INDENT_WIDTH, position.y + EditorGUIUtility.singleLineHeight, width_, Mathf.Min(height, height_));
                 }
 
                 void SetTexturePositionInSameLine()
                 {
-                    texturePosition = new Rect(position.x + mainPosition.width, position.y, height, width);
+                    float width_ = height;
+                    if (textureContent != null && textureContent.image != null)
+                        width_ = width_ / textureContent.image.height * textureContent.image.width;
+                    texturePosition = new Rect(position.x + mainPosition.width, position.y, Mathf.Min(width, width_), height);
                 }
 
                 switch (drawTextureAttribute.hideMode)
@@ -85,27 +92,15 @@ namespace Enderlook.Unity.Attributes
                 DrawDefault(position.height, position.width);
 
             // If we have an sprite to show and we are in a repaint event to show it
-            if (Event.current.type != EventType.Repaint && property.objectReferenceValue != null)
+            if (Event.current.type != EventType.Repaint && HasContent(property))
                 return;
 
-            Texture texture = GetTexture(property);
-            if (texture != null)
-            {
-                if (textureContent is null)
-                    textureContent = new GUIContent
-                    {
-                        tooltip = label.text + "\n" + label.tooltip,
-                        image = texture
-                    };
-                else if (textureContent.image != texture)
-                    textureContent.image = texture;
+            ProduceTextureGUIContent(property, label);
+
+            if (textureContent.image != null)
                 EditorGUI.LabelField(texturePosition, textureContent);
-            }
-            else if (property.objectReferenceValue != null)
-            {
-                EditorGUI.HelpBox(texturePosition, $"Doesn't have an object of type {typeof(Sprite)}.", MessageType.Error);
-                Debug.LogError($"Property {property.displayName} from {property.propertyPath} does't have an object of type {typeof(Sprite)}.");
-            }
+            else
+                CheckPropertyType(property, texturePosition);
 
             void DrawDefault(float h, float w)
             {
@@ -115,17 +110,70 @@ namespace Enderlook.Unity.Attributes
             }
         }
 
-        private Texture GetTexture(SerializedProperty property)
+        private void ProduceTextureGUIContent(SerializedProperty property, GUIContent label)
         {
-            if (property.objectReferenceValue is Texture2D texture2D)
-                return texture2D;
-            else if (property.objectReferenceValue is Sprite sprite)
-                return sprite.texture;
-            else
-                return null;
+            Texture texture = GetTexture(property);
+            if (textureContent is null)
+                textureContent = new GUIContent
+                {
+                    tooltip = label.text + "\n" + label.tooltip,
+                    image = texture
+                };
+            else if (textureContent.image != texture)
+                textureContent.image = texture;
         }
 
-        private float CalculateTextureHeight(float height, DrawTextureAttribute drawTextureAttribute)
+        private static bool HasContent(SerializedProperty property)
+        {
+            switch (property.propertyType)
+            {
+                case SerializedPropertyType.ObjectReference:
+                    return property.objectReferenceValue != null;
+                case SerializedPropertyType.String:
+                    return !string.IsNullOrEmpty(property.stringValue);
+            }
+            return false;
+        }
+
+        private static Texture GetTexture(SerializedProperty property)
+        {
+            switch (property.propertyType)
+            {
+                case SerializedPropertyType.ObjectReference:
+                    if (property.objectReferenceValue is Texture2D texture2D)
+                        return texture2D;
+                    else if (property.objectReferenceValue is Sprite sprite)
+                        return sprite.texture;
+                    break;
+                case SerializedPropertyType.String:
+                    string path = property.stringValue;
+                    Texture texture = Resources.Load<Texture2D>(path);
+                    if (path == null)
+                    {
+                        Sprite sprite = Resources.Load<Sprite>(path);
+                        if (path != null)
+                            texture = sprite.texture;
+                    }
+                    return texture;
+            }
+            return null;
+        }
+        private static void CheckPropertyType(SerializedProperty property, Rect texturePosition)
+        {
+            switch (property.propertyType)
+            {
+                case SerializedPropertyType.ObjectReference when property.objectReferenceValue != null:
+                    goto default;
+                case SerializedPropertyType.String:
+                    break;
+                default:
+                    EditorGUI.HelpBox(texturePosition, $"Doesn't have an object of type {typeof(Sprite)}, {typeof(Texture2D)} nor {typeof(string)}..", MessageType.Error);
+                    Debug.LogError($"Property {property.displayName} from {property.propertyPath} does't have an object of type {typeof(Sprite)}, {typeof(Texture2D)} nor {typeof(string)}.");
+                    break;
+            }
+        }
+
+        private static float CalculateTextureHeight(float height, DrawTextureAttribute drawTextureAttribute)
         {
             float height_ = drawTextureAttribute.height;
             if (height_ == -1)

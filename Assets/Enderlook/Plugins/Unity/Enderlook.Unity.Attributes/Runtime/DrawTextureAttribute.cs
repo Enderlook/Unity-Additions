@@ -7,7 +7,7 @@ using UnityEngine;
 namespace Enderlook.Unity.Attributes
 {
     [AttributeUsage(AttributeTargets.Field, AllowMultiple = false, Inherited = true)]
-    [AttributeUsageRequireDataType(typeof(Sprite), typeof(Texture2D), includeEnumerableTypes = true)]
+    [AttributeUsageRequireDataType(typeof(Sprite), typeof(Texture2D), typeof(string), includeEnumerableTypes = true)]
     [AttributeUsageFieldMustBeSerializableByUnity]
     public class DrawTextureAttribute : PropertyAttribute
     {
