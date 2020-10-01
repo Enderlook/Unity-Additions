@@ -158,12 +158,15 @@ namespace Enderlook.Unity.Attributes
             }
             return null;
         }
-        private static void CheckPropertyType(SerializedProperty property, Rect texturePosition)
+
+        private void CheckPropertyType(SerializedProperty property, Rect texturePosition)
         {
             switch (property.propertyType)
             {
-                case SerializedPropertyType.ObjectReference when property.objectReferenceValue != null:
-                    goto default;
+                case SerializedPropertyType.ObjectReference:
+                    if (fieldInfo.FieldType != typeof(Sprite) || fieldInfo.FieldType != typeof(Texture2D))
+                        goto default;
+                    break;
                 case SerializedPropertyType.String:
                     break;
                 default:
