@@ -251,10 +251,11 @@ namespace Enderlook.Unity.Attributes
                 EditorGUI.EndDisabledGroup();
             }
 
-            while (field.NextVisible(true))
+            while (field.NextVisible(false))
             {
                 fieldRect.y += EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing;
-                fieldRect.height = EditorGUI.GetPropertyHeight(field, true);
+                float totalHeight = EditorGUI.GetPropertyHeight(field, true);
+                fieldRect.height = totalHeight;
 
                 try
                 {
@@ -265,6 +266,10 @@ namespace Enderlook.Unity.Attributes
                     field.objectReferenceValue = null;
                     Debug.LogError("Detected self-nesting which caused StackOverFlowException. Avoid circular reference in nested objects.");
                 }
+
+                // TODO: maybe this could be done more efficiently.
+                if (field.isExpanded)
+                    fieldRect.y += totalHeight - EditorGUI.GetPropertyHeight(field, false);
             }
 
             GUI.backgroundColor = backgroundColorOld;
