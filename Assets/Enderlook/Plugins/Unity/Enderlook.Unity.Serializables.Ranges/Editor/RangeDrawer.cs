@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text;
 
 using UnityEditor;
 
@@ -21,23 +22,30 @@ namespace Enderlook.Unity.Serializables.Ranges
 
         private const int SPACE_BETTWEN_FIELD_AND_ERROR = 2;
 
+        private List<SerializedProperty> serializedProperties;
+        private List<GUIContent> guiContents;
+        private StringBuilder errorMessage;
+        private GUIContent errorContent;
+
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
             // Initialize properties
             SerializedProperty minProperty = property.FindPropertyRelative(MIN_FIELD_NAME);
             SerializedProperty maxProperty = property.FindPropertyRelative(MAX_FIELD_NAME);
 
-            List<SerializedProperty> serializedProperties = new List<SerializedProperty>()
-            {
-                minProperty,
-                maxProperty,
-            };
+            if (serializedProperties is null)
+                serializedProperties = new List<SerializedProperty>(3);
+            else
+                serializedProperties.Clear();
+            serializedProperties.Add(minProperty);
+            serializedProperties.Add(maxProperty);
 
-            List<GUIContent> guiContents = new List<GUIContent>()
-            {
-                new GUIContent(MIN_FIELD_DISPLAY_NAME, minProperty.tooltip),
-                new GUIContent(MAX_FIELD_DISPLAY_NAME, maxProperty.tooltip),
-            };
+            if (guiContents is null)
+                guiContents = new List<GUIContent>();
+            else
+                guiContents.Clear();
+            guiContents.Add(new GUIContent(MIN_FIELD_DISPLAY_NAME, minProperty.tooltip));
+            guiContents.Add(new GUIContent(MAX_FIELD_DISPLAY_NAME, maxProperty.tooltip));
 
             SerializedProperty stepProperty = property.FindPropertyRelative(STEP_FIELD_NAME);
             if (stepProperty != null)
@@ -79,17 +87,41 @@ namespace Enderlook.Unity.Serializables.Ranges
                     throw new ArgumentException(SERIALIZED_PROPERTY_TYPE_ERROR);
             }
 
-            List<string> errors = new List<string>();
-            if (min >= max)
-                errors.Add($"Value of {minProperty.displayName} can't be higher or equal to {maxProperty.displayName}.");
-            if (step != null && step > max - min)
-                errors.Add($"Value of {stepProperty.displayName} can't be higher than the difference between {minProperty.displayName} and {maxProperty.displayName}.");
-            if (errors.Count > 0)
+            if (errorMessage is null)
             {
-                foreach (string error in errors)
-                    Debug.LogWarning(error);
-                string message = string.Join("\n", errors);
-                float errorHeight = GUI.skin.box.CalcHeight(new GUIContent(message), width);
+                errorMessage = new StringBuilder();
+                errorContent = new GUIContent();
+            }
+            else
+                errorMessage.Clear();
+
+            if (min >= max)
+                errorMessage
+                    .Append("Value of ")
+                    .Append(minProperty.displayName)
+                    .Append(" can't be higher or equal to ")
+                    .Append(maxProperty.displayName)
+                    .Append('.');
+            if (step != null && step > max - min)
+            {
+                if (min >= max)
+                    errorMessage.Append("\nAlso it");
+                else
+                    errorMessage
+                        .Append("Value of ")
+                        .Append(stepProperty.displayName);
+                errorMessage
+                    .Append(" can't be higher than the difference between ")
+                    .Append(minProperty.displayName).Append(" and ")
+                    .Append(maxProperty.displayName)
+                    .Append('.');
+            }
+            if (errorMessage.Length > 0)
+            {
+                string message = errorMessage.ToString();
+                Debug.LogWarning(message);
+                errorContent.text = message;
+                float errorHeight = GUI.skin.box.CalcHeight(errorContent, width);
                 return (errorHeight, message);
             }
             return (0, null);
