@@ -11,11 +11,26 @@ namespace Enderlook.Unity.Attributes
     [CustomPropertyDrawer(typeof(PlayAudioClipAttribute))]
     public class PlayAudioClipDrawer : SmartPropertyDrawer
     {
+        private const int SPACE_BETTWEN_FIELD_AND_ERROR = 2;
+
+        private GUIContent errorContent;
+
         protected override void OnGUISmart(Rect position, SerializedProperty property, GUIContent label)
         {
             PlayAudioClipAttribute playAudioClipAttribute = (PlayAudioClipAttribute)attribute;
 
-            AudioClip audioClip = (AudioClip)property.GetTargetObjectOfProperty();
+            if (!IsFine(property))
+            {
+                EditorGUI.PropertyField(position, property, label);
+
+                (float height, string message) = CalculateError(position.width);
+
+                EditorGUI.HelpBox(new Rect(position.x, position.y + position.height + SPACE_BETTWEN_FIELD_AND_ERROR, position.width, height), message, MessageType.Error);
+                Debug.LogError(message);
+                return;
+            }
+
+            AudioClip audioClip = GetAudioClip(property);
             if (audioClip == null)
                 EditorGUI.PropertyField(position, property, label);
             else
@@ -46,6 +61,51 @@ namespace Enderlook.Unity.Attributes
                     // Forces repaint all the inspector per frame
                     EditorUtility.SetDirty(property.serializedObject.targetObject);
             }
+        }
+
+        protected override float GetPropertyHeightSmart(SerializedProperty property, GUIContent label)
+        {
+            float height = base.GetPropertyHeightSmart(property, label);
+            if (!IsFine(property))
+            {
+                height += CalculateError(EditorGUIUtility.currentViewWidth).height;
+                height += SPACE_BETTWEN_FIELD_AND_ERROR;
+            }
+            return height;
+        }
+
+        private (float height, string message) CalculateError(float width)
+        {
+            string message = $"Attribute {nameof(PlayAudioClipAttribute)} can only be used in field of type {typeof(AudioClip)} or {typeof(string)}. Was {fieldInfo.FieldType}.";
+            if (errorContent is null)
+                errorContent = new GUIContent();
+            errorContent.text = message;
+            float height = GUI.skin.box.CalcHeight(errorContent, width);
+            return (height, message);
+        }
+
+        private bool IsFine(SerializedProperty property)
+        {
+            switch (property.propertyType)
+            {
+                case SerializedPropertyType.String:
+                    return true;
+                case SerializedPropertyType.ObjectReference:
+                    return !(property.objectReferenceValue is AudioClip) || fieldInfo.FieldType == typeof(AudioClip);
+            }
+            return false;
+        }
+
+        private AudioClip GetAudioClip(SerializedProperty property)
+        {
+            switch (property.propertyType)
+            {
+                case SerializedPropertyType.String:
+                    return Resources.Load<AudioClip>(property.stringValue);
+                case SerializedPropertyType.ObjectReference:
+                    return property.objectReferenceValue as AudioClip;
+            }
+            return null;
         }
     }
 }
