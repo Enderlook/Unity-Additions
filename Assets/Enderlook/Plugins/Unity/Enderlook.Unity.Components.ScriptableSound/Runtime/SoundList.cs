@@ -25,7 +25,7 @@ namespace Enderlook.Unity.Components.ScriptableSound
 
         [SerializeField, Min(-1), Tooltip("If playListMode is FullList, it's the amount of times the full list will be played.\n" +
             "If playListMode is IndividualSounds, it's the amount of sounds that will be played.\n" +
-            "In any case, if this field is 0, no sound will be played. If -1, it will be and endless loop.")]
+            "In any case, if this field is 0, no sound will be played. If -1, it will be an endless loop.")]
         private int playsAmount = 1;
 #pragma warning restore CS0649
 
