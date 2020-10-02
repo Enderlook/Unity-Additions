@@ -33,8 +33,7 @@ namespace Enderlook.Unity.Components.ScriptableSound
         private void Awake()
         {
             audioSource = GetComponent<AudioSource>();
-
-            Sound[] sounds = new Sound[this.sounds.Length];
+            
             for (int i = 0; i < this.sounds.Length; i++)
                 sounds[i] = this.sounds[i].CreatePrototype();
 
