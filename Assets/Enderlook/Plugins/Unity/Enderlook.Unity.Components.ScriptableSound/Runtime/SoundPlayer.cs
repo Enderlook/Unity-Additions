@@ -1,7 +1,6 @@
 ﻿using Enderlook.Unity.Attributes;
 
 using System;
-using System.Linq;
 
 using UnityEngine;
 
@@ -15,11 +14,8 @@ namespace Enderlook.Unity.Components.ScriptableSound
         [SerializeField, Tooltip("List of sounds to play."), Expandable]
         private Sound[] sounds;
 
-        [SerializeField, Tooltip("If start playing on awake.")]
-        private bool playOnAwake;
-
-        [SerializeField, Tooltip("Which playlist play on awake."), ShowIf(nameof(playOnAwake)), Indented]
-        private int onAwakeIndex;
+        [SerializeField, Tooltip("Determine events that should trigger this to play a sound.")]
+        private PlayEvents playOn;
 #pragma warning restore CS0649
 
         private int index;
@@ -33,12 +29,26 @@ namespace Enderlook.Unity.Components.ScriptableSound
         private void Awake()
         {
             audioSource = GetComponent<AudioSource>();
-            
-            for (int i = 0; i < this.sounds.Length; i++)
-                sounds[i] = this.sounds[i].CreatePrototype();
 
-            if (playOnAwake)
-                Play(onAwakeIndex);
+            for (int i = 0; i < sounds.Length; i++)
+                sounds[i] = sounds[i].CreatePrototype();
+
+            if (playOn.OnAwake(out int index))
+                Play(index);
+        }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Code Quality", "IDE0051:Remove unused private members", Justification = "Used by Unity.")]
+        private void Start()
+        {
+            if (playOn.OnStart(out int index))
+                Play(index);
+        }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Code Quality", "IDE0051:Remove unused private members", Justification = "Used by Unity.")]
+        private void OnEnable()
+        {
+            if (playOn.OnEnable(out int index))
+                Play(index);
         }
 
         /// <summary>
@@ -47,6 +57,10 @@ namespace Enderlook.Unity.Components.ScriptableSound
         /// <param name="endCallback"><see cref="Action"/> called after <see cref="sound"/> ends.</param>
         public void Play(int index, Action endCallback = null)
         {
+            Sound oldSound = sounds[this.index];
+            if (oldSound.IsPlaying)
+                oldSound.Stop();
+
             Sound sound = sounds[index];
             sound.SetConfiguration(new SoundConfiguration(audioSource, endCallback));
             sound.Play();
