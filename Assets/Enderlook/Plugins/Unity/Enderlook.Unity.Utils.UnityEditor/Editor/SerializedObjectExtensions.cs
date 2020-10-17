@@ -14,7 +14,7 @@ namespace Enderlook.Unity.Utils.UnityEditor
     public static class SerializedObjectExtensions
     {
         /// <summary>
-        /// Create a Property Field and save it changes.
+        /// Create a Property Field and save its changes.
         /// </summary>
         /// <param name="source">Instance where its executed this method.</param>
         /// <param name="serializedProperty"><see cref="SerializedProperty"/> to show in the inspector.</param>
