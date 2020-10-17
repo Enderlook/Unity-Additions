@@ -1,7 +1,6 @@
 ﻿using Enderlook.Reflection;
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -19,8 +18,6 @@ namespace Enderlook.Unity.Utils.UnityEditor
     public static class SerializedPropertyExtensions
     {
         // https://github.com/lordofduct/spacepuppy-unity-framework/blob/master/SpacepuppyBaseEditor/EditorHelper.cs
-
-        internal const BindingFlags bindingFlags = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance;
 
         private static Regex isArrayRegex = new Regex(@"Array.data\[\d+\]$");
 
@@ -68,87 +65,6 @@ namespace Enderlook.Unity.Utils.UnityEditor
             if (source is null) throw new ArgumentNullException(nameof(source));
 
             return source.propertyPath.EndsWith("Array.size");
-        }
-
-        private static (Func<object> get, Action<object> set) GetAccessors(this object source, string name)
-        {
-            if (source == null)
-                return default;
-            Type type = source.GetType();
-
-            while (type != null)
-            {
-                FieldInfo fieldInfo = type.GetField(name, bindingFlags);
-                if (fieldInfo != null)
-                    return (() => fieldInfo.GetValue(source), (value) => fieldInfo.SetValue(source, value));
-
-                PropertyInfo propertyInfo = type.GetProperty(name, bindingFlags | BindingFlags.IgnoreCase);
-                if (propertyInfo != null)
-                    return (() => propertyInfo.GetValue(source, null), (value) => propertyInfo.SetValue(source, value, null));
-
-                type = type.BaseType;
-            }
-            return default;
-        }
-
-        private static (Func<object> get, Action<object> set) GetAccessors(this object source, string name, int index)
-        {
-            object obj = source.GetValue(name);
-
-            if (obj is Array array)
-                return (() => array.GetValue(index), (value) => array.SetValue(value, index));
-
-            if (!(obj is IEnumerable enumerable))
-                return default;
-
-            IEnumerator enumerator = enumerable.GetEnumerator();
-            return (() =>
-            {
-                for (int i = 0; i <= index; i++)
-                    if (!enumerator.MoveNext())
-                        throw new ArgumentOutOfRangeException($"{name} field from {source.GetType()} doesn't have an element at index {index}.");
-                return enumerator.Current;
-            }, null);
-        }
-
-        private static object GetValue(this object source, string name)
-        {
-            if (source == null)
-                return null;
-
-            Type type = source.GetType();
-
-            while (type != null)
-            {
-                FieldInfo fieldInfo = type.GetField(name, bindingFlags);
-                if (fieldInfo != null)
-                    return fieldInfo.GetValue(source);
-
-                PropertyInfo propertyInfo = type.GetProperty(name, bindingFlags);
-                if (propertyInfo != null)
-                    return propertyInfo.GetValue(source, null);
-
-                type = type.BaseType;
-            }
-            return null;
-        }
-
-        private static object GetValue(this object source, string name, int index)
-        {
-            object obj = source.GetValue(name);
-            if (obj is Array array)
-                return array.GetValue(index);
-
-            if (!(obj is IEnumerable enumerable))
-                return null;
-
-            IEnumerator enumerator = enumerable.GetEnumerator();
-
-            for (int i = 0; i <= index; i++)
-                if (!enumerator.MoveNext())
-                    throw new ArgumentOutOfRangeException($"{name} field from {source.GetType()} doesn't have an element at index {index}.");
-
-            return enumerator.Current;
         }
 
         /// <summary>
@@ -226,7 +142,7 @@ namespace Enderlook.Unity.Utils.UnityEditor
         /// </summary>
         /// <param name="source"><see cref="SerializedProperty"/> whose getter and setter will be get.</param>
         /// <returns>Getter and setter of the <paramref name="source"/>.</returns>
-        public static (Func<object> get, Action<object> set) GetTargetObjectAccessors(this SerializedProperty source)
+        public static Accessors GetTargetObjectAccessors(this SerializedProperty source)
         {
             object parent = source.GetParentTargetObjectOfProperty();
             Type parentType = parent.GetType();
@@ -236,18 +152,24 @@ namespace Enderlook.Unity.Utils.UnityEditor
             {
                 string elementName = element.Substring(0, element.IndexOf("["));
                 int index = int.Parse(element.Substring(element.IndexOf("[")).Replace("[", "").Replace("]", ""));
+                Accessors accessors = new Accessors(parent, elementName, index);
                 try
                 {
-                    return parent.GetAccessors(elementName, index);
+                    accessors.Get();
                 }
                 catch (ArgumentOutOfRangeException e)
                 {
                     throw new IndexOutOfRangeException($"The element {element} has no index {index} in {parentType} from {source.name} in path {element}.", e);
                 }
+                return accessors;
             }
             else
-                return parent.GetAccessors(element);
+                return new Accessors(parent, element);
         }
+
+        /// <inheritdoc cref="GetTargetObjectAccessors(SerializedProperty)"/>
+        public static Accessors<T> GetTargetObjectAccessors<T>(this SerializedProperty source)
+            => new Accessors<T>(GetTargetObjectAccessors(source));
 
         /// <summary>
         /// Produce a <see cref="GUIContent"/> with the <see cref="SerializedProperty.displayName"/> as <see cref="GUIContent.text"/> and <see cref="SerializedProperty.tooltip"/> as <see cref="GUIContent.tooltip"/>.
@@ -299,9 +221,9 @@ namespace Enderlook.Unity.Utils.UnityEditor
             string name = source.GetFieldName();
 
             if (includeInheritedPrivate)
-                return type.GetInheritedField(name, bindingFlags);
+                return type.GetInheritedField(name, AccessorsHelper.bindingFlags);
             else
-                return type.GetField(name, bindingFlags);
+                return type.GetField(name, AccessorsHelper.bindingFlags);
         }
 
         /// <summary>

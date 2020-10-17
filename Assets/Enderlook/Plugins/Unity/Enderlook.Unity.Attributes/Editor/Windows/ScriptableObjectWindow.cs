@@ -44,7 +44,7 @@ namespace Enderlook.Unity.Attributes
 
         private ScriptableObject oldScriptableObject;
 
-        private PropertyWrapper propertyWrapper;
+        private SerializedPropertyWrapper propertyWrapper;
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Code Quality", "IDE0051:Remove unused private members", Justification = "Used by Unity.")]
         [InitializeOnLoadMethod]
@@ -130,7 +130,7 @@ namespace Enderlook.Unity.Attributes
             ScriptableObjectWindow window = GetWindow<ScriptableObjectWindow>();
 
             window.propertyPath = AssetDatabaseHelper.GetAssetPath(property);
-            window.propertyWrapper = new PropertyWrapper(property, fieldInfo);
+            window.propertyWrapper = new SerializedPropertyWrapper(property, fieldInfo);
             IEnumerable<Type> allowedTypes = GetDerivedTypes(window.propertyWrapper.Type).Where(e => !e.IsAbstract);
 
             // RestrictTypeAttribute compatibility
@@ -149,7 +149,7 @@ namespace Enderlook.Unity.Attributes
         {
             titleContent = TITLE_CONTENT;
 
-            ScriptableObject scriptableObject = (ScriptableObject)propertyWrapper.Get?.Invoke();
+            ScriptableObject scriptableObject = (ScriptableObject)propertyWrapper.Accessors?.Get();
             bool hasScriptableObject = scriptableObject != null;
 
             if (oldScriptableObject != scriptableObject)
@@ -244,7 +244,7 @@ namespace Enderlook.Unity.Attributes
                 if (GUILayout.Button(CLEAN_FIELD))
                 {
                     Undo.RecordObject(targetObject, "Clean field");
-                    propertyWrapper.Set(null);
+                    propertyWrapper.Accessors.Set(null);
                     path = DEFAULT_PATH;
                     propertyWrapper.Property.serializedObject.ApplyModifiedProperties();
                 }
@@ -257,7 +257,7 @@ namespace Enderlook.Unity.Attributes
             Undo.RecordObject(targetObject, "Instantiate field");
             scriptableObject = CreateInstance(allowedTypes[index]);
             scriptableObject.name = name;
-            propertyWrapper.Set(scriptableObject);
+            propertyWrapper.Accessors.Set(scriptableObject);
             propertyWrapper.Property.serializedObject.ApplyModifiedProperties();
             return scriptableObject;
         }

@@ -20,7 +20,7 @@ namespace Enderlook.Unity.Attributes
         private static readonly GUIContent APPLY_CONTENT = new GUIContent("Apply", "Assign object to field");
         private static readonly GUIContent INCLUDE_ASSETS_CONTENT = new GUIContent("Include Assets", "Whenever it should also look for in asset files");
 
-        private PropertyWrapper propertyWrapper;
+        private SerializedPropertyWrapper propertyWrapper;
 
         private RestrictTypeAttribute restrictTypeAttribute;
 
@@ -52,7 +52,7 @@ namespace Enderlook.Unity.Attributes
         {
             ObjectPickerWindow window = GetWindow<ObjectPickerWindow>();
 
-            window.propertyWrapper = new PropertyWrapper(property, fieldInfo);
+            window.propertyWrapper = new SerializedPropertyWrapper(property, fieldInfo);
 
             window.restrictTypeAttribute = fieldInfo.GetCustomAttribute<RestrictTypeAttribute>();
 
@@ -79,7 +79,7 @@ namespace Enderlook.Unity.Attributes
             {
                 index = Array.IndexOf(objects, selected);
                 if (index == -1)
-                    index = Array.IndexOf(objects, propertyWrapper.Get());
+                    index = Array.IndexOf(objects, propertyWrapper.Accessors.Get());
             }
         }
 
@@ -101,7 +101,7 @@ namespace Enderlook.Unity.Attributes
             EditorGUI.BeginDisabledGroup(index == -1);
             if (GUILayout.Button(APPLY_CONTENT))
             {
-                propertyWrapper.Set(objects[index]);
+                propertyWrapper.Accessors.Set(objects[index]);
                 propertyWrapper.ApplyModifiedProperties();
             }
             EditorGUI.EndDisabledGroup();
