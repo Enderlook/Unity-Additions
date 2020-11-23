@@ -95,8 +95,8 @@ namespace Enderlook.Unity.Utils.UnityEditor
                 property.SetValue(source, value);
             else if (source is Array array)
                 array.SetValue(value, index);
-
-            throw new NotSupportedException($"Set not supported on {nameof(IEnumerable)} types.");
+            else
+                throw new NotSupportedException($"Set not supported on {nameof(IEnumerable)} types.");
         }
 
         /// <inheritdoc cref="IAccessors{T}.Get"/>
