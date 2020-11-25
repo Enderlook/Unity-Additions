@@ -14,6 +14,8 @@ namespace Enderlook.Unity.Attributes
     [CustomPropertyDrawer(typeof(DrawVectorRelativeToTransformAttribute)), InitializeOnLoad]
     internal class DrawVectorRelativeToTransformEditor : SmartPropertyDrawer
     {
+        private static readonly Handles.CapFunction cylinderHandleCap = Handles.CylinderHandleCap;
+
         protected override void OnGUISmart(Rect position, SerializedProperty property, GUIContent label)
         {
             EditorGUI.BeginProperty(position, label, property);
@@ -23,9 +25,10 @@ namespace Enderlook.Unity.Attributes
 
         static DrawVectorRelativeToTransformEditor() => SceneView.duringSceneGui += RenderSceneGUI;
 
-        private static Vector3 DrawHandle(Vector3 position, bool usePositionHandle) => usePositionHandle
-                ? Handles.PositionHandle(position, Quaternion.identity)
-                : Handles.FreeMoveHandle(position, Quaternion.identity, HandleUtility.GetHandleSize(position) * .1f, Vector2.one, Handles.CylinderHandleCap);
+        private static Vector3 DrawHandle(Vector3 position, bool usePositionHandle)
+            => usePositionHandle
+                            ? Handles.PositionHandle(position, Quaternion.identity)
+                            : Handles.FreeMoveHandle(position, Quaternion.identity, HandleUtility.GetHandleSize(position) * .1f, Vector2.one, cylinderHandleCap);
 
         private const BindingFlags bindingFlags = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static;
 
