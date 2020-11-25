@@ -1,5 +1,4 @@
 ﻿using Enderlook.Reflection;
-using Enderlook.Utils;
 
 using System;
 
@@ -42,7 +41,7 @@ namespace Enderlook.Unity.Attributes
                         return false;
                     }
                     // Restriction type must be casteable to field type
-                    else if (!type.IsCastableTo(fieldType))
+                    else if (!fieldType.IsAssignableFrom(type))
                     {
                         errorMessage = $"Attribute {nameof(RestrictTypeAttribute)} has a wrong {nameof(Type)} restriction. Restrictions class types must be casteable to the field element type ({fieldType}). One of its restrictions was {type}.";
                         return false;
@@ -76,7 +75,7 @@ namespace Enderlook.Unity.Attributes
         {
             foreach (Type type in attribute.restriction)
             {
-                if (!resultType.IsCastableTo(type))
+                if (!resultType.IsAssignableFrom(type))
                 {
                     errorMessage = $"Require values than can be casted to {type}. {resultType} can't.";
                     return false;
@@ -95,7 +94,7 @@ namespace Enderlook.Unity.Attributes
         public static bool CheckIfTypeIsAllowed(this RestrictTypeAttribute attribute, Type resultType)
         {
             foreach (Type type in attribute.restriction)
-                if (!resultType.IsCastableTo(type))
+                if (!type.IsAssignableFrom(resultType))
                     return false;
             return true;
         }

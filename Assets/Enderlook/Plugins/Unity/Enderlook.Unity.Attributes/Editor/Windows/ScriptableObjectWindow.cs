@@ -29,9 +29,18 @@ namespace Enderlook.Unity.Attributes
 
         private const string DEFAULT_PATH = "Resources/";
 
+        private static readonly Type root = typeof(UnityObject); // We don't use ScriptableObjet so this can work with RestrictTypeCheckingAttribute
+
+        // Pool values
+        private static readonly List<Type> tmpList = new List<Type>();
+        private static readonly List<Type> tmpList2 = new List<Type>();
+        private static readonly Stack<Type> tmpStack = new Stack<Type>();
+        private static readonly char[] splitBy = new[] { '/' };
+        private static readonly Func<Type, string> GetName = (Type type) => type.Name;
+
         private static ILookup<Type, Type> derivedTypes;
 
-        private Type[] allowedTypes;
+        private List<Type> allowedTypes;
         private string[] allowedTypesNames;
         private int index;
 
@@ -71,15 +80,16 @@ namespace Enderlook.Unity.Attributes
         {
             // We don't use AssembliesHelper.GetAllAssembliesOfPlayerAndEditorAssemblies() because that doesn't include dll files from Assets folder
             List<(Assembly assembly, Exception[] exceptions)> errors = new List<(Assembly assembly, Exception[] exceptions)>();
-            Stack<Type> types = new Stack<Type>(
-                AppDomain.CurrentDomain.GetAssemblies()
-                .SelectMany(e =>
-                {
-                    if (!e.TryGetTypes(out IEnumerable<Type> loadedTypes, out Exception[] exceptions))
-                        errors.Add((e, exceptions));
-                    return loadedTypes;
-                })
-                .Where(e => typeof(ScriptableObject).IsAssignableFrom(e)));
+            Debug.Assert(tmpStack.Count == 0);
+            foreach (Assembly assembly in AppDomain.CurrentDomain.GetAssemblies())
+            {
+                if (!assembly.TryGetTypes(out IEnumerable<Type> loadedTypes, out Exception[] exceptions))
+                    errors.Add((assembly, exceptions));
+
+                foreach (Type type in loadedTypes)
+                    if (root.IsAssignableFrom(type))
+                        tmpStack.Push(type);
+            }
 
             if (errors.Count > 0)
             {
@@ -91,14 +101,14 @@ namespace Enderlook.Unity.Attributes
 
             HashSet<KeyValuePair<Type, Type>> typesKV = new HashSet<KeyValuePair<Type, Type>>();
 
-            while (types.TryPop(out Type result))
+            while (tmpStack.TryPop(out Type result))
             {
                 typesKV.Add(new KeyValuePair<Type, Type>(result, result));
                 Type baseType = result.BaseType;
-                if (typeof(ScriptableObject).IsAssignableFrom(baseType))
+                if (root.IsAssignableFrom(baseType))
                 {
                     typesKV.Add(new KeyValuePair<Type, Type>(baseType, result));
-                    types.Push(baseType);
+                    tmpStack.Push(baseType);
                 }
             }
 
@@ -107,19 +117,28 @@ namespace Enderlook.Unity.Attributes
 
         private static IEnumerable<Type> GetDerivedTypes(Type type)
         {
-            Stack<Type> types = new Stack<Type>(derivedTypes[type].Where(e => e != type));
-            LinkedList<Type> linkedList = new LinkedList<Type>(types);
-            linkedList.AddFirst(type);
+            Debug.Assert(tmpStack.Count == 0);
+            foreach (Type t in derivedTypes[type])
+                if (t != type)
+                    tmpStack.Push(t);
 
-            while (types.TryPop(out Type result))
+            tmpList.Clear();
+            tmpList.Add(type);
+            tmpList.AddRange(tmpStack);
+
+            while (tmpStack.TryPop(out Type result))
             {
-                foreach (Type t in derivedTypes[result].Where(e => e != result))
+                foreach (Type t in derivedTypes[result])
                 {
-                    types.Push(t);
-                    linkedList.AddLast(t);
+                    if (t != result)
+                    {
+                        tmpStack.Push(t);
+                        tmpList.Add(t);
+                    }
                 }
             }
-            return linkedList.OrderBy(e => e.Name);
+
+            return tmpList.OrderBy(GetName);
         }
 
         private static void CreateWindow(SerializedProperty property, FieldInfo fieldInfo)
@@ -131,16 +150,34 @@ namespace Enderlook.Unity.Attributes
 
             window.propertyPath = AssetDatabaseHelper.GetAssetPath(property);
             window.propertyWrapper = new SerializedPropertyWrapper(property, fieldInfo);
-            IEnumerable<Type> allowedTypes = GetDerivedTypes(window.propertyWrapper.Type).Where(e => !e.IsAbstract);
+
+            Debug.Assert(tmpList2.Count == 0);
+            foreach (Type type in GetDerivedTypes(window.propertyWrapper.Type))
+                if (!type.IsAbstract)
+                    tmpList2.Add(type);
 
             // RestrictTypeAttribute compatibility
             RestrictTypeAttribute restrictTypeAttribute = fieldInfo.GetCustomAttribute<RestrictTypeAttribute>();
+            List<Type> allowedTypes;
             if (restrictTypeAttribute != null)
-                allowedTypes = allowedTypes.Where(e => restrictTypeAttribute.CheckIfTypeIsAllowed(e, out string _)).ToArray();
+            {
+                allowedTypes = new List<Type>();
+                foreach (Type type in tmpList2)
+                    if (restrictTypeAttribute.CheckIfTypeIsAllowed(type))
+                        allowedTypes.Add(type);
+            }
+            else
+                allowedTypes = new List<Type>(tmpList2);
 
-            window.allowedTypes = allowedTypes.ToArray();
+            tmpList2.Clear();
 
-            window.allowedTypesNames = window.allowedTypes.Select(e => e.Name).ToArray();
+            window.allowedTypes = allowedTypes;
+
+            window.allowedTypesNames = new string[allowedTypes.Count];
+
+            for (int i = 0; i < allowedTypes.Count; i++)
+                window.allowedTypesNames[i] = allowedTypes[i].Name;
+
             window.index = window.GetIndex(window.propertyWrapper.Type);
         }
 
@@ -171,7 +208,7 @@ namespace Enderlook.Unity.Attributes
 
             // Get Name
             if (scriptableObjectNameAuto && !hasScriptableObject)
-                scriptableObjectName = path.Split('/').Last().Split(EXTENSIONS, StringSplitOptions.None).First();
+                scriptableObjectName = path.Split(splitBy).Last().Split(EXTENSIONS, StringSplitOptions.None).First();
 
             UnityObject targetObject = propertyWrapper.Property.serializedObject.targetObject;
 
@@ -262,6 +299,6 @@ namespace Enderlook.Unity.Attributes
             return scriptableObject;
         }
 
-        private int GetIndex(Type type) => Array.IndexOf(allowedTypes, type);
+        private int GetIndex(Type type) => allowedTypes.IndexOf(type);
     }
 }
