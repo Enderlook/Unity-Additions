@@ -95,9 +95,40 @@
         </member>
         <member name="M:Enderlook.Collections.BinaryHeapMax`1.GetEnumerator">
             <inheritdoc cref="M:System.Collections.Generic.IEnumerable`1.GetEnumerator"/>
+            <remarks>Elements are unsorted.</remarks>
+        </member>
+        <member name="M:Enderlook.Collections.BinaryHeapMax`1.System#Collections#Generic#IEnumerable{TData}#GetEnumerator">
+            <inheritdoc cref="M:System.Collections.Generic.IEnumerable`1.GetEnumerator"/>
+            <remarks>Elements are unsorted.</remarks>
         </member>
         <member name="M:Enderlook.Collections.BinaryHeapMax`1.System#Collections#IEnumerable#GetEnumerator">
             <inheritdoc cref="M:System.Collections.IEnumerable.GetEnumerator"/>
+            <remarks>Elements are unsorted.</remarks>
+        </member>
+        <member name="T:Enderlook.Collections.BinaryHeapMax`1.UnsortedEnumerator">
+            <summary>
+            Represent the unsorted enumerator of a heap.
+            </summary>
+        </member>
+        <member name="M:Enderlook.Collections.BinaryHeapMax`1.UnsortedEnumerator.Dispose">
+            <inheritdoc cref="M:System.IDisposable.Dispose"/>
+        </member>
+        <member name="M:Enderlook.Collections.BinaryHeapMax`1.UnsortedEnumerator.MoveNext">
+            <inheritdoc cref="M:System.Collections.IEnumerator.MoveNext"/>
+        </member>
+        <member name="P:Enderlook.Collections.BinaryHeapMax`1.UnsortedEnumerator.Current">
+            <inheritdoc cref="P:System.Collections.Generic.IEnumerator`1.Current"/>
+        </member>
+        <member name="P:Enderlook.Collections.BinaryHeapMax`1.UnsortedEnumerator.System#Collections#IEnumerator#Current">
+            <inheritdoc cref="P:System.Collections.IEnumerator.Current"/>
+        </member>
+        <member name="M:Enderlook.Collections.BinaryHeapMax`1.UnsortedEnumerator.System#Collections#IEnumerator#Reset">
+            <inheritdoc cref="M:System.Collections.IEnumerator.Reset"/>
+        </member>
+        <member name="M:Enderlook.Collections.BinaryHeapMax`1.TrimExcess">
+            <summary>
+            Sets capacity to the actual number of elements in the heap, if that is less than 90 percent of current capacity.
+            </summary>
         </member>
         <member name="T:Enderlook.Collections.BinaryHeapMax`2">
             <summary>
@@ -145,27 +176,27 @@
             <inheritdoc cref="M:Enderlook.Collections.IPriorityQueue`2.Clear"/>
         </member>
         <member name="M:Enderlook.Collections.BinaryHeapMax`2.Enqueue(System.ValueTuple{`0,`1})">
-            <inheritdoc cref="!:IPriorityQueue&lt;TData, TPriority&gt;.Enqueue((TData data, TPriority priority))"/>
+            <inheritdoc cref="!:IPriorityQueue&lt;TData, TPriority&gt;.Enqueue((TData Data, TPriority Priority))"/>
         </member>
         <member name="M:Enderlook.Collections.BinaryHeapMax`2.EnqueueRange(System.ValueTuple{`0,`1}[])">
-            <inheritdoc cref="!:IPriorityQueue&lt;TData, TPriority&gt;.EnqueueRange((TData data, TPriority priority)[])"/>
+            <inheritdoc cref="!:IPriorityQueue&lt;TData, TPriority&gt;.EnqueueRange((TData Data, TPriority Priority)[])"/>
         </member>
         <member name="M:Enderlook.Collections.BinaryHeapMax`2.EnqueueRange(System.Collections.Generic.IEnumerable{System.ValueTuple{`0,`1}})">
-            <inheritdoc cref="!:IPriorityQueue&lt;TData, TPriority&gt;.EnqueueRange(IEnumerable&lt;(TData data, TPriority priority)&gt;)"/>
+            <inheritdoc cref="!:IPriorityQueue&lt;TData, TPriority&gt;.EnqueueRange(IEnumerable&lt;(TData Data, TPriority Priority)&gt;)"/>
         </member>
         <member name="M:Enderlook.Collections.BinaryHeapMax`2.Peek">
             <inheritdoc cref="M:Enderlook.Collections.IPriorityQueue`2.Peek"/>
         </member>
         <member name="M:Enderlook.Collections.BinaryHeapMax`2.TryPeek(System.ValueTuple{`0,`1}@)">
-            <inheritdoc cref="!:IPriorityQueue&lt;TData, TPriority&gt;.TryPeek(out (TData data, TPriority priority))"/>
+            <inheritdoc cref="!:IPriorityQueue&lt;TData, TPriority&gt;.TryPeek(out (TData Data, TPriority Priority))"/>
         </member>
         <member name="M:Enderlook.Collections.BinaryHeapMax`2.Dequeue">
             <inheritdoc cref="M:Enderlook.Collections.IPriorityQueue`2.Dequeue"/>
         </member>
         <member name="M:Enderlook.Collections.BinaryHeapMax`2.TryDequeue(System.ValueTuple{`0,`1}@)">
-            <inheritdoc cref="!:IPriorityQueue&lt;TData, TPriority&gt;.TryDequeue(out (TData data, TPriority priority))"/>
+            <inheritdoc cref="!:IPriorityQueue&lt;TData, TPriority&gt;.TryDequeue(out (TData Data, TPriority Priority))"/>
         </member>
-        <member name="P:Enderlook.Collections.BinaryHeapMax`2.System#Collections#Generic#ICollection{(TDatadata,TPrioritypriority)}#IsReadOnly">
+        <member name="P:Enderlook.Collections.BinaryHeapMax`2.System#Collections#Generic#ICollection{(TDataData,TPriorityPriority)}#IsReadOnly">
             <inheritdoc cref="P:System.Collections.Generic.ICollection`1.IsReadOnly"/>
         </member>
         <member name="P:Enderlook.Collections.BinaryHeapMax`2.System#Collections#ICollection#IsSynchronized">
@@ -174,26 +205,57 @@
         <member name="P:Enderlook.Collections.BinaryHeapMax`2.System#Collections#ICollection#SyncRoot">
             <inheritdoc cref="P:System.Collections.ICollection.SyncRoot"/>
         </member>
-        <member name="M:Enderlook.Collections.BinaryHeapMax`2.System#Collections#Generic#ICollection{(TDatadata,TPrioritypriority)}#Add(System.ValueTuple{`0,`1})">
+        <member name="M:Enderlook.Collections.BinaryHeapMax`2.System#Collections#Generic#ICollection{(TDataData,TPriorityPriority)}#Add(System.ValueTuple{`0,`1})">
             <inheritdoc cref="M:System.Collections.Generic.ICollection`1.Add(`0)"/>
         </member>
-        <member name="M:Enderlook.Collections.BinaryHeapMax`2.System#Collections#Generic#ICollection{(TDatadata,TPrioritypriority)}#Contains(System.ValueTuple{`0,`1})">
+        <member name="M:Enderlook.Collections.BinaryHeapMax`2.System#Collections#Generic#ICollection{(TDataData,TPriorityPriority)}#Contains(System.ValueTuple{`0,`1})">
             <inheritdoc cref="M:System.Collections.Generic.ICollection`1.Contains(`0)"/>
         </member>
-        <member name="M:Enderlook.Collections.BinaryHeapMax`2.System#Collections#Generic#ICollection{(TDatadata,TPrioritypriority)}#CopyTo(System.ValueTuple{`0,`1}[],System.Int32)">
+        <member name="M:Enderlook.Collections.BinaryHeapMax`2.System#Collections#Generic#ICollection{(TDataData,TPriorityPriority)}#CopyTo(System.ValueTuple{`0,`1}[],System.Int32)">
             <inheritdoc cref="M:System.Collections.Generic.ICollection`1.CopyTo(`0[],System.Int32)"/>
         </member>
         <member name="M:Enderlook.Collections.BinaryHeapMax`2.System#Collections#ICollection#CopyTo(System.Array,System.Int32)">
             <inheritdoc cref="M:System.Collections.ICollection.CopyTo(System.Array,System.Int32)"/>
         </member>
-        <member name="M:Enderlook.Collections.BinaryHeapMax`2.System#Collections#Generic#ICollection{(TDatadata,TPrioritypriority)}#Remove(System.ValueTuple{`0,`1})">
+        <member name="M:Enderlook.Collections.BinaryHeapMax`2.System#Collections#Generic#ICollection{(TDataData,TPriorityPriority)}#Remove(System.ValueTuple{`0,`1})">
             <inheritdoc cref="M:System.Collections.Generic.ICollection`1.Remove(`0)"/>
         </member>
         <member name="M:Enderlook.Collections.BinaryHeapMax`2.GetEnumerator">
             <inheritdoc cref="M:System.Collections.Generic.IEnumerable`1.GetEnumerator"/>
+            <remarks>Elements are unsorted.</remarks>
+        </member>
+        <member name="M:Enderlook.Collections.BinaryHeapMax`2.System#Collections#Generic#IEnumerable{(TDataData,TPriorityPriority)}#GetEnumerator">
+            <inheritdoc cref="M:System.Collections.Generic.IEnumerable`1.GetEnumerator"/>
+            <remarks>Elements are unsorted.</remarks>
         </member>
         <member name="M:Enderlook.Collections.BinaryHeapMax`2.System#Collections#IEnumerable#GetEnumerator">
             <inheritdoc cref="M:System.Collections.IEnumerable.GetEnumerator"/>
+            <remarks>Elements are unsorted.</remarks>
+        </member>
+        <member name="T:Enderlook.Collections.BinaryHeapMax`2.UnsortedEnumerator">
+            <summary>
+            Represent the unsorted enumerator of a heap.
+            </summary>
+        </member>
+        <member name="M:Enderlook.Collections.BinaryHeapMax`2.UnsortedEnumerator.Dispose">
+            <inheritdoc cref="M:System.IDisposable.Dispose"/>
+        </member>
+        <member name="M:Enderlook.Collections.BinaryHeapMax`2.UnsortedEnumerator.MoveNext">
+            <inheritdoc cref="M:System.Collections.IEnumerator.MoveNext"/>
+        </member>
+        <member name="P:Enderlook.Collections.BinaryHeapMax`2.UnsortedEnumerator.Current">
+            <inheritdoc cref="P:System.Collections.Generic.IEnumerator`1.Current"/>
+        </member>
+        <member name="P:Enderlook.Collections.BinaryHeapMax`2.UnsortedEnumerator.System#Collections#IEnumerator#Current">
+            <inheritdoc cref="P:System.Collections.IEnumerator.Current"/>
+        </member>
+        <member name="M:Enderlook.Collections.BinaryHeapMax`2.UnsortedEnumerator.System#Collections#IEnumerator#Reset">
+            <inheritdoc cref="M:System.Collections.IEnumerator.Reset"/>
+        </member>
+        <member name="M:Enderlook.Collections.BinaryHeapMax`2.TrimExcess">
+            <summary>
+            Sets capacity to the actual number of elements in the heap, if that is less than 90 percent of current capacity.
+            </summary>
         </member>
         <member name="M:Enderlook.Collections.BinaryHeapMax`2.Enqueue(`0,`1)">
             <inheritdoc cref="M:Enderlook.Collections.IPriorityQueue`2.Enqueue(`0,`1)"/>
@@ -218,6 +280,56 @@
         </member>
         <member name="M:Enderlook.Collections.BinaryHeapMax`2.TryDequeue(`0@)">
             <inheritdoc cref="M:Enderlook.Collections.IPriorityQueue`2.TryDequeue(`0@)"/>
+        </member>
+        <member name="T:Enderlook.Collections.BinaryHeapMax`2.ElementCollection">
+            <summary>
+            Colletion of all elements in a heap.
+            </summary>
+        </member>
+        <member name="P:Enderlook.Collections.BinaryHeapMax`2.ElementCollection.Count">
+            <inheritdoc cref="P:System.Collections.Generic.IReadOnlyCollection`1.Count"/>
+        </member>
+        <member name="P:Enderlook.Collections.BinaryHeapMax`2.ElementCollection.System#Collections#Generic#ICollection{TData}#IsReadOnly">
+            <inheritdoc cref="P:System.Collections.Generic.ICollection`1.IsReadOnly"/>
+        </member>
+        <member name="M:Enderlook.Collections.BinaryHeapMax`2.ElementCollection.System#Collections#Generic#ICollection{TData}#Add(`0)">
+            <inheritdoc cref="M:System.Collections.Generic.ICollection`1.Add(`0)"/>
+        </member>
+        <member name="M:Enderlook.Collections.BinaryHeapMax`2.ElementCollection.System#Collections#Generic#ICollection{TData}#Clear">
+            <inheritdoc cref="M:System.Collections.Generic.ICollection`1.Clear"/>
+        </member>
+        <member name="M:Enderlook.Collections.BinaryHeapMax`2.ElementCollection.System#Collections#Generic#ICollection{TData}#Contains(`0)">
+            <inheritdoc cref="M:System.Collections.Generic.ICollection`1.Contains(`0)"/>
+        </member>
+        <member name="M:Enderlook.Collections.BinaryHeapMax`2.ElementCollection.GetEnumerator">
+            <inheritdoc cref="M:System.Collections.Generic.IEnumerable`1.GetEnumerator"/>
+            <remarks>Elements are unsorted.</remarks>
+        </member>
+        <member name="M:Enderlook.Collections.BinaryHeapMax`2.ElementCollection.System#Collections#IEnumerable#GetEnumerator">
+            <inheritdoc cref="M:System.Collections.IEnumerable.GetEnumerator"/>
+        </member>
+        <member name="M:Enderlook.Collections.BinaryHeapMax`2.ElementCollection.System#Collections#Generic#IEnumerable{TData}#GetEnumerator">
+            <inheritdoc cref="M:System.Collections.Generic.IEnumerable`1.GetEnumerator"/>
+        </member>
+        <member name="T:Enderlook.Collections.BinaryHeapMax`2.ElementCollection.UnsortedEnumerator">
+            <summary>
+            Represent the unsorted enumerator of a <see cref="T:Enderlook.Collections.BinaryHeapMax`2.ElementCollection"/>.
+            </summary>
+        </member>
+        <member name="M:Enderlook.Collections.BinaryHeapMax`2.ElementCollection.UnsortedEnumerator.Dispose">
+            <inheritdoc cref="M:System.IDisposable.Dispose"/>
+        </member>
+        <member name="M:Enderlook.Collections.BinaryHeapMax`2.ElementCollection.UnsortedEnumerator.MoveNext">
+            <inheritdoc cref="M:System.Collections.IEnumerator.MoveNext"/>
+        </member>
+        <member name="P:Enderlook.Collections.BinaryHeapMax`2.ElementCollection.UnsortedEnumerator.Current">
+            <inheritdoc cref="P:System.Collections.Generic.IEnumerator`1.Current"/>
+        </member>
+        <member name="P:Enderlook.Collections.BinaryHeapMax`2.ElementCollection.UnsortedEnumerator.System#Collections#IEnumerator#Current">
+            <inheritdoc cref="P:System.Collections.IEnumerator.Current"/>
+        </member>
+        <member name="M:Enderlook.Collections.BinaryHeapMax`2.ElementCollection.UnsortedEnumerator.System#Collections#IEnumerator#Reset">
+            <inheritdoc cref="M:System.Collections.IEnumerator.Reset"/>
         </member>
         <member name="T:Enderlook.Collections.BinaryHeapMin`1">
             <summary>
@@ -310,9 +422,40 @@
         </member>
         <member name="M:Enderlook.Collections.BinaryHeapMin`1.GetEnumerator">
             <inheritdoc cref="M:System.Collections.Generic.IEnumerable`1.GetEnumerator"/>
+            <remarks>Elements are unsorted.</remarks>
+        </member>
+        <member name="M:Enderlook.Collections.BinaryHeapMin`1.System#Collections#Generic#IEnumerable{TData}#GetEnumerator">
+            <inheritdoc cref="M:System.Collections.Generic.IEnumerable`1.GetEnumerator"/>
+            <remarks>Elements are unsorted.</remarks>
         </member>
         <member name="M:Enderlook.Collections.BinaryHeapMin`1.System#Collections#IEnumerable#GetEnumerator">
             <inheritdoc cref="M:System.Collections.IEnumerable.GetEnumerator"/>
+            <remarks>Elements are unsorted.</remarks>
+        </member>
+        <member name="T:Enderlook.Collections.BinaryHeapMin`1.UnsortedEnumerator">
+            <summary>
+            Represent the unsorted enumerator of a heap.
+            </summary>
+        </member>
+        <member name="M:Enderlook.Collections.BinaryHeapMin`1.UnsortedEnumerator.Dispose">
+            <inheritdoc cref="M:System.IDisposable.Dispose"/>
+        </member>
+        <member name="M:Enderlook.Collections.BinaryHeapMin`1.UnsortedEnumerator.MoveNext">
+            <inheritdoc cref="M:System.Collections.IEnumerator.MoveNext"/>
+        </member>
+        <member name="P:Enderlook.Collections.BinaryHeapMin`1.UnsortedEnumerator.Current">
+            <inheritdoc cref="P:System.Collections.Generic.IEnumerator`1.Current"/>
+        </member>
+        <member name="P:Enderlook.Collections.BinaryHeapMin`1.UnsortedEnumerator.System#Collections#IEnumerator#Current">
+            <inheritdoc cref="P:System.Collections.IEnumerator.Current"/>
+        </member>
+        <member name="M:Enderlook.Collections.BinaryHeapMin`1.UnsortedEnumerator.System#Collections#IEnumerator#Reset">
+            <inheritdoc cref="M:System.Collections.IEnumerator.Reset"/>
+        </member>
+        <member name="M:Enderlook.Collections.BinaryHeapMin`1.TrimExcess">
+            <summary>
+            Sets capacity to the actual number of elements in the heap, if that is less than 90 percent of current capacity.
+            </summary>
         </member>
         <member name="T:Enderlook.Collections.BinaryHeapMin`2">
             <summary>
@@ -360,27 +503,27 @@
             <inheritdoc cref="M:Enderlook.Collections.IPriorityQueue`2.Clear"/>
         </member>
         <member name="M:Enderlook.Collections.BinaryHeapMin`2.Enqueue(System.ValueTuple{`0,`1})">
-            <inheritdoc cref="!:IPriorityQueue&lt;TData, TPriority&gt;.Enqueue((TData data, TPriority priority))"/>
+            <inheritdoc cref="!:IPriorityQueue&lt;TData, TPriority&gt;.Enqueue((TData Data, TPriority Priority))"/>
         </member>
         <member name="M:Enderlook.Collections.BinaryHeapMin`2.EnqueueRange(System.ValueTuple{`0,`1}[])">
-            <inheritdoc cref="!:IPriorityQueue&lt;TData, TPriority&gt;.EnqueueRange((TData data, TPriority priority)[])"/>
+            <inheritdoc cref="!:IPriorityQueue&lt;TData, TPriority&gt;.EnqueueRange((TData Data, TPriority Priority)[])"/>
         </member>
         <member name="M:Enderlook.Collections.BinaryHeapMin`2.EnqueueRange(System.Collections.Generic.IEnumerable{System.ValueTuple{`0,`1}})">
-            <inheritdoc cref="!:IPriorityQueue&lt;TData, TPriority&gt;.EnqueueRange(IEnumerable&lt;(TData data, TPriority priority)&gt;)"/>
+            <inheritdoc cref="!:IPriorityQueue&lt;TData, TPriority&gt;.EnqueueRange(IEnumerable&lt;(TData Data, TPriority Priority)&gt;)"/>
         </member>
         <member name="M:Enderlook.Collections.BinaryHeapMin`2.Peek">
             <inheritdoc cref="M:Enderlook.Collections.IPriorityQueue`2.Peek"/>
         </member>
         <member name="M:Enderlook.Collections.BinaryHeapMin`2.TryPeek(System.ValueTuple{`0,`1}@)">
-            <inheritdoc cref="!:IPriorityQueue&lt;TData, TPriority&gt;.TryPeek(out (TData data, TPriority priority))"/>
+            <inheritdoc cref="!:IPriorityQueue&lt;TData, TPriority&gt;.TryPeek(out (TData Data, TPriority Priority))"/>
         </member>
         <member name="M:Enderlook.Collections.BinaryHeapMin`2.Dequeue">
             <inheritdoc cref="M:Enderlook.Collections.IPriorityQueue`2.Dequeue"/>
         </member>
         <member name="M:Enderlook.Collections.BinaryHeapMin`2.TryDequeue(System.ValueTuple{`0,`1}@)">
-            <inheritdoc cref="!:IPriorityQueue&lt;TData, TPriority&gt;.TryDequeue(out (TData data, TPriority priority))"/>
+            <inheritdoc cref="!:IPriorityQueue&lt;TData, TPriority&gt;.TryDequeue(out (TData Data, TPriority Priority))"/>
         </member>
-        <member name="P:Enderlook.Collections.BinaryHeapMin`2.System#Collections#Generic#ICollection{(TDatadata,TPrioritypriority)}#IsReadOnly">
+        <member name="P:Enderlook.Collections.BinaryHeapMin`2.System#Collections#Generic#ICollection{(TDataData,TPriorityPriority)}#IsReadOnly">
             <inheritdoc cref="P:System.Collections.Generic.ICollection`1.IsReadOnly"/>
         </member>
         <member name="P:Enderlook.Collections.BinaryHeapMin`2.System#Collections#ICollection#IsSynchronized">
@@ -389,26 +532,57 @@
         <member name="P:Enderlook.Collections.BinaryHeapMin`2.System#Collections#ICollection#SyncRoot">
             <inheritdoc cref="P:System.Collections.ICollection.SyncRoot"/>
         </member>
-        <member name="M:Enderlook.Collections.BinaryHeapMin`2.System#Collections#Generic#ICollection{(TDatadata,TPrioritypriority)}#Add(System.ValueTuple{`0,`1})">
+        <member name="M:Enderlook.Collections.BinaryHeapMin`2.System#Collections#Generic#ICollection{(TDataData,TPriorityPriority)}#Add(System.ValueTuple{`0,`1})">
             <inheritdoc cref="M:System.Collections.Generic.ICollection`1.Add(`0)"/>
         </member>
-        <member name="M:Enderlook.Collections.BinaryHeapMin`2.System#Collections#Generic#ICollection{(TDatadata,TPrioritypriority)}#Contains(System.ValueTuple{`0,`1})">
+        <member name="M:Enderlook.Collections.BinaryHeapMin`2.System#Collections#Generic#ICollection{(TDataData,TPriorityPriority)}#Contains(System.ValueTuple{`0,`1})">
             <inheritdoc cref="M:System.Collections.Generic.ICollection`1.Contains(`0)"/>
         </member>
-        <member name="M:Enderlook.Collections.BinaryHeapMin`2.System#Collections#Generic#ICollection{(TDatadata,TPrioritypriority)}#CopyTo(System.ValueTuple{`0,`1}[],System.Int32)">
+        <member name="M:Enderlook.Collections.BinaryHeapMin`2.System#Collections#Generic#ICollection{(TDataData,TPriorityPriority)}#CopyTo(System.ValueTuple{`0,`1}[],System.Int32)">
             <inheritdoc cref="M:System.Collections.Generic.ICollection`1.CopyTo(`0[],System.Int32)"/>
         </member>
         <member name="M:Enderlook.Collections.BinaryHeapMin`2.System#Collections#ICollection#CopyTo(System.Array,System.Int32)">
             <inheritdoc cref="M:System.Collections.ICollection.CopyTo(System.Array,System.Int32)"/>
         </member>
-        <member name="M:Enderlook.Collections.BinaryHeapMin`2.System#Collections#Generic#ICollection{(TDatadata,TPrioritypriority)}#Remove(System.ValueTuple{`0,`1})">
+        <member name="M:Enderlook.Collections.BinaryHeapMin`2.System#Collections#Generic#ICollection{(TDataData,TPriorityPriority)}#Remove(System.ValueTuple{`0,`1})">
             <inheritdoc cref="M:System.Collections.Generic.ICollection`1.Remove(`0)"/>
         </member>
         <member name="M:Enderlook.Collections.BinaryHeapMin`2.GetEnumerator">
             <inheritdoc cref="M:System.Collections.Generic.IEnumerable`1.GetEnumerator"/>
+            <remarks>Elements are unsorted.</remarks>
+        </member>
+        <member name="M:Enderlook.Collections.BinaryHeapMin`2.System#Collections#Generic#IEnumerable{(TDataData,TPriorityPriority)}#GetEnumerator">
+            <inheritdoc cref="M:System.Collections.Generic.IEnumerable`1.GetEnumerator"/>
+            <remarks>Elements are unsorted.</remarks>
         </member>
         <member name="M:Enderlook.Collections.BinaryHeapMin`2.System#Collections#IEnumerable#GetEnumerator">
             <inheritdoc cref="M:System.Collections.IEnumerable.GetEnumerator"/>
+            <remarks>Elements are unsorted.</remarks>
+        </member>
+        <member name="T:Enderlook.Collections.BinaryHeapMin`2.UnsortedEnumerator">
+            <summary>
+            Represent the unsorted enumerator of a heap.
+            </summary>
+        </member>
+        <member name="M:Enderlook.Collections.BinaryHeapMin`2.UnsortedEnumerator.Dispose">
+            <inheritdoc cref="M:System.IDisposable.Dispose"/>
+        </member>
+        <member name="M:Enderlook.Collections.BinaryHeapMin`2.UnsortedEnumerator.MoveNext">
+            <inheritdoc cref="M:System.Collections.IEnumerator.MoveNext"/>
+        </member>
+        <member name="P:Enderlook.Collections.BinaryHeapMin`2.UnsortedEnumerator.Current">
+            <inheritdoc cref="P:System.Collections.Generic.IEnumerator`1.Current"/>
+        </member>
+        <member name="P:Enderlook.Collections.BinaryHeapMin`2.UnsortedEnumerator.System#Collections#IEnumerator#Current">
+            <inheritdoc cref="P:System.Collections.IEnumerator.Current"/>
+        </member>
+        <member name="M:Enderlook.Collections.BinaryHeapMin`2.UnsortedEnumerator.System#Collections#IEnumerator#Reset">
+            <inheritdoc cref="M:System.Collections.IEnumerator.Reset"/>
+        </member>
+        <member name="M:Enderlook.Collections.BinaryHeapMin`2.TrimExcess">
+            <summary>
+            Sets capacity to the actual number of elements in the heap, if that is less than 90 percent of current capacity.
+            </summary>
         </member>
         <member name="M:Enderlook.Collections.BinaryHeapMin`2.Enqueue(`0,`1)">
             <inheritdoc cref="M:Enderlook.Collections.IPriorityQueue`2.Enqueue(`0,`1)"/>
@@ -433,6 +607,56 @@
         </member>
         <member name="M:Enderlook.Collections.BinaryHeapMin`2.TryDequeue(`0@)">
             <inheritdoc cref="M:Enderlook.Collections.IPriorityQueue`2.TryDequeue(`0@)"/>
+        </member>
+        <member name="T:Enderlook.Collections.BinaryHeapMin`2.ElementCollection">
+            <summary>
+            Colletion of all elements in a heap.
+            </summary>
+        </member>
+        <member name="P:Enderlook.Collections.BinaryHeapMin`2.ElementCollection.Count">
+            <inheritdoc cref="P:System.Collections.Generic.IReadOnlyCollection`1.Count"/>
+        </member>
+        <member name="P:Enderlook.Collections.BinaryHeapMin`2.ElementCollection.System#Collections#Generic#ICollection{TData}#IsReadOnly">
+            <inheritdoc cref="P:System.Collections.Generic.ICollection`1.IsReadOnly"/>
+        </member>
+        <member name="M:Enderlook.Collections.BinaryHeapMin`2.ElementCollection.System#Collections#Generic#ICollection{TData}#Add(`0)">
+            <inheritdoc cref="M:System.Collections.Generic.ICollection`1.Add(`0)"/>
+        </member>
+        <member name="M:Enderlook.Collections.BinaryHeapMin`2.ElementCollection.System#Collections#Generic#ICollection{TData}#Clear">
+            <inheritdoc cref="M:System.Collections.Generic.ICollection`1.Clear"/>
+        </member>
+        <member name="M:Enderlook.Collections.BinaryHeapMin`2.ElementCollection.System#Collections#Generic#ICollection{TData}#Contains(`0)">
+            <inheritdoc cref="M:System.Collections.Generic.ICollection`1.Contains(`0)"/>
+        </member>
+        <member name="M:Enderlook.Collections.BinaryHeapMin`2.ElementCollection.GetEnumerator">
+            <inheritdoc cref="M:System.Collections.Generic.IEnumerable`1.GetEnumerator"/>
+            <remarks>Elements are unsorted.</remarks>
+        </member>
+        <member name="M:Enderlook.Collections.BinaryHeapMin`2.ElementCollection.System#Collections#IEnumerable#GetEnumerator">
+            <inheritdoc cref="M:System.Collections.IEnumerable.GetEnumerator"/>
+        </member>
+        <member name="M:Enderlook.Collections.BinaryHeapMin`2.ElementCollection.System#Collections#Generic#IEnumerable{TData}#GetEnumerator">
+            <inheritdoc cref="M:System.Collections.Generic.IEnumerable`1.GetEnumerator"/>
+        </member>
+        <member name="T:Enderlook.Collections.BinaryHeapMin`2.ElementCollection.UnsortedEnumerator">
+            <summary>
+            Represent the unsorted enumerator of a <see cref="T:Enderlook.Collections.BinaryHeapMin`2.ElementCollection"/>.
+            </summary>
+        </member>
+        <member name="M:Enderlook.Collections.BinaryHeapMin`2.ElementCollection.UnsortedEnumerator.Dispose">
+            <inheritdoc cref="M:System.IDisposable.Dispose"/>
+        </member>
+        <member name="M:Enderlook.Collections.BinaryHeapMin`2.ElementCollection.UnsortedEnumerator.MoveNext">
+            <inheritdoc cref="M:System.Collections.IEnumerator.MoveNext"/>
+        </member>
+        <member name="P:Enderlook.Collections.BinaryHeapMin`2.ElementCollection.UnsortedEnumerator.Current">
+            <inheritdoc cref="P:System.Collections.Generic.IEnumerator`1.Current"/>
+        </member>
+        <member name="P:Enderlook.Collections.BinaryHeapMin`2.ElementCollection.UnsortedEnumerator.System#Collections#IEnumerator#Current">
+            <inheritdoc cref="P:System.Collections.IEnumerator.Current"/>
+        </member>
+        <member name="M:Enderlook.Collections.BinaryHeapMin`2.ElementCollection.UnsortedEnumerator.System#Collections#IEnumerator#Reset">
+            <inheritdoc cref="M:System.Collections.IEnumerator.Reset"/>
         </member>
         <member name="T:Enderlook.Collections.IPriorityQueue`1">
             <summary>
@@ -624,6 +848,9 @@
             <param name="key">Key of the node to insert.</param>
             <remarks>This is <c>O(log n)</c>.</remarks>
         </member>
+        <member name="M:Enderlook.Collections.ISpatialIndexBasic`1.Clear">
+            <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.Clear"/>
+        </member>
         <member name="M:Enderlook.Collections.ISpatialIndexBasic`1.Contains(`0)">
             <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.Contains(`0)"/>
         </member>
@@ -653,6 +880,11 @@
             <param name="key">Key of the node to insert.</param>
             <param name="value">Value of the node to insert.</param>
             <remarks>This is <c>O(log n)</c>.</remarks>
+        </member>
+        <member name="M:Enderlook.Collections.ISpatialIndexBasic`2.Clear">
+            <summary>
+            Remove all elements.
+            </summary>
         </member>
         <member name="M:Enderlook.Collections.ISpatialIndexBasic`2.Contains(`0)">
             <summary>
@@ -717,6 +949,9 @@
         <member name="M:Enderlook.Collections.D2TreeDecimal.Insert(System.ValueTuple{System.Decimal,System.Decimal})">
             <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`1.Insert(`0)"/>
         </member>
+        <member name="M:Enderlook.Collections.D2TreeDecimal.Clear">
+            <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.Clear"/>
+        </member>
         <member name="M:Enderlook.Collections.D2TreeDecimal.Contains(System.ValueTuple{System.Decimal,System.Decimal})">
             <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.Contains(`0)"/>
         </member>
@@ -763,6 +998,9 @@
         </member>
         <member name="M:Enderlook.Collections.D2TreeDecimal`1.InsertOrUpdate(System.ValueTuple{System.Decimal,System.Decimal},`0)">
             <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.InsertOrUpdate(`0,`1)"/>
+        </member>
+        <member name="M:Enderlook.Collections.D2TreeDecimal`1.Clear">
+            <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.Clear"/>
         </member>
         <member name="M:Enderlook.Collections.D2TreeDecimal`1.Contains(System.ValueTuple{System.Decimal,System.Decimal})">
             <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.Contains(`0)"/>
@@ -816,6 +1054,9 @@
         <member name="M:Enderlook.Collections.D2TreeDouble.Insert(System.ValueTuple{System.Double,System.Double})">
             <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`1.Insert(`0)"/>
         </member>
+        <member name="M:Enderlook.Collections.D2TreeDouble.Clear">
+            <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.Clear"/>
+        </member>
         <member name="M:Enderlook.Collections.D2TreeDouble.Contains(System.ValueTuple{System.Double,System.Double})">
             <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.Contains(`0)"/>
         </member>
@@ -862,6 +1103,9 @@
         </member>
         <member name="M:Enderlook.Collections.D2TreeDouble`1.InsertOrUpdate(System.ValueTuple{System.Double,System.Double},`0)">
             <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.InsertOrUpdate(`0,`1)"/>
+        </member>
+        <member name="M:Enderlook.Collections.D2TreeDouble`1.Clear">
+            <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.Clear"/>
         </member>
         <member name="M:Enderlook.Collections.D2TreeDouble`1.Contains(System.ValueTuple{System.Double,System.Double})">
             <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.Contains(`0)"/>
@@ -915,6 +1159,9 @@
         <member name="M:Enderlook.Collections.D2TreeFloat.Insert(System.ValueTuple{System.Single,System.Single})">
             <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`1.Insert(`0)"/>
         </member>
+        <member name="M:Enderlook.Collections.D2TreeFloat.Clear">
+            <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.Clear"/>
+        </member>
         <member name="M:Enderlook.Collections.D2TreeFloat.Contains(System.ValueTuple{System.Single,System.Single})">
             <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.Contains(`0)"/>
         </member>
@@ -961,6 +1208,9 @@
         </member>
         <member name="M:Enderlook.Collections.D2TreeFloat`1.InsertOrUpdate(System.ValueTuple{System.Single,System.Single},`0)">
             <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.InsertOrUpdate(`0,`1)"/>
+        </member>
+        <member name="M:Enderlook.Collections.D2TreeFloat`1.Clear">
+            <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.Clear"/>
         </member>
         <member name="M:Enderlook.Collections.D2TreeFloat`1.Contains(System.ValueTuple{System.Single,System.Single})">
             <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.Contains(`0)"/>
@@ -1014,6 +1264,9 @@
         <member name="M:Enderlook.Collections.D2TreeInt.Insert(System.ValueTuple{System.Int32,System.Int32})">
             <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`1.Insert(`0)"/>
         </member>
+        <member name="M:Enderlook.Collections.D2TreeInt.Clear">
+            <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.Clear"/>
+        </member>
         <member name="M:Enderlook.Collections.D2TreeInt.Contains(System.ValueTuple{System.Int32,System.Int32})">
             <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.Contains(`0)"/>
         </member>
@@ -1060,6 +1313,9 @@
         </member>
         <member name="M:Enderlook.Collections.D2TreeInt`1.InsertOrUpdate(System.ValueTuple{System.Int32,System.Int32},`0)">
             <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.InsertOrUpdate(`0,`1)"/>
+        </member>
+        <member name="M:Enderlook.Collections.D2TreeInt`1.Clear">
+            <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.Clear"/>
         </member>
         <member name="M:Enderlook.Collections.D2TreeInt`1.Contains(System.ValueTuple{System.Int32,System.Int32})">
             <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.Contains(`0)"/>
@@ -1113,6 +1369,9 @@
         <member name="M:Enderlook.Collections.D2TreeLong.Insert(System.ValueTuple{System.Int64,System.Int64})">
             <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`1.Insert(`0)"/>
         </member>
+        <member name="M:Enderlook.Collections.D2TreeLong.Clear">
+            <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.Clear"/>
+        </member>
         <member name="M:Enderlook.Collections.D2TreeLong.Contains(System.ValueTuple{System.Int64,System.Int64})">
             <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.Contains(`0)"/>
         </member>
@@ -1159,6 +1418,9 @@
         </member>
         <member name="M:Enderlook.Collections.D2TreeLong`1.InsertOrUpdate(System.ValueTuple{System.Int64,System.Int64},`0)">
             <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.InsertOrUpdate(`0,`1)"/>
+        </member>
+        <member name="M:Enderlook.Collections.D2TreeLong`1.Clear">
+            <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.Clear"/>
         </member>
         <member name="M:Enderlook.Collections.D2TreeLong`1.Contains(System.ValueTuple{System.Int64,System.Int64})">
             <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.Contains(`0)"/>
@@ -1212,6 +1474,9 @@
         <member name="M:Enderlook.Collections.D2TreeUInt.Insert(System.ValueTuple{System.UInt32,System.UInt32})">
             <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`1.Insert(`0)"/>
         </member>
+        <member name="M:Enderlook.Collections.D2TreeUInt.Clear">
+            <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.Clear"/>
+        </member>
         <member name="M:Enderlook.Collections.D2TreeUInt.Contains(System.ValueTuple{System.UInt32,System.UInt32})">
             <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.Contains(`0)"/>
         </member>
@@ -1258,6 +1523,9 @@
         </member>
         <member name="M:Enderlook.Collections.D2TreeUInt`1.InsertOrUpdate(System.ValueTuple{System.UInt32,System.UInt32},`0)">
             <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.InsertOrUpdate(`0,`1)"/>
+        </member>
+        <member name="M:Enderlook.Collections.D2TreeUInt`1.Clear">
+            <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.Clear"/>
         </member>
         <member name="M:Enderlook.Collections.D2TreeUInt`1.Contains(System.ValueTuple{System.UInt32,System.UInt32})">
             <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.Contains(`0)"/>
@@ -1311,6 +1579,9 @@
         <member name="M:Enderlook.Collections.D2TreeULong.Insert(System.ValueTuple{System.UInt64,System.UInt64})">
             <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`1.Insert(`0)"/>
         </member>
+        <member name="M:Enderlook.Collections.D2TreeULong.Clear">
+            <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.Clear"/>
+        </member>
         <member name="M:Enderlook.Collections.D2TreeULong.Contains(System.ValueTuple{System.UInt64,System.UInt64})">
             <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.Contains(`0)"/>
         </member>
@@ -1357,6 +1628,9 @@
         </member>
         <member name="M:Enderlook.Collections.D2TreeULong`1.InsertOrUpdate(System.ValueTuple{System.UInt64,System.UInt64},`0)">
             <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.InsertOrUpdate(`0,`1)"/>
+        </member>
+        <member name="M:Enderlook.Collections.D2TreeULong`1.Clear">
+            <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.Clear"/>
         </member>
         <member name="M:Enderlook.Collections.D2TreeULong`1.Contains(System.ValueTuple{System.UInt64,System.UInt64})">
             <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.Contains(`0)"/>
@@ -1410,6 +1684,9 @@
         <member name="M:Enderlook.Collections.D3TreeDecimal.Insert(System.ValueTuple{System.Decimal,System.Decimal,System.Decimal})">
             <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`1.Insert(`0)"/>
         </member>
+        <member name="M:Enderlook.Collections.D3TreeDecimal.Clear">
+            <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.Clear"/>
+        </member>
         <member name="M:Enderlook.Collections.D3TreeDecimal.Contains(System.ValueTuple{System.Decimal,System.Decimal,System.Decimal})">
             <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.Contains(`0)"/>
         </member>
@@ -1456,6 +1733,9 @@
         </member>
         <member name="M:Enderlook.Collections.D3TreeDecimal`1.InsertOrUpdate(System.ValueTuple{System.Decimal,System.Decimal,System.Decimal},`0)">
             <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.InsertOrUpdate(`0,`1)"/>
+        </member>
+        <member name="M:Enderlook.Collections.D3TreeDecimal`1.Clear">
+            <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.Clear"/>
         </member>
         <member name="M:Enderlook.Collections.D3TreeDecimal`1.Contains(System.ValueTuple{System.Decimal,System.Decimal,System.Decimal})">
             <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.Contains(`0)"/>
@@ -1509,6 +1789,9 @@
         <member name="M:Enderlook.Collections.D3TreeDouble.Insert(System.ValueTuple{System.Double,System.Double,System.Double})">
             <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`1.Insert(`0)"/>
         </member>
+        <member name="M:Enderlook.Collections.D3TreeDouble.Clear">
+            <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.Clear"/>
+        </member>
         <member name="M:Enderlook.Collections.D3TreeDouble.Contains(System.ValueTuple{System.Double,System.Double,System.Double})">
             <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.Contains(`0)"/>
         </member>
@@ -1555,6 +1838,9 @@
         </member>
         <member name="M:Enderlook.Collections.D3TreeDouble`1.InsertOrUpdate(System.ValueTuple{System.Double,System.Double,System.Double},`0)">
             <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.InsertOrUpdate(`0,`1)"/>
+        </member>
+        <member name="M:Enderlook.Collections.D3TreeDouble`1.Clear">
+            <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.Clear"/>
         </member>
         <member name="M:Enderlook.Collections.D3TreeDouble`1.Contains(System.ValueTuple{System.Double,System.Double,System.Double})">
             <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.Contains(`0)"/>
@@ -1608,6 +1894,9 @@
         <member name="M:Enderlook.Collections.D3TreeFloat.Insert(System.ValueTuple{System.Single,System.Single,System.Single})">
             <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`1.Insert(`0)"/>
         </member>
+        <member name="M:Enderlook.Collections.D3TreeFloat.Clear">
+            <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.Clear"/>
+        </member>
         <member name="M:Enderlook.Collections.D3TreeFloat.Contains(System.ValueTuple{System.Single,System.Single,System.Single})">
             <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.Contains(`0)"/>
         </member>
@@ -1654,6 +1943,9 @@
         </member>
         <member name="M:Enderlook.Collections.D3TreeFloat`1.InsertOrUpdate(System.ValueTuple{System.Single,System.Single,System.Single},`0)">
             <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.InsertOrUpdate(`0,`1)"/>
+        </member>
+        <member name="M:Enderlook.Collections.D3TreeFloat`1.Clear">
+            <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.Clear"/>
         </member>
         <member name="M:Enderlook.Collections.D3TreeFloat`1.Contains(System.ValueTuple{System.Single,System.Single,System.Single})">
             <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.Contains(`0)"/>
@@ -1707,6 +1999,9 @@
         <member name="M:Enderlook.Collections.D3TreeInt.Insert(System.ValueTuple{System.Int32,System.Int32,System.Int32})">
             <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`1.Insert(`0)"/>
         </member>
+        <member name="M:Enderlook.Collections.D3TreeInt.Clear">
+            <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.Clear"/>
+        </member>
         <member name="M:Enderlook.Collections.D3TreeInt.Contains(System.ValueTuple{System.Int32,System.Int32,System.Int32})">
             <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.Contains(`0)"/>
         </member>
@@ -1753,6 +2048,9 @@
         </member>
         <member name="M:Enderlook.Collections.D3TreeInt`1.InsertOrUpdate(System.ValueTuple{System.Int32,System.Int32,System.Int32},`0)">
             <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.InsertOrUpdate(`0,`1)"/>
+        </member>
+        <member name="M:Enderlook.Collections.D3TreeInt`1.Clear">
+            <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.Clear"/>
         </member>
         <member name="M:Enderlook.Collections.D3TreeInt`1.Contains(System.ValueTuple{System.Int32,System.Int32,System.Int32})">
             <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.Contains(`0)"/>
@@ -1806,6 +2104,9 @@
         <member name="M:Enderlook.Collections.D3TreeLong.Insert(System.ValueTuple{System.Int64,System.Int64,System.Int64})">
             <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`1.Insert(`0)"/>
         </member>
+        <member name="M:Enderlook.Collections.D3TreeLong.Clear">
+            <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.Clear"/>
+        </member>
         <member name="M:Enderlook.Collections.D3TreeLong.Contains(System.ValueTuple{System.Int64,System.Int64,System.Int64})">
             <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.Contains(`0)"/>
         </member>
@@ -1852,6 +2153,9 @@
         </member>
         <member name="M:Enderlook.Collections.D3TreeLong`1.InsertOrUpdate(System.ValueTuple{System.Int64,System.Int64,System.Int64},`0)">
             <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.InsertOrUpdate(`0,`1)"/>
+        </member>
+        <member name="M:Enderlook.Collections.D3TreeLong`1.Clear">
+            <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.Clear"/>
         </member>
         <member name="M:Enderlook.Collections.D3TreeLong`1.Contains(System.ValueTuple{System.Int64,System.Int64,System.Int64})">
             <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.Contains(`0)"/>
@@ -1905,6 +2209,9 @@
         <member name="M:Enderlook.Collections.D3TreeUInt.Insert(System.ValueTuple{System.UInt32,System.UInt32,System.UInt32})">
             <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`1.Insert(`0)"/>
         </member>
+        <member name="M:Enderlook.Collections.D3TreeUInt.Clear">
+            <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.Clear"/>
+        </member>
         <member name="M:Enderlook.Collections.D3TreeUInt.Contains(System.ValueTuple{System.UInt32,System.UInt32,System.UInt32})">
             <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.Contains(`0)"/>
         </member>
@@ -1951,6 +2258,9 @@
         </member>
         <member name="M:Enderlook.Collections.D3TreeUInt`1.InsertOrUpdate(System.ValueTuple{System.UInt32,System.UInt32,System.UInt32},`0)">
             <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.InsertOrUpdate(`0,`1)"/>
+        </member>
+        <member name="M:Enderlook.Collections.D3TreeUInt`1.Clear">
+            <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.Clear"/>
         </member>
         <member name="M:Enderlook.Collections.D3TreeUInt`1.Contains(System.ValueTuple{System.UInt32,System.UInt32,System.UInt32})">
             <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.Contains(`0)"/>
@@ -2004,6 +2314,9 @@
         <member name="M:Enderlook.Collections.D3TreeULong.Insert(System.ValueTuple{System.UInt64,System.UInt64,System.UInt64})">
             <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`1.Insert(`0)"/>
         </member>
+        <member name="M:Enderlook.Collections.D3TreeULong.Clear">
+            <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.Clear"/>
+        </member>
         <member name="M:Enderlook.Collections.D3TreeULong.Contains(System.ValueTuple{System.UInt64,System.UInt64,System.UInt64})">
             <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.Contains(`0)"/>
         </member>
@@ -2050,6 +2363,9 @@
         </member>
         <member name="M:Enderlook.Collections.D3TreeULong`1.InsertOrUpdate(System.ValueTuple{System.UInt64,System.UInt64,System.UInt64},`0)">
             <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.InsertOrUpdate(`0,`1)"/>
+        </member>
+        <member name="M:Enderlook.Collections.D3TreeULong`1.Clear">
+            <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.Clear"/>
         </member>
         <member name="M:Enderlook.Collections.D3TreeULong`1.Contains(System.ValueTuple{System.UInt64,System.UInt64,System.UInt64})">
             <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.Contains(`0)"/>
@@ -2103,6 +2419,9 @@
         <member name="M:Enderlook.Collections.D4TreeDecimal.Insert(System.ValueTuple{System.Decimal,System.Decimal,System.Decimal,System.Decimal})">
             <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`1.Insert(`0)"/>
         </member>
+        <member name="M:Enderlook.Collections.D4TreeDecimal.Clear">
+            <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.Clear"/>
+        </member>
         <member name="M:Enderlook.Collections.D4TreeDecimal.Contains(System.ValueTuple{System.Decimal,System.Decimal,System.Decimal,System.Decimal})">
             <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.Contains(`0)"/>
         </member>
@@ -2149,6 +2468,9 @@
         </member>
         <member name="M:Enderlook.Collections.D4TreeDecimal`1.InsertOrUpdate(System.ValueTuple{System.Decimal,System.Decimal,System.Decimal,System.Decimal},`0)">
             <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.InsertOrUpdate(`0,`1)"/>
+        </member>
+        <member name="M:Enderlook.Collections.D4TreeDecimal`1.Clear">
+            <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.Clear"/>
         </member>
         <member name="M:Enderlook.Collections.D4TreeDecimal`1.Contains(System.ValueTuple{System.Decimal,System.Decimal,System.Decimal,System.Decimal})">
             <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.Contains(`0)"/>
@@ -2202,6 +2524,9 @@
         <member name="M:Enderlook.Collections.D4TreeDouble.Insert(System.ValueTuple{System.Double,System.Double,System.Double,System.Double})">
             <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`1.Insert(`0)"/>
         </member>
+        <member name="M:Enderlook.Collections.D4TreeDouble.Clear">
+            <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.Clear"/>
+        </member>
         <member name="M:Enderlook.Collections.D4TreeDouble.Contains(System.ValueTuple{System.Double,System.Double,System.Double,System.Double})">
             <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.Contains(`0)"/>
         </member>
@@ -2248,6 +2573,9 @@
         </member>
         <member name="M:Enderlook.Collections.D4TreeDouble`1.InsertOrUpdate(System.ValueTuple{System.Double,System.Double,System.Double,System.Double},`0)">
             <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.InsertOrUpdate(`0,`1)"/>
+        </member>
+        <member name="M:Enderlook.Collections.D4TreeDouble`1.Clear">
+            <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.Clear"/>
         </member>
         <member name="M:Enderlook.Collections.D4TreeDouble`1.Contains(System.ValueTuple{System.Double,System.Double,System.Double,System.Double})">
             <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.Contains(`0)"/>
@@ -2301,6 +2629,9 @@
         <member name="M:Enderlook.Collections.D4TreeFloat.Insert(System.ValueTuple{System.Single,System.Single,System.Single,System.Single})">
             <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`1.Insert(`0)"/>
         </member>
+        <member name="M:Enderlook.Collections.D4TreeFloat.Clear">
+            <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.Clear"/>
+        </member>
         <member name="M:Enderlook.Collections.D4TreeFloat.Contains(System.ValueTuple{System.Single,System.Single,System.Single,System.Single})">
             <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.Contains(`0)"/>
         </member>
@@ -2347,6 +2678,9 @@
         </member>
         <member name="M:Enderlook.Collections.D4TreeFloat`1.InsertOrUpdate(System.ValueTuple{System.Single,System.Single,System.Single,System.Single},`0)">
             <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.InsertOrUpdate(`0,`1)"/>
+        </member>
+        <member name="M:Enderlook.Collections.D4TreeFloat`1.Clear">
+            <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.Clear"/>
         </member>
         <member name="M:Enderlook.Collections.D4TreeFloat`1.Contains(System.ValueTuple{System.Single,System.Single,System.Single,System.Single})">
             <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.Contains(`0)"/>
@@ -2400,6 +2734,9 @@
         <member name="M:Enderlook.Collections.D4TreeInt.Insert(System.ValueTuple{System.Int32,System.Int32,System.Int32,System.Int32})">
             <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`1.Insert(`0)"/>
         </member>
+        <member name="M:Enderlook.Collections.D4TreeInt.Clear">
+            <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.Clear"/>
+        </member>
         <member name="M:Enderlook.Collections.D4TreeInt.Contains(System.ValueTuple{System.Int32,System.Int32,System.Int32,System.Int32})">
             <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.Contains(`0)"/>
         </member>
@@ -2446,6 +2783,9 @@
         </member>
         <member name="M:Enderlook.Collections.D4TreeInt`1.InsertOrUpdate(System.ValueTuple{System.Int32,System.Int32,System.Int32,System.Int32},`0)">
             <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.InsertOrUpdate(`0,`1)"/>
+        </member>
+        <member name="M:Enderlook.Collections.D4TreeInt`1.Clear">
+            <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.Clear"/>
         </member>
         <member name="M:Enderlook.Collections.D4TreeInt`1.Contains(System.ValueTuple{System.Int32,System.Int32,System.Int32,System.Int32})">
             <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.Contains(`0)"/>
@@ -2499,6 +2839,9 @@
         <member name="M:Enderlook.Collections.D4TreeLong.Insert(System.ValueTuple{System.Int64,System.Int64,System.Int64,System.Int64})">
             <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`1.Insert(`0)"/>
         </member>
+        <member name="M:Enderlook.Collections.D4TreeLong.Clear">
+            <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.Clear"/>
+        </member>
         <member name="M:Enderlook.Collections.D4TreeLong.Contains(System.ValueTuple{System.Int64,System.Int64,System.Int64,System.Int64})">
             <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.Contains(`0)"/>
         </member>
@@ -2545,6 +2888,9 @@
         </member>
         <member name="M:Enderlook.Collections.D4TreeLong`1.InsertOrUpdate(System.ValueTuple{System.Int64,System.Int64,System.Int64,System.Int64},`0)">
             <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.InsertOrUpdate(`0,`1)"/>
+        </member>
+        <member name="M:Enderlook.Collections.D4TreeLong`1.Clear">
+            <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.Clear"/>
         </member>
         <member name="M:Enderlook.Collections.D4TreeLong`1.Contains(System.ValueTuple{System.Int64,System.Int64,System.Int64,System.Int64})">
             <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.Contains(`0)"/>
@@ -2598,6 +2944,9 @@
         <member name="M:Enderlook.Collections.D4TreeUInt.Insert(System.ValueTuple{System.UInt32,System.UInt32,System.UInt32,System.UInt32})">
             <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`1.Insert(`0)"/>
         </member>
+        <member name="M:Enderlook.Collections.D4TreeUInt.Clear">
+            <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.Clear"/>
+        </member>
         <member name="M:Enderlook.Collections.D4TreeUInt.Contains(System.ValueTuple{System.UInt32,System.UInt32,System.UInt32,System.UInt32})">
             <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.Contains(`0)"/>
         </member>
@@ -2644,6 +2993,9 @@
         </member>
         <member name="M:Enderlook.Collections.D4TreeUInt`1.InsertOrUpdate(System.ValueTuple{System.UInt32,System.UInt32,System.UInt32,System.UInt32},`0)">
             <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.InsertOrUpdate(`0,`1)"/>
+        </member>
+        <member name="M:Enderlook.Collections.D4TreeUInt`1.Clear">
+            <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.Clear"/>
         </member>
         <member name="M:Enderlook.Collections.D4TreeUInt`1.Contains(System.ValueTuple{System.UInt32,System.UInt32,System.UInt32,System.UInt32})">
             <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.Contains(`0)"/>
@@ -2697,6 +3049,9 @@
         <member name="M:Enderlook.Collections.D4TreeULong.Insert(System.ValueTuple{System.UInt64,System.UInt64,System.UInt64,System.UInt64})">
             <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`1.Insert(`0)"/>
         </member>
+        <member name="M:Enderlook.Collections.D4TreeULong.Clear">
+            <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.Clear"/>
+        </member>
         <member name="M:Enderlook.Collections.D4TreeULong.Contains(System.ValueTuple{System.UInt64,System.UInt64,System.UInt64,System.UInt64})">
             <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.Contains(`0)"/>
         </member>
@@ -2743,6 +3098,9 @@
         </member>
         <member name="M:Enderlook.Collections.D4TreeULong`1.InsertOrUpdate(System.ValueTuple{System.UInt64,System.UInt64,System.UInt64,System.UInt64},`0)">
             <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.InsertOrUpdate(`0,`1)"/>
+        </member>
+        <member name="M:Enderlook.Collections.D4TreeULong`1.Clear">
+            <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.Clear"/>
         </member>
         <member name="M:Enderlook.Collections.D4TreeULong`1.Contains(System.ValueTuple{System.UInt64,System.UInt64,System.UInt64,System.UInt64})">
             <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.Contains(`0)"/>
@@ -2796,6 +3154,9 @@
         <member name="M:Enderlook.Collections.D5TreeDecimal.Insert(System.ValueTuple{System.Decimal,System.Decimal,System.Decimal,System.Decimal,System.Decimal})">
             <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`1.Insert(`0)"/>
         </member>
+        <member name="M:Enderlook.Collections.D5TreeDecimal.Clear">
+            <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.Clear"/>
+        </member>
         <member name="M:Enderlook.Collections.D5TreeDecimal.Contains(System.ValueTuple{System.Decimal,System.Decimal,System.Decimal,System.Decimal,System.Decimal})">
             <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.Contains(`0)"/>
         </member>
@@ -2842,6 +3203,9 @@
         </member>
         <member name="M:Enderlook.Collections.D5TreeDecimal`1.InsertOrUpdate(System.ValueTuple{System.Decimal,System.Decimal,System.Decimal,System.Decimal,System.Decimal},`0)">
             <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.InsertOrUpdate(`0,`1)"/>
+        </member>
+        <member name="M:Enderlook.Collections.D5TreeDecimal`1.Clear">
+            <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.Clear"/>
         </member>
         <member name="M:Enderlook.Collections.D5TreeDecimal`1.Contains(System.ValueTuple{System.Decimal,System.Decimal,System.Decimal,System.Decimal,System.Decimal})">
             <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.Contains(`0)"/>
@@ -2895,6 +3259,9 @@
         <member name="M:Enderlook.Collections.D5TreeDouble.Insert(System.ValueTuple{System.Double,System.Double,System.Double,System.Double,System.Double})">
             <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`1.Insert(`0)"/>
         </member>
+        <member name="M:Enderlook.Collections.D5TreeDouble.Clear">
+            <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.Clear"/>
+        </member>
         <member name="M:Enderlook.Collections.D5TreeDouble.Contains(System.ValueTuple{System.Double,System.Double,System.Double,System.Double,System.Double})">
             <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.Contains(`0)"/>
         </member>
@@ -2941,6 +3308,9 @@
         </member>
         <member name="M:Enderlook.Collections.D5TreeDouble`1.InsertOrUpdate(System.ValueTuple{System.Double,System.Double,System.Double,System.Double,System.Double},`0)">
             <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.InsertOrUpdate(`0,`1)"/>
+        </member>
+        <member name="M:Enderlook.Collections.D5TreeDouble`1.Clear">
+            <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.Clear"/>
         </member>
         <member name="M:Enderlook.Collections.D5TreeDouble`1.Contains(System.ValueTuple{System.Double,System.Double,System.Double,System.Double,System.Double})">
             <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.Contains(`0)"/>
@@ -2994,6 +3364,9 @@
         <member name="M:Enderlook.Collections.D5TreeFloat.Insert(System.ValueTuple{System.Single,System.Single,System.Single,System.Single,System.Single})">
             <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`1.Insert(`0)"/>
         </member>
+        <member name="M:Enderlook.Collections.D5TreeFloat.Clear">
+            <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.Clear"/>
+        </member>
         <member name="M:Enderlook.Collections.D5TreeFloat.Contains(System.ValueTuple{System.Single,System.Single,System.Single,System.Single,System.Single})">
             <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.Contains(`0)"/>
         </member>
@@ -3040,6 +3413,9 @@
         </member>
         <member name="M:Enderlook.Collections.D5TreeFloat`1.InsertOrUpdate(System.ValueTuple{System.Single,System.Single,System.Single,System.Single,System.Single},`0)">
             <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.InsertOrUpdate(`0,`1)"/>
+        </member>
+        <member name="M:Enderlook.Collections.D5TreeFloat`1.Clear">
+            <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.Clear"/>
         </member>
         <member name="M:Enderlook.Collections.D5TreeFloat`1.Contains(System.ValueTuple{System.Single,System.Single,System.Single,System.Single,System.Single})">
             <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.Contains(`0)"/>
@@ -3093,6 +3469,9 @@
         <member name="M:Enderlook.Collections.D5TreeInt.Insert(System.ValueTuple{System.Int32,System.Int32,System.Int32,System.Int32,System.Int32})">
             <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`1.Insert(`0)"/>
         </member>
+        <member name="M:Enderlook.Collections.D5TreeInt.Clear">
+            <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.Clear"/>
+        </member>
         <member name="M:Enderlook.Collections.D5TreeInt.Contains(System.ValueTuple{System.Int32,System.Int32,System.Int32,System.Int32,System.Int32})">
             <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.Contains(`0)"/>
         </member>
@@ -3139,6 +3518,9 @@
         </member>
         <member name="M:Enderlook.Collections.D5TreeInt`1.InsertOrUpdate(System.ValueTuple{System.Int32,System.Int32,System.Int32,System.Int32,System.Int32},`0)">
             <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.InsertOrUpdate(`0,`1)"/>
+        </member>
+        <member name="M:Enderlook.Collections.D5TreeInt`1.Clear">
+            <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.Clear"/>
         </member>
         <member name="M:Enderlook.Collections.D5TreeInt`1.Contains(System.ValueTuple{System.Int32,System.Int32,System.Int32,System.Int32,System.Int32})">
             <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.Contains(`0)"/>
@@ -3192,6 +3574,9 @@
         <member name="M:Enderlook.Collections.D5TreeLong.Insert(System.ValueTuple{System.Int64,System.Int64,System.Int64,System.Int64,System.Int64})">
             <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`1.Insert(`0)"/>
         </member>
+        <member name="M:Enderlook.Collections.D5TreeLong.Clear">
+            <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.Clear"/>
+        </member>
         <member name="M:Enderlook.Collections.D5TreeLong.Contains(System.ValueTuple{System.Int64,System.Int64,System.Int64,System.Int64,System.Int64})">
             <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.Contains(`0)"/>
         </member>
@@ -3238,6 +3623,9 @@
         </member>
         <member name="M:Enderlook.Collections.D5TreeLong`1.InsertOrUpdate(System.ValueTuple{System.Int64,System.Int64,System.Int64,System.Int64,System.Int64},`0)">
             <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.InsertOrUpdate(`0,`1)"/>
+        </member>
+        <member name="M:Enderlook.Collections.D5TreeLong`1.Clear">
+            <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.Clear"/>
         </member>
         <member name="M:Enderlook.Collections.D5TreeLong`1.Contains(System.ValueTuple{System.Int64,System.Int64,System.Int64,System.Int64,System.Int64})">
             <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.Contains(`0)"/>
@@ -3291,6 +3679,9 @@
         <member name="M:Enderlook.Collections.D5TreeUInt.Insert(System.ValueTuple{System.UInt32,System.UInt32,System.UInt32,System.UInt32,System.UInt32})">
             <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`1.Insert(`0)"/>
         </member>
+        <member name="M:Enderlook.Collections.D5TreeUInt.Clear">
+            <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.Clear"/>
+        </member>
         <member name="M:Enderlook.Collections.D5TreeUInt.Contains(System.ValueTuple{System.UInt32,System.UInt32,System.UInt32,System.UInt32,System.UInt32})">
             <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.Contains(`0)"/>
         </member>
@@ -3337,6 +3728,9 @@
         </member>
         <member name="M:Enderlook.Collections.D5TreeUInt`1.InsertOrUpdate(System.ValueTuple{System.UInt32,System.UInt32,System.UInt32,System.UInt32,System.UInt32},`0)">
             <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.InsertOrUpdate(`0,`1)"/>
+        </member>
+        <member name="M:Enderlook.Collections.D5TreeUInt`1.Clear">
+            <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.Clear"/>
         </member>
         <member name="M:Enderlook.Collections.D5TreeUInt`1.Contains(System.ValueTuple{System.UInt32,System.UInt32,System.UInt32,System.UInt32,System.UInt32})">
             <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.Contains(`0)"/>
@@ -3390,6 +3784,9 @@
         <member name="M:Enderlook.Collections.D5TreeULong.Insert(System.ValueTuple{System.UInt64,System.UInt64,System.UInt64,System.UInt64,System.UInt64})">
             <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`1.Insert(`0)"/>
         </member>
+        <member name="M:Enderlook.Collections.D5TreeULong.Clear">
+            <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.Clear"/>
+        </member>
         <member name="M:Enderlook.Collections.D5TreeULong.Contains(System.ValueTuple{System.UInt64,System.UInt64,System.UInt64,System.UInt64,System.UInt64})">
             <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.Contains(`0)"/>
         </member>
@@ -3436,6 +3833,9 @@
         </member>
         <member name="M:Enderlook.Collections.D5TreeULong`1.InsertOrUpdate(System.ValueTuple{System.UInt64,System.UInt64,System.UInt64,System.UInt64,System.UInt64},`0)">
             <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.InsertOrUpdate(`0,`1)"/>
+        </member>
+        <member name="M:Enderlook.Collections.D5TreeULong`1.Clear">
+            <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.Clear"/>
         </member>
         <member name="M:Enderlook.Collections.D5TreeULong`1.Contains(System.ValueTuple{System.UInt64,System.UInt64,System.UInt64,System.UInt64,System.UInt64})">
             <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.Contains(`0)"/>
@@ -3490,6 +3890,9 @@
         <member name="M:Enderlook.Collections.KDTreeDecimal.Insert(System.Decimal[])">
             <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`1.Insert(`0)"/>
         </member>
+        <member name="M:Enderlook.Collections.KDTreeDecimal.Clear">
+            <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.Clear"/>
+        </member>
         <member name="M:Enderlook.Collections.KDTreeDecimal.Contains(System.Decimal[])">
             <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.Contains(`0)"/>
         </member>
@@ -3537,6 +3940,9 @@
         </member>
         <member name="M:Enderlook.Collections.KDTreeDecimal`1.InsertOrUpdate(System.Decimal[],`0)">
             <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.InsertOrUpdate(`0,`1)"/>
+        </member>
+        <member name="M:Enderlook.Collections.KDTreeDecimal`1.Clear">
+            <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.Clear"/>
         </member>
         <member name="M:Enderlook.Collections.KDTreeDecimal`1.Contains(System.Decimal[])">
             <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.Contains(`0)"/>
@@ -3591,6 +3997,9 @@
         <member name="M:Enderlook.Collections.KDTreeDouble.Insert(System.Double[])">
             <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`1.Insert(`0)"/>
         </member>
+        <member name="M:Enderlook.Collections.KDTreeDouble.Clear">
+            <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.Clear"/>
+        </member>
         <member name="M:Enderlook.Collections.KDTreeDouble.Contains(System.Double[])">
             <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.Contains(`0)"/>
         </member>
@@ -3638,6 +4047,9 @@
         </member>
         <member name="M:Enderlook.Collections.KDTreeDouble`1.InsertOrUpdate(System.Double[],`0)">
             <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.InsertOrUpdate(`0,`1)"/>
+        </member>
+        <member name="M:Enderlook.Collections.KDTreeDouble`1.Clear">
+            <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.Clear"/>
         </member>
         <member name="M:Enderlook.Collections.KDTreeDouble`1.Contains(System.Double[])">
             <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.Contains(`0)"/>
@@ -3692,6 +4104,9 @@
         <member name="M:Enderlook.Collections.KDTreeFloat.Insert(System.Single[])">
             <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`1.Insert(`0)"/>
         </member>
+        <member name="M:Enderlook.Collections.KDTreeFloat.Clear">
+            <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.Clear"/>
+        </member>
         <member name="M:Enderlook.Collections.KDTreeFloat.Contains(System.Single[])">
             <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.Contains(`0)"/>
         </member>
@@ -3739,6 +4154,9 @@
         </member>
         <member name="M:Enderlook.Collections.KDTreeFloat`1.InsertOrUpdate(System.Single[],`0)">
             <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.InsertOrUpdate(`0,`1)"/>
+        </member>
+        <member name="M:Enderlook.Collections.KDTreeFloat`1.Clear">
+            <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.Clear"/>
         </member>
         <member name="M:Enderlook.Collections.KDTreeFloat`1.Contains(System.Single[])">
             <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.Contains(`0)"/>
@@ -3793,6 +4211,9 @@
         <member name="M:Enderlook.Collections.KDTreeInt.Insert(System.Int32[])">
             <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`1.Insert(`0)"/>
         </member>
+        <member name="M:Enderlook.Collections.KDTreeInt.Clear">
+            <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.Clear"/>
+        </member>
         <member name="M:Enderlook.Collections.KDTreeInt.Contains(System.Int32[])">
             <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.Contains(`0)"/>
         </member>
@@ -3840,6 +4261,9 @@
         </member>
         <member name="M:Enderlook.Collections.KDTreeInt`1.InsertOrUpdate(System.Int32[],`0)">
             <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.InsertOrUpdate(`0,`1)"/>
+        </member>
+        <member name="M:Enderlook.Collections.KDTreeInt`1.Clear">
+            <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.Clear"/>
         </member>
         <member name="M:Enderlook.Collections.KDTreeInt`1.Contains(System.Int32[])">
             <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.Contains(`0)"/>
@@ -3894,6 +4318,9 @@
         <member name="M:Enderlook.Collections.KDTreeLong.Insert(System.Int64[])">
             <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`1.Insert(`0)"/>
         </member>
+        <member name="M:Enderlook.Collections.KDTreeLong.Clear">
+            <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.Clear"/>
+        </member>
         <member name="M:Enderlook.Collections.KDTreeLong.Contains(System.Int64[])">
             <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.Contains(`0)"/>
         </member>
@@ -3941,6 +4368,9 @@
         </member>
         <member name="M:Enderlook.Collections.KDTreeLong`1.InsertOrUpdate(System.Int64[],`0)">
             <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.InsertOrUpdate(`0,`1)"/>
+        </member>
+        <member name="M:Enderlook.Collections.KDTreeLong`1.Clear">
+            <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.Clear"/>
         </member>
         <member name="M:Enderlook.Collections.KDTreeLong`1.Contains(System.Int64[])">
             <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.Contains(`0)"/>
@@ -3995,6 +4425,9 @@
         <member name="M:Enderlook.Collections.KDTreeUInt.Insert(System.UInt32[])">
             <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`1.Insert(`0)"/>
         </member>
+        <member name="M:Enderlook.Collections.KDTreeUInt.Clear">
+            <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.Clear"/>
+        </member>
         <member name="M:Enderlook.Collections.KDTreeUInt.Contains(System.UInt32[])">
             <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.Contains(`0)"/>
         </member>
@@ -4042,6 +4475,9 @@
         </member>
         <member name="M:Enderlook.Collections.KDTreeUInt`1.InsertOrUpdate(System.UInt32[],`0)">
             <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.InsertOrUpdate(`0,`1)"/>
+        </member>
+        <member name="M:Enderlook.Collections.KDTreeUInt`1.Clear">
+            <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.Clear"/>
         </member>
         <member name="M:Enderlook.Collections.KDTreeUInt`1.Contains(System.UInt32[])">
             <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.Contains(`0)"/>
@@ -4096,6 +4532,9 @@
         <member name="M:Enderlook.Collections.KDTreeULong.Insert(System.UInt64[])">
             <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`1.Insert(`0)"/>
         </member>
+        <member name="M:Enderlook.Collections.KDTreeULong.Clear">
+            <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.Clear"/>
+        </member>
         <member name="M:Enderlook.Collections.KDTreeULong.Contains(System.UInt64[])">
             <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.Contains(`0)"/>
         </member>
@@ -4143,6 +4582,9 @@
         </member>
         <member name="M:Enderlook.Collections.KDTreeULong`1.InsertOrUpdate(System.UInt64[],`0)">
             <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.InsertOrUpdate(`0,`1)"/>
+        </member>
+        <member name="M:Enderlook.Collections.KDTreeULong`1.Clear">
+            <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.Clear"/>
         </member>
         <member name="M:Enderlook.Collections.KDTreeULong`1.Contains(System.UInt64[])">
             <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.Contains(`0)"/>
@@ -4197,6 +4639,9 @@
             <param name="key">Key of the node to insert.</param>
             <param name="depth">Depth used to determine which key's index to compare.</param>
             <returns>New root and whenever there was a previous value there.</returns>
+        </member>
+        <member name="M:Enderlook.Collections.D2Tree`1.Clear">
+            <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.Clear"/>
         </member>
         <member name="M:Enderlook.Collections.D2Tree`1.Contains(System.ValueTuple{`0,`0})">
             <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.Contains(`0)"/>
@@ -4310,6 +4755,9 @@
             <param name="depth">Depth used to determine which key's index to compare.</param>
             <returns>New root and whenever there was a previous value there.</returns>
         </member>
+        <member name="M:Enderlook.Collections.D2Tree`2.Clear">
+            <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.Clear"/>
+        </member>
         <member name="M:Enderlook.Collections.D2Tree`2.Contains(System.ValueTuple{`0,`0})">
             <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.Contains(`0)"/>
         </member>
@@ -4416,6 +4864,9 @@
             <param name="key">Key of the node to insert.</param>
             <param name="depth">Depth used to determine which key's index to compare.</param>
             <returns>New root and whenever there was a previous value there.</returns>
+        </member>
+        <member name="M:Enderlook.Collections.D3Tree`1.Clear">
+            <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.Clear"/>
         </member>
         <member name="M:Enderlook.Collections.D3Tree`1.Contains(System.ValueTuple{`0,`0,`0})">
             <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.Contains(`0)"/>
@@ -4529,6 +4980,9 @@
             <param name="depth">Depth used to determine which key's index to compare.</param>
             <returns>New root and whenever there was a previous value there.</returns>
         </member>
+        <member name="M:Enderlook.Collections.D3Tree`2.Clear">
+            <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.Clear"/>
+        </member>
         <member name="M:Enderlook.Collections.D3Tree`2.Contains(System.ValueTuple{`0,`0,`0})">
             <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.Contains(`0)"/>
         </member>
@@ -4635,6 +5089,9 @@
             <param name="key">Key of the node to insert.</param>
             <param name="depth">Depth used to determine which key's index to compare.</param>
             <returns>New root and whenever there was a previous value there.</returns>
+        </member>
+        <member name="M:Enderlook.Collections.D4Tree`1.Clear">
+            <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.Clear"/>
         </member>
         <member name="M:Enderlook.Collections.D4Tree`1.Contains(System.ValueTuple{`0,`0,`0,`0})">
             <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.Contains(`0)"/>
@@ -4748,6 +5205,9 @@
             <param name="depth">Depth used to determine which key's index to compare.</param>
             <returns>New root and whenever there was a previous value there.</returns>
         </member>
+        <member name="M:Enderlook.Collections.D4Tree`2.Clear">
+            <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.Clear"/>
+        </member>
         <member name="M:Enderlook.Collections.D4Tree`2.Contains(System.ValueTuple{`0,`0,`0,`0})">
             <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.Contains(`0)"/>
         </member>
@@ -4854,6 +5314,9 @@
             <param name="key">Key of the node to insert.</param>
             <param name="depth">Depth used to determine which key's index to compare.</param>
             <returns>New root and whenever there was a previous value there.</returns>
+        </member>
+        <member name="M:Enderlook.Collections.D5Tree`1.Clear">
+            <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.Clear"/>
         </member>
         <member name="M:Enderlook.Collections.D5Tree`1.Contains(System.ValueTuple{`0,`0,`0,`0,`0})">
             <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.Contains(`0)"/>
@@ -4967,6 +5430,9 @@
             <param name="depth">Depth used to determine which key's index to compare.</param>
             <returns>New root and whenever there was a previous value there.</returns>
         </member>
+        <member name="M:Enderlook.Collections.D5Tree`2.Clear">
+            <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.Clear"/>
+        </member>
         <member name="M:Enderlook.Collections.D5Tree`2.Contains(System.ValueTuple{`0,`0,`0,`0,`0})">
             <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.Contains(`0)"/>
         </member>
@@ -5079,6 +5545,9 @@
             <param name="key">Key of the node to insert.</param>
             <param name="depth">Depth used to determine which key's index to compare.</param>
             <returns>New root and whenever there was a previous value there.</returns>
+        </member>
+        <member name="M:Enderlook.Collections.KDTree`1.Clear">
+            <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.Clear"/>
         </member>
         <member name="M:Enderlook.Collections.KDTree`1.Contains(`0[])">
             <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.Contains(`0)"/>
@@ -5197,6 +5666,9 @@
             <param name="value">Value of the node to insert.</param>
             <param name="depth">Depth used to determine which key's index to compare.</param>
             <returns>New root and whenever there was a previous value there.</returns>
+        </member>
+        <member name="M:Enderlook.Collections.KDTree`2.Clear">
+            <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.Clear"/>
         </member>
         <member name="M:Enderlook.Collections.KDTree`2.Contains(`0[])">
             <inheritdoc cref="M:Enderlook.Collections.ISpatialIndexBasic`2.Contains(`0)"/>
