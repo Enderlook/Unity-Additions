@@ -1,4 +1,5 @@
 ﻿using Enderlook.Exceptions;
+using Enderlook.Reflection;
 using Enderlook.Unity.Extensions;
 using Enderlook.Unity.Utils.UnityEditor;
 
@@ -35,6 +36,7 @@ namespace Enderlook.Unity.Attributes
         private static Vector3 GetPositionByTransform(SerializedObject serializedObject) => ((Component)serializedObject.targetObject).transform.position;
 
         private static readonly string vectorTypes = $"{nameof(Vector3)}, {nameof(Vector3Int)}, {nameof(Vector2)}, {nameof(Vector2Int)}, {nameof(Vector4)}";
+
         private static void DisplayErrorReference(string name) => throw new Exception($"The serialized property reference {name} isn't neither {vectorTypes} nor {nameof(Transform)}.");
 
         private static Vector3 GetVector3ValueOf(SerializedProperty serializedProperty)
@@ -54,6 +56,8 @@ namespace Enderlook.Unity.Attributes
                 case SerializedPropertyType.ObjectReference:
                     if (serializedProperty.objectReferenceValue is Transform transform)
                         return transform.position;
+                    else if (serializedProperty.GetFieldType(true) == typeof(Transform))
+                        return Vector3.zero;
                     DisplayErrorReference(serializedProperty.name);
                     break;
                 default:
@@ -79,8 +83,10 @@ namespace Enderlook.Unity.Attributes
             return (Vector3)source;
         }
 
-        private static Vector3 GetReference(SerializedObject serializedObject, string referenceName)
+        private static Vector3 GetReference(SerializedProperty serializedProperty, string referenceName)
         {
+            SerializedObject serializedObject = serializedProperty.serializedObject;
+
             if (string.IsNullOrEmpty(referenceName))
                 return GetPositionByTransform(serializedObject);
 
@@ -98,10 +104,15 @@ namespace Enderlook.Unity.Attributes
                     {
                         MethodInfo methodInfo = type.GetMethod(referenceName, bindingFlags);
                         if (methodInfo != null)
-                            // Get reference by method
-                            return CastToVector3(methodInfo.Invoke(targetObject, Array.Empty<object>()), methodInfo.ReturnType);
-                        // If everything fails, get by transform
-                        return GetPositionByTransform(serializedObject);
+                        {
+                            if (methodInfo.HasNoMandatoryParameters(out object[] parameters))
+                                // Get reference by method
+                                return CastToVector3(methodInfo.Invoke(targetObject, parameters), methodInfo.ReturnType);
+                            else
+                                Debug.LogError($"Found method {methodInfo.Name} on {type.Name} based on reference name {referenceName} in {serializedObject.targetObject.name} requested by property {serializedProperty.propertyPath}.");
+                        }
+                        // If everything fails, use zero
+                        return Vector3.zero;
                     }
                     else
                         // Get reference by property
@@ -138,8 +149,20 @@ namespace Enderlook.Unity.Attributes
                     Debug.LogError($"The attribute {nameof(DrawVectorRelativeToTransformAttribute)} is only allowed in types of {nameof(Vector2)}, {nameof(Vector2Int)}, {nameof(Vector3)} and {nameof(Vector3Int)}.");
                     return;
             }
+
             if (!string.IsNullOrEmpty(drawVectorRelativeToTransform.icon))
-                Handles.Label(position, (Texture2D)EditorGUIUtility.Load(drawVectorRelativeToTransform.icon));
+            {
+                Texture2D texture = (Texture2D)EditorGUIUtility.Load(drawVectorRelativeToTransform.icon);
+                if (texture == null)
+                    texture = AssetDatabase.LoadAssetAtPath<Texture2D>(drawVectorRelativeToTransform.icon);
+                if (texture == null)
+                    texture = Resources.Load<Texture2D>(drawVectorRelativeToTransform.icon);
+
+                if (texture == null)
+                    Debug.LogError($"The Texture '{drawVectorRelativeToTransform.icon}' sued by '{serializedProperty.propertyPath}' could not be found.");
+                else
+                    Handles.Label(position + reference, texture);
+            }
         }
 
         private static void RenderSceneGUI(SceneView sceneview)
@@ -147,7 +170,7 @@ namespace Enderlook.Unity.Attributes
             foreach ((SerializedProperty serializedProperty, object field, DrawVectorRelativeToTransformAttribute drawVectorRelativeToTransform, Editor editor) in PropertyDrawerHelper.FindAllSerializePropertiesInActiveEditorWithTheAttribute<DrawVectorRelativeToTransformAttribute>())
             {
                 serializedProperty.serializedObject.Update();
-                Vector3 reference = GetReference(serializedProperty.serializedObject, drawVectorRelativeToTransform.reference);
+                Vector3 reference = GetReference(serializedProperty, drawVectorRelativeToTransform.reference);
 
                 if (serializedProperty.isArray)
                     for (int i = 0; i < serializedProperty.arraySize; i++)
