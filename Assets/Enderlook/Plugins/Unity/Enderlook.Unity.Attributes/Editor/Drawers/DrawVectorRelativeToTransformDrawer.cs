@@ -159,7 +159,7 @@ namespace Enderlook.Unity.Attributes
                     texture = Resources.Load<Texture2D>(drawVectorRelativeToTransform.icon);
 
                 if (texture == null)
-                    Debug.LogError($"The Texture '{drawVectorRelativeToTransform.icon}' sued by '{serializedProperty.propertyPath}' could not be found.");
+                    Debug.LogError($"The Texture '{drawVectorRelativeToTransform.icon}' used by '{serializedProperty.propertyPath}' could not be found.");
                 else
                     Handles.Label(position + reference, texture);
             }
