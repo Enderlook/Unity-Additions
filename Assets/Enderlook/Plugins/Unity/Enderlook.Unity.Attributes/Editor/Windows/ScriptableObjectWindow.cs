@@ -3,9 +3,11 @@ using Enderlook.Reflection;
 using Enderlook.Unity.Utils.UnityEditor;
 
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Threading.Tasks;
 
 using UnityEditor;
 
@@ -78,45 +80,73 @@ namespace Enderlook.Unity.Attributes
 
         private static void InitializeDerivedTypes()
         {
-            // We don't use AssembliesHelper.GetAllAssembliesOfPlayerAndEditorAssemblies() because that doesn't include dll files from Assets folder
-            List<(Assembly assembly, Exception[] exceptions)> errors = new List<(Assembly assembly, Exception[] exceptions)>();
-            Debug.Assert(tmpStack.Count == 0);
-            foreach (Assembly assembly in AppDomain.CurrentDomain.GetAssemblies())
-            {
-                if (!assembly.TryGetTypes(out IEnumerable<Type> loadedTypes, out Exception[] exceptions))
-                    errors.Add((assembly, exceptions));
+            Assembly[] assemblies = AppDomain.CurrentDomain.GetAssemblies();
+            Exception[][] exceptions = new Exception[assemblies.Length][];
+            HashSet<KeyValuePair<Type, Type>>[] sets = new HashSet<KeyValuePair<Type, Type>>[assemblies.Length];
 
+            // By using multithreading we can speed up large workflows around a 60% from 5.5s to 3.5s.
+            // However, we can't use a ConcurrentBag to stores keys because that slowdown the code in a factor of x3 (from 5.5s to 17.2s).
+
+            Parallel.For(0, assemblies.Length, (int i) =>
+            {
+                Assembly assembly = assemblies[i];
+                if (!assembly.TryGetTypes(out IEnumerable<Type> loadedTypes, out Exception[] exceptions_))
+                    exceptions[i] = exceptions_;
+                else
+                    exceptions[i] = Array.Empty<Exception>();
+
+                Stack<Type> stack = new Stack<Type>();
                 foreach (Type type in loadedTypes)
                     if (root.IsAssignableFrom(type))
-                        tmpStack.Push(type);
-            }
+                        stack.Push(type);
 
-            if (errors.Count > 0)
-            {
-                Debug.LogError("While getting Types from loaded assemblies in Scriptable Object Window the following exceptions occurred:");
-                foreach ((Assembly assembly, Exception[] exceptions) in errors)
-                    foreach (Exception exception in exceptions)
-                        Debug.LogWarning($"{assembly.FullName}: {exception.Message}.");
-            }
-
-            HashSet<KeyValuePair<Type, Type>> typesKV = new HashSet<KeyValuePair<Type, Type>>();
-
-            while (tmpStack.TryPop(out Type result))
-            {
-                typesKV.Add(new KeyValuePair<Type, Type>(result, result));
-                Type baseType = result.BaseType;
-                if (root.IsAssignableFrom(baseType))
+                HashSet<KeyValuePair<Type, Type>> set = new HashSet<KeyValuePair<Type, Type>>();
+                while (stack.TryPop(out Type result))
                 {
-                    KeyValuePair<Type, Type> item = new KeyValuePair<Type, Type>(baseType, result);
-                    if (!typesKV.Contains(item))
+                    set.Add(new KeyValuePair<Type, Type>(result, result));
+                    Type baseType = result.BaseType;
+                    if (root.IsAssignableFrom(baseType))
                     {
-                        typesKV.Add(item);
-                        tmpStack.Push(baseType);
+                        KeyValuePair<Type, Type> item = new KeyValuePair<Type, Type>(baseType, result);
+                        if (!set.Contains(item))
+                        {
+                            set.Add(item);
+                            stack.Push(baseType);
+                        }
                     }
+                }
+                sets[i] = set;
+            });
+
+            bool hasErrors = false;
+            for (int i = 0; i < exceptions.Length; i++)
+            {
+                Exception[] exceptions_ = exceptions[i];
+                Assembly assembly = assemblies[i];
+                if (exceptions_.Length > 0)
+                {
+                    if (!hasErrors)
+                    {
+                        hasErrors = true;
+                        Debug.LogError("While getting Types from loaded assemblies in Scriptable Object Window the following exceptions occurred:");
+                    }
+
+                    foreach (Exception exception in exceptions_)
+                        Debug.LogWarning($"{assembly.FullName}: {exception.Message}.");
                 }
             }
 
-            derivedTypes = typesKV.ToLookup();
+            if (sets.Length == 0)
+                derivedTypes = Array.Empty<KeyValuePair<Type, Type>>().ToLookup();
+            else
+            {
+                HashSet<KeyValuePair<Type, Type>> keys = sets[0];
+
+                for (int i = 1; i < sets.Length; i++)
+                    keys.UnionWith(sets[i]);
+
+                derivedTypes = keys.ToLookup();
+            }
         }
 
         private static IEnumerable<Type> GetDerivedTypes(Type type)
