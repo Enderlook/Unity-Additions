@@ -15,7 +15,28 @@ namespace Enderlook.Unity.Attributes
     [CustomPropertyDrawer(typeof(DrawVectorRelativeToTransformAttribute)), InitializeOnLoad]
     internal class DrawVectorRelativeToTransformEditor : SmartPropertyDrawer
     {
-        private static readonly Handles.CapFunction cylinderHandleCap = Handles.CylinderHandleCap;
+        private static readonly Handles.CapFunction handleCap = Handles.SphereHandleCap;
+
+        private static readonly string vectorTypes = $"{nameof(Vector3)}, {nameof(Vector3Int)}, {nameof(Vector2)}, {nameof(Vector2Int)}, {nameof(Vector4)}";
+
+        private static readonly char[] splitByBracket = new char[] { '[' };
+        private static readonly char[] splitByDot = new char[] { '.' };
+
+        private static readonly GUIContent CLOSE_BUTTON = new GUIContent("Close", "Closes this panel.");
+        private static readonly GUIContent OBJECT_CONTENT = new GUIContent("Object", "From which object this property cames.");
+        private static readonly GUIContent PATH_CONTENT = new GUIContent("Path", "Path of the property to be edited.");
+        private static readonly GUIContent PROPERTY_CONTENT = new GUIContent("Property", "Name of the property to be edited.");
+        private static readonly GUIContent ABSOLUTE_POSITION_CONTENT = new GUIContent("Absolute Position", "Determines the absolute position of this property.");
+        private static readonly GUIContent RELATIVE_POSITION_CONTENT = new GUIContent("Relative Position", "Determines the relative position of this property.");
+        private static readonly GUIContent REFERENCE_POSITION_CONTENT = new GUIContent("Reference Position", "Determines the reference position of this property.");
+
+        private static (SerializedProperty serializedProperty, Vector3 position, DrawVectorRelativeToTransformAttribute drawVectorRelativeToTransform, FieldInfo field) selected;
+
+        private static readonly GUIContent OBJECT_LABEL = new GUIContent();
+        private static readonly GUIContent PROPERTY_PATH_LABEL = new GUIContent();
+        private static readonly GUIContent PROPERTY_NAME_LABEL = new GUIContent();
+
+        private static bool showButton;
 
         protected override void OnGUISmart(Rect position, SerializedProperty property, GUIContent label)
         {
@@ -27,15 +48,18 @@ namespace Enderlook.Unity.Attributes
         static DrawVectorRelativeToTransformEditor() => SceneView.duringSceneGui += RenderSceneGUI;
 
         private static Vector3 DrawHandle(Vector3 position, bool usePositionHandle)
-            => usePositionHandle
-                            ? Handles.PositionHandle(position, Quaternion.identity)
-                            : Handles.FreeMoveHandle(position, Quaternion.identity, HandleUtility.GetHandleSize(position) * .1f, Vector2.one, cylinderHandleCap);
+        {
+            if (showButton)
+                return position;
+
+            return usePositionHandle
+                ? Handles.PositionHandle(position, Quaternion.identity)
+                : Handles.FreeMoveHandle(position, Quaternion.identity, GetSize(position), Vector2.one, handleCap);
+        }
 
         private const BindingFlags bindingFlags = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static;
 
         private static Vector3 GetPositionByTransform(SerializedObject serializedObject) => ((Component)serializedObject.targetObject).transform.position;
-
-        private static readonly string vectorTypes = $"{nameof(Vector3)}, {nameof(Vector3Int)}, {nameof(Vector2)}, {nameof(Vector2Int)}, {nameof(Vector4)}";
 
         private static void DisplayErrorReference(string name) => throw new Exception($"The serialized property reference {name} isn't neither {vectorTypes} nor {nameof(Transform)}.");
 
@@ -127,28 +151,51 @@ namespace Enderlook.Unity.Attributes
                 return GetVector3ValueOf(referenceProperty);
         }
 
-        private static void RenderSingleSerializedProperty(SerializedProperty serializedProperty, DrawVectorRelativeToTransformAttribute drawVectorRelativeToTransform, Vector3 reference)
+        private static Vector3 ToAbsolutePosition(SerializedProperty serializedProperty, Vector3 reference)
         {
-            Vector3 position;
             switch (serializedProperty.propertyType)
             {
                 case SerializedPropertyType.Vector2:
-                    position = serializedProperty.vector2Value = DrawHandle(serializedProperty.vector2Value + (Vector2)reference, drawVectorRelativeToTransform.usePositionHandler) - reference;
+                    return serializedProperty.vector2Value + (Vector2)reference;
+                case SerializedPropertyType.Vector2Int:
+                    return (Vector2)(serializedProperty.vector2IntValue + reference.ToVector2Int());
+                case SerializedPropertyType.Vector3:
+                    return serializedProperty.vector3Value + reference;
+                case SerializedPropertyType.Vector3Int:
+                    return serializedProperty.vector3IntValue + reference.ToVector3Int();
+                default:
+                    Debug.LogError($"The attribute {nameof(DrawVectorRelativeToTransformAttribute)} is only allowed in types of {nameof(Vector2)}, {nameof(Vector2Int)}, {nameof(Vector3)} and {nameof(Vector3Int)}.");
+                    return Vector3.zero;
+            }
+        }
+
+        private static void SetFromAbsolutePosition(SerializedProperty serializedProperty, Vector3 world, Vector3 reference)
+        {
+            switch (serializedProperty.propertyType)
+            {
+                case SerializedPropertyType.Vector2:
+                    serializedProperty.vector2Value = world - reference;
                     break;
                 case SerializedPropertyType.Vector2Int:
-                    serializedProperty.vector2IntValue = DrawHandle((Vector2)(serializedProperty.vector2IntValue + reference.ToVector2Int()), drawVectorRelativeToTransform.usePositionHandler).ToVector2Int() - reference.ToVector2Int();
-                    position = (Vector2)serializedProperty.vector2IntValue;
+                    serializedProperty.vector2IntValue = ((Vector2)world).ToVector2Int() - reference.ToVector2Int();
                     break;
                 case SerializedPropertyType.Vector3:
-                    position = serializedProperty.vector3Value = DrawHandle(serializedProperty.vector3Value + reference, drawVectorRelativeToTransform.usePositionHandler) - reference;
+                    serializedProperty.vector3Value = world - reference;
                     break;
                 case SerializedPropertyType.Vector3Int:
-                    position = serializedProperty.vector3IntValue = DrawHandle(serializedProperty.vector3IntValue + reference.ToVector3Int(), drawVectorRelativeToTransform.usePositionHandler).ToVector3Int() - reference.ToVector3Int();
+                    serializedProperty.vector3IntValue = world.ToVector3Int() - reference.ToVector3Int();
                     break;
                 default:
                     Debug.LogError($"The attribute {nameof(DrawVectorRelativeToTransformAttribute)} is only allowed in types of {nameof(Vector2)}, {nameof(Vector2Int)}, {nameof(Vector3)} and {nameof(Vector3Int)}.");
-                    return;
+                    break;
             }
+        }
+
+        private static void RenderSingleSerializedProperty(SerializedProperty serializedProperty, DrawVectorRelativeToTransformAttribute drawVectorRelativeToTransform, Vector3 reference, FieldInfo field)
+        {
+            Vector3 absolutePosition = ToAbsolutePosition(serializedProperty, reference);
+            absolutePosition = DrawHandle(absolutePosition, drawVectorRelativeToTransform.usePositionHandler);
+            SetFromAbsolutePosition(serializedProperty, absolutePosition, reference);
 
             if (!string.IsNullOrEmpty(drawVectorRelativeToTransform.icon))
             {
@@ -161,13 +208,36 @@ namespace Enderlook.Unity.Attributes
                 if (texture == null)
                     Debug.LogError($"The Texture '{drawVectorRelativeToTransform.icon}' used by '{serializedProperty.propertyPath}' could not be found.");
                 else
-                    Handles.Label(position + reference, texture);
+                    Handles.Label(absolutePosition, texture);
             }
+
+            CheckForSelection(absolutePosition, serializedProperty, drawVectorRelativeToTransform, field);
         }
+
+        private static void CheckForSelection(Vector3 position, SerializedProperty serializedProperty, DrawVectorRelativeToTransformAttribute drawVectorRelativeToTransform, FieldInfo field)
+        {
+            if (!showButton)
+                return;
+
+            float size = GetSize(position);
+
+            if (Handles.Button(position, Quaternion.identity, size, size, handleCap))
+                selected = (serializedProperty.Copy(), position, drawVectorRelativeToTransform, field);
+        }
+
+        private static float GetSize(Vector3 position) => HandleUtility.GetHandleSize(position) * .1f;
 
         private static void RenderSceneGUI(SceneView sceneview)
         {
-            foreach ((SerializedProperty serializedProperty, object field, DrawVectorRelativeToTransformAttribute drawVectorRelativeToTransform, Editor editor) in PropertyDrawerHelper.FindAllSerializePropertiesInActiveEditorWithTheAttribute<DrawVectorRelativeToTransformAttribute>())
+            if (Event.current != null)
+            {
+                if (Event.current.type == EventType.KeyDown && Event.current.control)
+                    showButton = true;
+                else if (Event.current.type == EventType.KeyUp)
+                    showButton = false;
+            }
+
+            foreach ((SerializedProperty serializedProperty, FieldInfo field, DrawVectorRelativeToTransformAttribute drawVectorRelativeToTransform, Editor editor) in PropertyDrawerHelper.FindAllSerializePropertiesInActiveEditorWithTheAttribute<DrawVectorRelativeToTransformAttribute>())
             {
                 serializedProperty.serializedObject.Update();
                 Vector3 reference = GetReference(serializedProperty, drawVectorRelativeToTransform.reference);
@@ -176,12 +246,74 @@ namespace Enderlook.Unity.Attributes
                     for (int i = 0; i < serializedProperty.arraySize; i++)
                     {
                         SerializedProperty item = serializedProperty.GetArrayElementAtIndex(i);
-                        RenderSingleSerializedProperty(item, drawVectorRelativeToTransform, reference);
+                        RenderSingleSerializedProperty(item, drawVectorRelativeToTransform, reference, field);
                     }
                 else
-                    RenderSingleSerializedProperty(serializedProperty, drawVectorRelativeToTransform, reference);
+                    RenderSingleSerializedProperty(serializedProperty, drawVectorRelativeToTransform, reference, field);
 
                 serializedProperty.serializedObject.ApplyModifiedProperties();
+            }
+
+            TryDrawPanel();
+        }
+
+        private static void TryDrawPanel()
+        {
+            if (!(selected.serializedProperty is null))
+            {
+                try
+                {
+                    Handles.BeginGUI();
+                    Rect screenRect = new Rect(0, 0, 300, 175);
+                    GUILayout.BeginArea(screenRect);
+                    if (Event.current.type == EventType.Repaint)
+                        GUI.skin.box.Draw(screenRect, GUIContent.none, false, true, true, false);
+                    EditorGUI.BeginChangeCheck();
+
+                    OBJECT_LABEL.text = selected.serializedProperty.serializedObject.targetObject.name;
+                    EditorGUILayout.LabelField(OBJECT_CONTENT, OBJECT_LABEL);
+
+                    PROPERTY_PATH_LABEL.text = $"{selected.field.DeclaringType.Name}.{selected.serializedProperty.propertyPath.Replace(".Array.data", "")}";
+                    EditorGUILayout.LabelField(PATH_CONTENT, PROPERTY_PATH_LABEL);
+
+                    if (selected.serializedProperty.propertyPath.EndsWith("]"))
+                    {
+                        string[] parts = selected.serializedProperty.propertyPath.Replace(".Array.data", "").Split(splitByBracket);
+                        string rawNumber = parts[parts.Length - 1];
+                        string number = rawNumber.Substring(0, rawNumber.Length - 1);
+                        string[] prefixes = parts[parts.Length - 2].Split(splitByDot);
+                        string prefix = prefixes[prefixes.Length - 1];
+                        PROPERTY_NAME_LABEL.text = $"{ObjectNames.NicifyVariableName(prefix)}[{number}]"; 
+                    }
+                    else
+                        PROPERTY_NAME_LABEL.text = selected.serializedProperty.displayName;
+                    EditorGUILayout.LabelField(PROPERTY_CONTENT, PROPERTY_NAME_LABEL);
+
+                    EditorGUILayout.PropertyField(selected.serializedProperty, RELATIVE_POSITION_CONTENT);
+
+                    Vector3 reference = GetReference(selected.serializedProperty, selected.drawVectorRelativeToTransform.reference);
+                    Vector3 absolutePosition = ToAbsolutePosition(selected.serializedProperty, reference);
+                    absolutePosition = EditorGUILayout.Vector3Field(ABSOLUTE_POSITION_CONTENT, absolutePosition);
+                    SetFromAbsolutePosition(selected.serializedProperty, absolutePosition, reference);
+
+                    EditorGUI.BeginDisabledGroup(true);
+                    EditorGUILayout.Vector3Field(REFERENCE_POSITION_CONTENT, reference);
+                    EditorGUI.EndDisabledGroup();
+
+                    if (GUILayout.Button(CLOSE_BUTTON))
+                        selected = default;
+                }
+                catch
+                {
+                    selected = default;
+                }
+                finally
+                {
+                    if (EditorGUI.EndChangeCheck() && selected != default)
+                        selected.serializedProperty.serializedObject.ApplyModifiedProperties();
+                    GUILayout.EndArea();
+                    Handles.EndGUI();
+                }
             }
         }
     }
