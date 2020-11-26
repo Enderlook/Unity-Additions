@@ -107,8 +107,12 @@ namespace Enderlook.Unity.Attributes
                 Type baseType = result.BaseType;
                 if (root.IsAssignableFrom(baseType))
                 {
-                    typesKV.Add(new KeyValuePair<Type, Type>(baseType, result));
-                    tmpStack.Push(baseType);
+                    KeyValuePair<Type, Type> item = new KeyValuePair<Type, Type>(baseType, result);
+                    if (!typesKV.Contains(item))
+                    {
+                        typesKV.Add(item);
+                        tmpStack.Push(baseType);
+                    }
                 }
             }
 
