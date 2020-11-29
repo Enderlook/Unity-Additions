@@ -75,7 +75,7 @@ namespace Enderlook.Unity.Attributes
         {
             foreach (Type type in attribute.restriction)
             {
-                if (!resultType.IsAssignableFrom(type))
+                if (!type.IsAssignableFrom(resultType))
                 {
                     errorMessage = $"Require values than can be casted to {type}. {resultType} can't.";
                     return false;
